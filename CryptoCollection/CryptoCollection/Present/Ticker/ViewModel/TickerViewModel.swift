@@ -10,6 +10,7 @@ import RxSwift
 
 final class TickerViewModel: ViewModel {
     private let disposeBag = DisposeBag()
+    private var disposable: Disposable?
 
     struct Input {
 
@@ -17,6 +18,7 @@ final class TickerViewModel: ViewModel {
 
     struct Output {
         let data: Observable<[UpbitMarketResponse]>
+        let timer: Observable<Int>
     }
 
     func transform(input: Input) -> Output {
@@ -41,7 +43,10 @@ final class TickerViewModel: ViewModel {
         }
         .disposed(by: disposeBag)
 
-        timer
+        /*
+         timer를 Disposable로 선언 후 명시적으로 dispose() 시켜줌
+         */
+        disposable = timer
             .subscribe(with: self) { owner, value in
                 print("Timer:", value)
                 NetworkManager.shared.getItem(
@@ -55,10 +60,16 @@ final class TickerViewModel: ViewModel {
                     print("onDisposed")
                 }
                 .disposed(by: owner.disposeBag)
+            } onDisposed: { owner in
+                print("Timer onDisposed")
             }
-            .disposed(by: disposeBag)
 
-        return Output(data: data.asObservable())
+        return Output(data: data.asObservable(),
+                      timer: timer)
+    }
+
+    func disposeTimer() {
+        disposable?.dispose()
     }
 
 }

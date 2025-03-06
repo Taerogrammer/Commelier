@@ -35,7 +35,16 @@ final class TickerViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 
-    override func bind() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.disposeTimer()
+    }
+
+    private func bind() {
         let output = viewModel.transform(input: TickerViewModel.Input())
 
         output.data
@@ -45,19 +54,5 @@ final class TickerViewController: BaseViewController {
                 print("onDisposed")
             }
             .disposed(by: disposeBag)
-
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // 타이머 다시 시작
-        print(#function)
-
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        // 타이머 해제
-        print(#function)
-    }
-
 }

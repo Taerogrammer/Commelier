@@ -16,7 +16,6 @@ class BaseViewController: UIViewController, ViewConfiguration {
         configureView()
         configureNavigation()
         configureDefaultSetting()
-        bind()
     }
 
     init() {
@@ -37,8 +36,6 @@ class BaseViewController: UIViewController, ViewConfiguration {
     func configureNavigation() { }
 
     func configureDefaultSetting() { }
-
-    func bind() { }
 
     deinit {
         print(#function)
