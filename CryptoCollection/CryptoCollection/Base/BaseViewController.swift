@@ -39,4 +39,8 @@ class BaseViewController: UIViewController, ViewConfiguration {
     func configureDefaultSetting() { }
 
     func bind() { }
+
+    deinit {
+        print(#function)
+    }
 }
