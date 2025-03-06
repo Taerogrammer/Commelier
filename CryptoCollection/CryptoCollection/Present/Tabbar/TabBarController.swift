@@ -16,9 +16,9 @@ final class TabBarController: UITabBarController {
     }
 
     private func configureTabBar() {
-        let tickerVC = TickerViewController()
-        let trendingVC = TrendingViewController()
-        let portfolioVC = PortfolioViewController()
+        let tickerVC = UINavigationController(rootViewController: TickerViewController())
+        let trendingVC = UINavigationController(rootViewController: TrendingViewController())
+        let portfolioVC = UINavigationController(rootViewController: PortfolioViewController()) 
 
         tickerVC.tabBarItem.title = "거래소"
         tickerVC.tabBarItem.image = UIImage(systemName: "chart.line.uptrend.xyaxis")
