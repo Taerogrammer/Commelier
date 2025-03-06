@@ -34,6 +34,10 @@
 		16158D502D79AF6E00AC3458 /* UpbitRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */; };
 		16158D522D79B15000AC3458 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D512D79B15000AC3458 /* NetworkManager.swift */; };
 		16158D562D79B2A200AC3458 /* UpbitMarketResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */; };
+		16158DE12D79BC8300AC3458 /* CoingeckoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */; };
+		16158DE32D79BF2900AC3458 /* CoingeckoCoinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */; };
+		16158DE52D79C07000AC3458 /* CoingeckoTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */; };
+		16158DE72D79C55200AC3458 /* CoingeckoSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,10 @@
 		16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpbitRouter.swift; sourceTree = "<group>"; };
 		16158D512D79B15000AC3458 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpbitMarketResponse.swift; sourceTree = "<group>"; };
+		16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoRouter.swift; sourceTree = "<group>"; };
+		16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoCoinResponse.swift; sourceTree = "<group>"; };
+		16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoTrendingResponse.swift; sourceTree = "<group>"; };
+		16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoSearchResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +156,7 @@
 				16158D4B2D79AE2C00AC3458 /* APIEnvironment.swift */,
 				16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */,
 				16158D512D79B15000AC3458 /* NetworkManager.swift */,
+				16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -164,6 +173,9 @@
 			isa = PBXGroup;
 			children = (
 				16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */,
+				16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */,
+				16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */,
+				16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -264,10 +276,13 @@
 				16158CCC2D79AAED00AC3458 /* BaseViewController.swift in Sources */,
 				16158D4E2D79AEF200AC3458 /* APIRouter.swift in Sources */,
 				16158CD12D79AB6C00AC3458 /* ReuseIdentifiable.swift in Sources */,
+				16158DE12D79BC8300AC3458 /* CoingeckoRouter.swift in Sources */,
 				16158CC42D79A9BF00AC3458 /* AppDelegate.swift in Sources */,
 				16158CC52D79A9BF00AC3458 /* SceneDelegate.swift in Sources */,
 				16158CD52D79ACD400AC3458 /* BaseTableViewCell.swift in Sources */,
 				16158CD72D79AD3200AC3458 /* BaseCollectionViewCell.swift in Sources */,
+				16158DE32D79BF2900AC3458 /* CoingeckoCoinResponse.swift in Sources */,
+				16158DE72D79C55200AC3458 /* CoingeckoSearchResponse.swift in Sources */,
 				16158CCF2D79AB3000AC3458 /* ViewConfiguration.swift in Sources */,
 				16158D4C2D79AE2C00AC3458 /* APIEnvironment.swift in Sources */,
 				16158CC62D79A9BF00AC3458 /* ViewController.swift in Sources */,
@@ -276,6 +291,7 @@
 				16158CD32D79AB9F00AC3458 /* ViewModel.swift in Sources */,
 				16158D502D79AF6E00AC3458 /* UpbitRouter.swift in Sources */,
 				16158CCA2D79AAE800AC3458 /* BaseView.swift in Sources */,
+				16158DE52D79C07000AC3458 /* CoingeckoTrendingResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
