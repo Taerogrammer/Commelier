@@ -17,54 +17,32 @@
 		16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB22D799BB000AC3458 /* Kingfisher */; };
 		16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB52D799BEA00AC3458 /* RxCocoa */; };
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
-		16158CC12D79A9BF00AC3458 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16158CBA2D79A9BF00AC3458 /* Assets.xcassets */; };
-		16158CC32D79A9BF00AC3458 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16158CBD2D79A9BF00AC3458 /* LaunchScreen.storyboard */; };
-		16158CC42D79A9BF00AC3458 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CB92D79A9BF00AC3458 /* AppDelegate.swift */; };
-		16158CC52D79A9BF00AC3458 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CBE2D79A9BF00AC3458 /* SceneDelegate.swift */; };
-		16158CC62D79A9BF00AC3458 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CBF2D79A9BF00AC3458 /* ViewController.swift */; };
-		16158CCA2D79AAE800AC3458 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CC92D79AAE800AC3458 /* BaseView.swift */; };
-		16158CCC2D79AAED00AC3458 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CCB2D79AAED00AC3458 /* BaseViewController.swift */; };
-		16158CCF2D79AB3000AC3458 /* ViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CCE2D79AB3000AC3458 /* ViewConfiguration.swift */; };
-		16158CD12D79AB6C00AC3458 /* ReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CD02D79AB6C00AC3458 /* ReuseIdentifiable.swift */; };
-		16158CD32D79AB9F00AC3458 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CD22D79AB9F00AC3458 /* ViewModel.swift */; };
-		16158CD52D79ACD400AC3458 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CD42D79ACD400AC3458 /* BaseTableViewCell.swift */; };
-		16158CD72D79AD3200AC3458 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158CD62D79AD3200AC3458 /* BaseCollectionViewCell.swift */; };
-		16158D4C2D79AE2C00AC3458 /* APIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D4B2D79AE2C00AC3458 /* APIEnvironment.swift */; };
-		16158D4E2D79AEF200AC3458 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D4D2D79AEF200AC3458 /* APIRouter.swift */; };
-		16158D502D79AF6E00AC3458 /* UpbitRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */; };
-		16158D522D79B15000AC3458 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D512D79B15000AC3458 /* NetworkManager.swift */; };
-		16158D562D79B2A200AC3458 /* UpbitMarketResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */; };
-		16158DE12D79BC8300AC3458 /* CoingeckoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */; };
-		16158DE32D79BF2900AC3458 /* CoingeckoCoinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */; };
-		16158DE52D79C07000AC3458 /* CoingeckoTrendingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */; };
-		16158DE72D79C55200AC3458 /* CoingeckoSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16158C852D79992E00AC3458 /* CryptoCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		16158CB92D79A9BF00AC3458 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		16158CBA2D79A9BF00AC3458 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		16158CBB2D79A9BF00AC3458 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		16158CBC2D79A9BF00AC3458 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		16158CBE2D79A9BF00AC3458 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		16158CBF2D79A9BF00AC3458 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		16158CC92D79AAE800AC3458 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		16158CCB2D79AAED00AC3458 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		16158CCE2D79AB3000AC3458 /* ViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfiguration.swift; sourceTree = "<group>"; };
-		16158CD02D79AB6C00AC3458 /* ReuseIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiable.swift; sourceTree = "<group>"; };
-		16158CD22D79AB9F00AC3458 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		16158CD42D79ACD400AC3458 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
-		16158CD62D79AD3200AC3458 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		16158D4B2D79AE2C00AC3458 /* APIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironment.swift; sourceTree = "<group>"; };
-		16158D4D2D79AEF200AC3458 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
-		16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpbitRouter.swift; sourceTree = "<group>"; };
-		16158D512D79B15000AC3458 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpbitMarketResponse.swift; sourceTree = "<group>"; };
-		16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoRouter.swift; sourceTree = "<group>"; };
-		16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoCoinResponse.swift; sourceTree = "<group>"; };
-		16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoTrendingResponse.swift; sourceTree = "<group>"; };
-		16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoingeckoSearchResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		16158E402D79CDDC00AC3458 /* Exceptions for "CryptoCollection" folder in "CryptoCollection" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 16158C842D79992E00AC3458 /* CryptoCollection */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		16158E262D79CDDC00AC3458 /* CryptoCollection */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				16158E402D79CDDC00AC3458 /* Exceptions for "CryptoCollection" folder in "CryptoCollection" target */,
+			);
+			path = CryptoCollection;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		16158C822D79992E00AC3458 /* Frameworks */ = {
@@ -90,7 +68,7 @@
 		16158C7C2D79992E00AC3458 = {
 			isa = PBXGroup;
 			children = (
-				16158CC02D79A9BF00AC3458 /* CryptoCollection */,
+				16158E262D79CDDC00AC3458 /* CryptoCollection */,
 				16158C862D79992E00AC3458 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,83 +79,6 @@
 				16158C852D79992E00AC3458 /* CryptoCollection.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		16158CC02D79A9BF00AC3458 /* CryptoCollection */ = {
-			isa = PBXGroup;
-			children = (
-				16158D482D79ADE800AC3458 /* Model */,
-				16158CCD2D79AB1300AC3458 /* Protocol */,
-				16158CC72D79A9C400AC3458 /* Base */,
-				16158CB92D79A9BF00AC3458 /* AppDelegate.swift */,
-				16158CBA2D79A9BF00AC3458 /* Assets.xcassets */,
-				16158CBB2D79A9BF00AC3458 /* Info.plist */,
-				16158CBD2D79A9BF00AC3458 /* LaunchScreen.storyboard */,
-				16158CBE2D79A9BF00AC3458 /* SceneDelegate.swift */,
-				16158CBF2D79A9BF00AC3458 /* ViewController.swift */,
-			);
-			path = CryptoCollection;
-			sourceTree = "<group>";
-		};
-		16158CC72D79A9C400AC3458 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				16158CC92D79AAE800AC3458 /* BaseView.swift */,
-				16158CCB2D79AAED00AC3458 /* BaseViewController.swift */,
-				16158CD42D79ACD400AC3458 /* BaseTableViewCell.swift */,
-				16158CD62D79AD3200AC3458 /* BaseCollectionViewCell.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		16158CCD2D79AB1300AC3458 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				16158CCE2D79AB3000AC3458 /* ViewConfiguration.swift */,
-				16158CD02D79AB6C00AC3458 /* ReuseIdentifiable.swift */,
-				16158CD22D79AB9F00AC3458 /* ViewModel.swift */,
-				16158D4D2D79AEF200AC3458 /* APIRouter.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		16158D482D79ADE800AC3458 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				16158D532D79B27200AC3458 /* DTO */,
-				16158D4A2D79AE1F00AC3458 /* Network */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		16158D4A2D79AE1F00AC3458 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				16158D4B2D79AE2C00AC3458 /* APIEnvironment.swift */,
-				16158D4F2D79AF6E00AC3458 /* UpbitRouter.swift */,
-				16158D512D79B15000AC3458 /* NetworkManager.swift */,
-				16158DE02D79BC8300AC3458 /* CoingeckoRouter.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		16158D532D79B27200AC3458 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-				16158D542D79B27600AC3458 /* Response */,
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
-		16158D542D79B27600AC3458 /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				16158D552D79B2A200AC3458 /* UpbitMarketResponse.swift */,
-				16158DE22D79BF2900AC3458 /* CoingeckoCoinResponse.swift */,
-				16158DE42D79C07000AC3458 /* CoingeckoTrendingResponse.swift */,
-				16158DE62D79C55200AC3458 /* CoingeckoSearchResponse.swift */,
-			);
-			path = Response;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +95,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				16158E262D79CDDC00AC3458 /* CryptoCollection */,
 			);
 			name = CryptoCollection;
 			packageProductDependencies = (
@@ -261,8 +165,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16158CC12D79A9BF00AC3458 /* Assets.xcassets in Resources */,
-				16158CC32D79A9BF00AC3458 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,40 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16158CCC2D79AAED00AC3458 /* BaseViewController.swift in Sources */,
-				16158D4E2D79AEF200AC3458 /* APIRouter.swift in Sources */,
-				16158CD12D79AB6C00AC3458 /* ReuseIdentifiable.swift in Sources */,
-				16158DE12D79BC8300AC3458 /* CoingeckoRouter.swift in Sources */,
-				16158CC42D79A9BF00AC3458 /* AppDelegate.swift in Sources */,
-				16158CC52D79A9BF00AC3458 /* SceneDelegate.swift in Sources */,
-				16158CD52D79ACD400AC3458 /* BaseTableViewCell.swift in Sources */,
-				16158CD72D79AD3200AC3458 /* BaseCollectionViewCell.swift in Sources */,
-				16158DE32D79BF2900AC3458 /* CoingeckoCoinResponse.swift in Sources */,
-				16158DE72D79C55200AC3458 /* CoingeckoSearchResponse.swift in Sources */,
-				16158CCF2D79AB3000AC3458 /* ViewConfiguration.swift in Sources */,
-				16158D4C2D79AE2C00AC3458 /* APIEnvironment.swift in Sources */,
-				16158CC62D79A9BF00AC3458 /* ViewController.swift in Sources */,
-				16158D522D79B15000AC3458 /* NetworkManager.swift in Sources */,
-				16158D562D79B2A200AC3458 /* UpbitMarketResponse.swift in Sources */,
-				16158CD32D79AB9F00AC3458 /* ViewModel.swift in Sources */,
-				16158D502D79AF6E00AC3458 /* UpbitRouter.swift in Sources */,
-				16158CCA2D79AAE800AC3458 /* BaseView.swift in Sources */,
-				16158DE52D79C07000AC3458 /* CoingeckoTrendingResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		16158CBD2D79A9BF00AC3458 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				16158CBC2D79A9BF00AC3458 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		16158C992D79993000AC3458 /* Debug */ = {
