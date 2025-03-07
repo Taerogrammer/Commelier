@@ -35,9 +35,12 @@ class BaseViewController: UIViewController, ViewConfiguration {
 
     func configureNavigation() { }
 
-    func configureDefaultSetting() { }
+    func configureDefaultSetting() {
+        view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.tintColor = UIColor.customBlack
+    }
 
     deinit {
-        print(#function)
+        print(#function, self)
     }
 }
