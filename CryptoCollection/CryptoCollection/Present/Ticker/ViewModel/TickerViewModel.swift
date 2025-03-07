@@ -12,6 +12,10 @@ import RxGesture
 final class TickerViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var disposable: Disposable?
+    private let buttonStatus = BehaviorRelay<ButtonStatus>(value: ButtonStatus(
+        price: .unClicked,
+        changedPrice: .unClicked,
+        acc: .unClicked))
 
     struct Input {
         let priceTapped: TapControlEvent
@@ -22,6 +26,7 @@ final class TickerViewModel: ViewModel {
     struct Output {
         let data: Observable<[UpbitMarketResponse]>
         let timer: Observable<Int>
+        let buttonStatus: Observable<ButtonStatus>
     }
 
     func transform(input: Input) -> Output {
@@ -31,21 +36,21 @@ final class TickerViewModel: ViewModel {
         input.priceTapped
             .when(.recognized)
             .subscribe(with: self) { owner, _ in
-                print("priceTapped")
+                owner.buttonConfigure(button: .price)
             }
             .disposed(by: disposeBag)
 
         input.changedPriceTapped
             .when(.recognized)
             .subscribe(with: self) { owner, _ in
-                print("changedPriceTapped")
+                owner.buttonConfigure(button: .changedPrice)
             }
             .disposed(by: disposeBag)
 
         input.accTapped
             .when(.recognized)
             .subscribe(with: self) { owner, _ in
-                print("accTapped")
+                owner.buttonConfigure(button: .acc)
             }
             .disposed(by: disposeBag)
 
@@ -88,11 +93,59 @@ final class TickerViewModel: ViewModel {
             }
 
         return Output(data: data.asObservable(),
-                      timer: timer)
+                      timer: timer,
+                      buttonStatus: buttonStatus.asObservable())
     }
 
     func disposeTimer() {
         disposable?.dispose()
     }
 
+    private func buttonConfigure(button: ButtonType) {
+        let currentStatus = buttonStatus.value
+        let newStatus: ButtonStatus
+
+        switch button {
+        case .price:
+            newStatus = ButtonStatus(
+                price: changeStatus(currentStatus: currentStatus.price),
+                changedPrice: .unClicked,
+                acc: .unClicked)
+        case .changedPrice:
+            newStatus = ButtonStatus(
+                price: .unClicked,
+                changedPrice: changeStatus(currentStatus: currentStatus.changedPrice),
+                acc: .unClicked)
+        case .acc:
+            newStatus = ButtonStatus(
+                price: .unClicked,
+                changedPrice: .unClicked,
+                acc: changeStatus(currentStatus: currentStatus.acc))
+        }
+
+        buttonStatus.accept(newStatus)
+    }
+
+    private func changeStatus(currentStatus: CoinFilterButtonStatus) -> CoinFilterButtonStatus {
+        switch currentStatus {
+        case .unClicked:
+            return .downClicked
+        case .upClicked:
+            return .unClicked
+        case .downClicked:
+            return .upClicked
+        }
+    }
+}
+
+enum ButtonType {
+    case price
+    case changedPrice
+    case acc
+}
+
+struct ButtonStatus {
+    let price: CoinFilterButtonStatus
+    let changedPrice: CoinFilterButtonStatus
+    let acc: CoinFilterButtonStatus
 }

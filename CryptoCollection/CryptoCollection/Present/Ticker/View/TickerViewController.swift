@@ -74,5 +74,14 @@ final class TickerViewController: BaseViewController {
                 }
                 .disposed(by: disposeBag)
 
+        output.buttonStatus
+            .subscribe(with: self) { owner, status in
+                owner.headerView.priceButton.buttonStatus(status: status.price)
+                owner.headerView.changedPriceButton.buttonStatus(status: status.changedPrice)
+                owner.headerView.accButton.buttonStatus(status: status.acc)
+            }
+            .disposed(by: disposeBag)
+
     }
+
 }
