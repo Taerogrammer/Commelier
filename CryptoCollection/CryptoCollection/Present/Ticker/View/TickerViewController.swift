@@ -73,6 +73,7 @@ final class TickerViewController: BaseViewController {
                     cell.changeRate.text = element.signed_change_rate_description
                     cell.changePrice.text = element.signed_change_price_description
                     cell.tradePrice.text = element.acc_trade_price_24h_description
+                    cell.updateColor(number: element.signed_change_rate)
                 }
                 .disposed(by: disposeBag)
 

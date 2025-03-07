@@ -63,4 +63,18 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
         tradePrice.textAlignment = .right
     }
 
+    func updateColor(number: Double) {
+
+        if round(number * 100) / 100 == 0.00 {
+            changeRate.textColor = .customBlack
+            changePrice.textColor = .customBlack
+        } else if round(number * 100) / 100 > 0 {
+            changeRate.textColor = .customRed
+            changePrice.textColor = .customRed
+        } else {
+            changeRate.textColor = .customBlue
+            changePrice.textColor = .customBlue
+        }
+    }
+
 }
