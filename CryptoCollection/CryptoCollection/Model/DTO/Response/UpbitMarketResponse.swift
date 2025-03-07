@@ -21,7 +21,6 @@ struct UpbitMarketResponse: Decodable {
     let signed_change_rate: Double
     let acc_trade_price_24h: Double
 
-
     var trade_price_description: String {
         return numberConverter(number: trade_price)
     }
@@ -31,7 +30,7 @@ struct UpbitMarketResponse: Decodable {
     }
 
     var signed_change_rate_description: String {
-        return numberConverter(number: signed_change_rate) + "%"
+        return rateConverter(number: signed_change_rate) + "%"
     }
 
     var acc_trade_price_24h_description: String {
@@ -55,4 +54,9 @@ struct UpbitMarketResponse: Decodable {
 func numberConverter(number: Double) -> String {
 
     return (round(number * 100) / 100).formatted()
+}
+
+// 반올림해서 0.00인 경우 -부호 제거
+func rateConverter(number: Double) -> String {
+    return round(number * 100) / 100 == 0.00 ? "0.00" : String(format: "%.2f", (round(number * 100) / 100))
 }
