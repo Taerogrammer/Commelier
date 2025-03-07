@@ -12,8 +12,16 @@ import RxDataSources
 import RxSwift
 
 final class TrendingViewController: BaseViewController {
-    private let searchBar = UISearchBar()
+    enum Section: CaseIterable {
+        case coin
+        case nft
+    }
 
+    private let searchBar = UISearchBar()
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createCompositionalLayout())
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
 
     override func configureHierarchy() {
         view.addSubview(searchBar)
@@ -49,5 +57,67 @@ final class TrendingViewController: BaseViewController {
         searchBar.searchTextField.layer.cornerRadius = 16
         searchBar.searchTextField.backgroundColor = .white
     }
+
+    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            if sectionIndex == 0 {
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
+
+                let innerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/7), heightDimension: .fractionalHeight(1.0))
+                let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerSize, subitems: [item])
+
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [innerGroup])
+
+                let section = NSCollectionLayoutSection(group: group)
+
+                return section
+            } else {
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(80), heightDimension: .fractionalHeight(1.0))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(120))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+                let section = NSCollectionLayoutSection(group: group)
+
+                return section
+            }
+        }
+
+        return layout
+    }
+
+    private func configureDataSource() {
+        let coinCellRegistration = UICollectionView.CellRegistration<CoinCollectionViewCell, Int> { cell, indexPath, itemIdentifier in
+            print("coinRegistration", indexPath)
+        }
+
+        let nftCellRegistration = UICollectionView.CellRegistration<NFTCollectionViewCell, Int> { cell, indexPath, itemIdentifier in
+            print("nftRegistration", indexPath)
+        }
+
+        // cellForItemAt
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                let section = Section.allCases[indexPath.section]
+
+                switch section {
+                case .coin:
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: coinCellRegistration, for: indexPath, item: itemIdentifier)
+                    print("coin Reusable Cell", indexPath)
+                    return cell
+                case .nft:
+                    let cell = collectionView.dequeueConfiguredReusableCell(using: nftCellRegistration, for: indexPath, item: itemIdentifier)
+                    print("nft Reusable Cell", indexPath)
+                    return cell
+                }
+            })
+    }
+
+
 
 }
