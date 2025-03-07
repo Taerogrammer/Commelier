@@ -55,7 +55,12 @@ final class TickerViewController: BaseViewController {
     }
 
     private func bind() {
-        let output = viewModel.transform(input: TickerViewModel.Input())
+        let input = TickerViewModel.Input(
+            priceTapped: headerView.priceButton.rx.tapGesture(),
+            changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
+            accTapped: headerView.accButton.rx.tapGesture()
+        )
+        let output = viewModel.transform(input: input)
 
         output.data
             .bind(to:tableView.rx.items(

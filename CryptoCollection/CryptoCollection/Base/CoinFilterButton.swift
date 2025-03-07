@@ -18,6 +18,10 @@ final class CoinFilterButton: BaseView {
     }
     override func configureLayout() {
 
+        self.snp.makeConstraints { make in
+            make.height.lessThanOrEqualTo(26)
+        }
+
         title.snp.makeConstraints { make in
             make.centerY.equalTo(safeAreaLayoutGuide)
             make.trailing.equalTo(upImage.snp.leading)

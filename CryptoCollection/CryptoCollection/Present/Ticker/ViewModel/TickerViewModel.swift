@@ -7,13 +7,16 @@
 
 import RxCocoa
 import RxSwift
+import RxGesture
 
 final class TickerViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var disposable: Disposable?
 
     struct Input {
-
+        let priceTapped: TapControlEvent
+        let changedPriceTapped: TapControlEvent
+        let accTapped: TapControlEvent
     }
 
     struct Output {
@@ -25,6 +28,26 @@ final class TickerViewModel: ViewModel {
         let data = PublishRelay<[UpbitMarketResponse]>()
         let timer = Observable<Int>.interval(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
 
+        input.priceTapped
+            .when(.recognized)
+            .subscribe(with: self) { owner, _ in
+                print("priceTapped")
+            }
+            .disposed(by: disposeBag)
+
+        input.changedPriceTapped
+            .when(.recognized)
+            .subscribe(with: self) { owner, _ in
+                print("changedPriceTapped")
+            }
+            .disposed(by: disposeBag)
+
+        input.accTapped
+            .when(.recognized)
+            .subscribe(with: self) { owner, _ in
+                print("accTapped")
+            }
+            .disposed(by: disposeBag)
 
         // TODO: 방법 고민해보기
         /*
