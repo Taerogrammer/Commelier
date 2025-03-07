@@ -38,6 +38,7 @@ class BaseViewController: UIViewController, ViewConfiguration {
     func configureDefaultSetting() {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.tintColor = UIColor.customBlack
+        navigationItem.backButtonDisplayMode = .minimal
     }
 
     deinit {
