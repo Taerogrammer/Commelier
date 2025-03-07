@@ -53,6 +53,7 @@ final class TickerHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, Vi
 
     }
     func configureView() {
+        contentView.backgroundColor = .customWhiteGray
         coinLabel.textAlignment = .left
         coinLabel.text = "코인"
         coinLabel.font = .boldSystemFont(ofSize: 14)
