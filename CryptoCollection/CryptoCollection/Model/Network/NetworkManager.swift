@@ -18,7 +18,7 @@ final class NetworkManager {
         return Single.create { value in
             AF.request(api)
                 .validate(statusCode: 200...299)
-                .cURLDescription { print($0) }
+//                .cURLDescription { print($0) }
                 .responseDecodable(of: T.self) { response in
                     if let statusCode = response.response?.statusCode {
                         switch statusCode {
