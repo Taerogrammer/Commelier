@@ -26,6 +26,7 @@ final class TickerViewController: BaseViewController {
     }
 
     override func configureView() {
+        tableView.register(TickerTableViewCell.self, forCellReuseIdentifier: TickerTableViewCell.identifier)
     }
 
     override func configureNavigation() {
@@ -48,11 +49,16 @@ final class TickerViewController: BaseViewController {
         let output = viewModel.transform(input: TickerViewModel.Input())
 
         output.data
-            .subscribe(with: self) { owner, value in
-                print("값", value)
-            } onDisposed: { owner in
-                print("onDisposed")
-            }
-            .disposed(by: disposeBag)
+            .bind(to:tableView.rx.items(
+                cellIdentifier: TickerTableViewCell.identifier,
+                cellType: TickerTableViewCell.self)) { index, element, cell in
+                    cell.name.text = element.market
+                    cell.price.text = element.trade_price_description
+                    cell.changeRate.text = element.signed_change_rate_description
+                    cell.changePrice.text = element.signed_change_price_description
+                    cell.tradePrice.text = element.acc_trade_price_24h_description
+                }
+                .disposed(by: disposeBag)
+
     }
 }
