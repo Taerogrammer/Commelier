@@ -21,6 +21,10 @@ final class TrendingViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
+    private let viewModel = TrendingViewModel()
+    private let disposeBag = DisposeBag()
+
+
     private var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
 
     override func configureHierarchy() {
@@ -35,6 +39,7 @@ final class TrendingViewController: BaseViewController {
 
     override func configureView() {
         configureSearchBar()
+        bind()
     }
 
     override func configureNavigation() {
@@ -42,6 +47,36 @@ final class TrendingViewController: BaseViewController {
         titleLabel.text = "가상자산 / 심볼 검색"
         titleLabel.font = .boldSystemFont(ofSize: 16)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+    }
+
+    private func bind() {
+        let input = TrendingViewModel.Input(
+            searchBarTapped: searchBar.rx.searchButtonClicked,
+            searchText: searchBar.rx.text.orEmpty)
+        let output = viewModel.transform(input: input)
+
+        output.action
+            .bind(with: self) { owner, action in
+                owner.view.endEditing(true)
+                switch action {
+                case .navigateToDetail(let text):
+                    print("String", text)
+                    let vm = SearchViewModel(searchText: text)
+                    let vc = SearchViewController(viewModel: vm)
+                    vc.title = text
+
+                    owner.navigationController?.pushViewController(vc, animated: true)
+
+                case .showAlert:
+                    print("alert")
+                }
+            }
+            .disposed(by: disposeBag)
+
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 
     private func configureSearchBar() {
@@ -117,7 +152,5 @@ final class TrendingViewController: BaseViewController {
                 }
             })
     }
-
-
 
 }
