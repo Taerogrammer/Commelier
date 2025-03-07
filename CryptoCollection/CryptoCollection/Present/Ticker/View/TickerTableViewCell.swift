@@ -27,13 +27,13 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
             make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
         }
         price.snp.makeConstraints { make in
-            make.trailing.equalTo(changeRate.snp.leading).offset(-12)
+            make.trailing.equalTo(changeRate.snp.leading).offset(-8)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
         }
         changeRate.snp.makeConstraints { make in
-            make.trailing.equalTo(tradePrice.snp.leading).offset(-12)
+            make.trailing.equalTo(tradePrice.snp.leading).offset(-8)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.15)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
         }
         changePrice.snp.makeConstraints { make in
             make.trailing.equalTo(changeRate.snp.trailing)
@@ -42,7 +42,7 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
             make.width.equalTo(contentView.snp.width).multipliedBy(0.15)
         }
         tradePrice.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(12)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(16)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
         }

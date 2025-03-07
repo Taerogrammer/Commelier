@@ -14,19 +14,28 @@ final class TickerViewController: BaseViewController {
     private let tableView = UITableView()
     private let viewModel = TickerViewModel()
     private var disposeBag = DisposeBag()
+    private let headerView = TickerHeaderView()
 
     override func configureHierarchy() {
         view.addSubview(tableView)
+        view.addSubview(headerView)
     }
 
     override func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        headerView.snp.makeConstraints { make in
+            make.width.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(44)
+        }
     }
 
     override func configureView() {
         tableView.register(TickerTableViewCell.self, forCellReuseIdentifier: TickerTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 44
+        tableView.tableHeaderView = headerView
     }
 
     override func configureNavigation() {
