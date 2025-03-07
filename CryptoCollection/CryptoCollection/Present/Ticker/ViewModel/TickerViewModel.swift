@@ -12,6 +12,7 @@ import RxGesture
 final class TickerViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var disposable: Disposable?
+    private let data = PublishRelay<[UpbitMarketResponse]>()
     private let buttonStatus = BehaviorRelay<ButtonStatus>(value: ButtonStatus(
         price: .unClicked,
         changedPrice: .unClicked,
@@ -30,7 +31,6 @@ final class TickerViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let data = PublishRelay<[UpbitMarketResponse]>()
         let timer = Observable<Int>.interval(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
 
         input.priceTapped
@@ -63,7 +63,7 @@ final class TickerViewModel: ViewModel {
             api: UpbitRouter.getMarket(),
             type: [UpbitMarketResponse].self)
         .subscribe(with: self) { owner, value in
-            data.accept(value)
+            owner.data.accept(value)
         } onFailure: { owner, error in
             print("failed", APIError.unknownError)
         } onDisposed: { owner in
@@ -81,7 +81,7 @@ final class TickerViewModel: ViewModel {
                     api: UpbitRouter.getMarket(),
                     type: [UpbitMarketResponse].self)
                 .subscribe(with: self) { owner, value in
-                    data.accept(value)
+                    owner.data.accept(value)
                 } onFailure: { owner, error in
                     print("failed", error)
                 } onDisposed: { owner in
@@ -92,7 +92,14 @@ final class TickerViewModel: ViewModel {
                 print("Timer onDisposed")
             }
 
-        return Output(data: data.asObservable(),
+        let sortedData = Observable
+            .combineLatest(data, buttonStatus)
+            .map { data, buttonStatus in
+                return self.sortData(data: data, status: buttonStatus)
+            }
+            .asObservable()
+
+        return Output(data: sortedData,
                       timer: timer,
                       buttonStatus: buttonStatus.asObservable())
     }
@@ -122,7 +129,6 @@ final class TickerViewModel: ViewModel {
                 changedPrice: .unClicked,
                 acc: changeStatus(currentStatus: currentStatus.acc))
         }
-
         buttonStatus.accept(newStatus)
     }
 
@@ -135,6 +141,37 @@ final class TickerViewModel: ViewModel {
         case .downClicked:
             return .upClicked
         }
+    }
+
+    private func sortData(data: [UpbitMarketResponse], status: ButtonStatus) -> [UpbitMarketResponse] {
+        if status.price == .unClicked && status.changedPrice == .unClicked && status.acc == .unClicked {
+            return data.sorted { $0.acc_trade_price_24h > $1.acc_trade_price_24h }
+        } else {
+            switch status.price {
+            case .unClicked: break
+            case .upClicked:
+                print("price - upClicked")
+                return data.sorted { $0.trade_price < $1.trade_price }
+            case .downClicked:
+                return data.sorted { $0.trade_price > $1.trade_price }
+            }
+            switch status.changedPrice {
+            case .unClicked: break
+            case .upClicked:
+                return data.sorted { $0.signed_change_rate < $1.signed_change_rate }
+            case .downClicked:
+                return data.sorted { $0.signed_change_rate > $1.signed_change_rate }
+            }
+            switch status.acc {
+            case .unClicked: break
+            case .upClicked:
+                return data.sorted { $0.acc_trade_price_24h < $1.acc_trade_price_24h }
+            case .downClicked:
+                print("acc - downClicked")
+                return data.sorted { $0.acc_trade_price_24h > $1.acc_trade_price_24h }
+            }
+        }
+        return []
     }
 }
 

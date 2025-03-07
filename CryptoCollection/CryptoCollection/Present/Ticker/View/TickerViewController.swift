@@ -51,6 +51,8 @@ final class TickerViewController: BaseViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        tableView.dataSource = nil
+        tableView.delegate = nil
         viewModel.disposeTimer()
     }
 
