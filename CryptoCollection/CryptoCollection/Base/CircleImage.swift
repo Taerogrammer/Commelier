@@ -12,6 +12,7 @@ final class CircleImage: UIImageView {
         super.init(frame: frame)
 
         clipsToBounds = true
+        contentMode = .scaleAspectFit
     }
 
     @available(*, unavailable)
