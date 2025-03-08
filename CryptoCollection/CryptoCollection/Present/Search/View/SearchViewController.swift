@@ -118,9 +118,18 @@ final class SearchViewController: BaseViewController {
 
     private func bind() {
         let input = SearchViewModel.Input(
+            searchBarTapped: searchBar.rx.searchButtonClicked,
+            searchText: searchBar.rx.text.orEmpty,
             barButtonTapped: barButton.rx.tap,
             itemSelectedTapped: segCoinView.coinCollectionView.rx.itemSelected)
         let output = viewModel.transform(input: input)
+
+
+        searchBar.rx.searchButtonClicked
+            .subscribe(with: self) { owner, _ in
+                owner.searchBar.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
 
         output.action
             .bind(with: self) { owner, action in
@@ -154,7 +163,6 @@ final class SearchViewController: BaseViewController {
 // MARK: - @objc
 extension SearchViewController {
     @objc private func changeUnderLinePosition(_ segment: UISegmentedControl) {
-        print("INDEX", segment.selectedSegmentIndex)
         let segWidth = segment.frame.width / 3
         let xPosition = segment.frame.origin.x + (segWidth * CGFloat(segment.selectedSegmentIndex))
 

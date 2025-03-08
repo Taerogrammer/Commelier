@@ -18,6 +18,8 @@ final class SearchViewModel: ViewModel {
     }
 
     struct Input {
+        let searchBarTapped: ControlEvent<Void>
+        let searchText: ControlProperty<String>
         let barButtonTapped: ControlEvent<Void>
         let itemSelectedTapped: ControlEvent<IndexPath>
     }
@@ -34,6 +36,18 @@ final class SearchViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
         let result = BehaviorRelay<[CoinData]>(value: [])
+
+        input.searchBarTapped
+            .withLatestFrom(input.searchText)
+            .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
+                return NetworkManager.shared.getItem(
+                    api: CoingeckoRouter.getSearch(query: query),
+                    type: CoingeckoSearchResponse.self)
+            }
+            .subscribe(with: self) { owner, data in
+                result.accept(data.coins)
+            }
+            .disposed(by: disposeBag)
 
         input.barButtonTapped
             .bind(with: self) { owner, _ in
