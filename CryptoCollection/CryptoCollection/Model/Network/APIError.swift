@@ -12,5 +12,5 @@ enum APIError: Error {
     case unauthorized   // 401
     case notFound   // 404
     case networkError   // TODO: 확인
-    case unknownError   // 정체불명
+    case decodingError   // DecodingError
 }

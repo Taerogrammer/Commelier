@@ -27,7 +27,7 @@ final class NetworkManager {
                             case .success(let data):
                                 value(.success(data))
                             case .failure:
-                                value(.failure(APIError.unknownError))
+                                value(.failure(APIError.decodingError))
                             }
                         case 400:
                             print("400")
@@ -42,6 +42,7 @@ final class NetworkManager {
                             value(.failure(APIError.networkError))
                         }
                     }
+//                    debugPrint(response.result)
                 }
             return Disposables.create {
                 print("끝")
