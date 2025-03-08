@@ -63,7 +63,7 @@ final class TrendingViewController: BaseViewController {
                     print("String", text)
                     let vm = SearchViewModel(searchText: text)
                     let vc = SearchViewController(viewModel: vm)
-                    vc.title = text
+                    vc.searchBar.text = text
 
                     owner.navigationController?.pushViewController(vc, animated: true)
 

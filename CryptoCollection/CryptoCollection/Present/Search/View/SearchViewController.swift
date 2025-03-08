@@ -15,7 +15,7 @@ import Toast
 final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
     private let disposeBag = DisposeBag()
-    private let searchBar = UISearchBar()
+    let searchBar = UISearchBar()
     private let barButton = UIBarButtonItem(
         image: UIImage(systemName: "arrow.left"),
         style: .plain,
@@ -29,6 +29,7 @@ final class SearchViewController: BaseViewController {
 
     override func configureView() {
         bind()
+        configureSearchBar()
     }
 
     override func configureNavigation() {
@@ -36,8 +37,17 @@ final class SearchViewController: BaseViewController {
         navigationItem.leftBarButtonItem = barButton
     }
 
-    private func configureSearchBar() {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchBar.endEditing(true)
+    }
 
+    private func configureSearchBar() {
+        searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.setImage(UIImage(), for: .search, state: .normal)
+        searchBar.searchTextField.clearButtonMode = .never
+        searchBar.searchTextField.font = .systemFont(ofSize: 12)
+        searchBar.searchTextField.textColor = UIColor.customBlack
     }
 
     private func bind() {
