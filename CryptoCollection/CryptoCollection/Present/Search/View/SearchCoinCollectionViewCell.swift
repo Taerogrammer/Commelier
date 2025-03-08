@@ -14,7 +14,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
     let image = CircleImage(frame: .zero)
     let symbol = UILabel()
     let name = UILabel()
-    let rank = UILabel()
+    let rank = rankLabel()
     let favorite = UIButton()
 
     override func configureHierarchy() {
@@ -49,7 +49,6 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
     override func configureView() {
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
-        rank.font = .boldSystemFont(ofSize: 9)
         name.textColor = UIColor.customGray
 
         image.image = UIImage(systemName: "person.fill")
