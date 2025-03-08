@@ -17,7 +17,7 @@ final class DetailViewModel: ViewModel {
     }
 
     struct Output {
-
+        let data: Observable<CoingeckoCoinResponse>
     }
 
     init(id: String) {
@@ -25,7 +25,19 @@ final class DetailViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
+        let result = PublishRelay<CoingeckoCoinResponse>()
 
-        return Output()
+        id
+            .flatMapLatest { id -> Single<CoingeckoCoinResponse> in
+                return NetworkManager.shared.getItem(
+                    api: CoingeckoRouter.getCoinInformation(ids: id),
+                    type: CoingeckoCoinResponse.self)
+            }
+            .bind(with: self) { owner, data in
+                result.accept(data)
+            }
+            .disposed(by: disposeBag)
+
+        return Output(data: result.asObservable())
     }
 }
