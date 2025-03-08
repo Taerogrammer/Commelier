@@ -65,7 +65,7 @@ final class TickerViewModel: ViewModel {
         .subscribe(with: self) { owner, value in
             owner.data.accept(value)
         } onFailure: { owner, error in
-            print("failed", APIError.unknownError)
+            print("failed", APIError.decodingError)
         } onDisposed: { owner in
             print("onDisposed")
         }
