@@ -15,6 +15,11 @@ final class DetailViewController: BaseViewController {
     private let viewModel: DetailViewModel
     private let disposeBag = DisposeBag()
     private let titleView = DetailTitleView()
+    private let barButton = UIBarButtonItem(
+        image: UIImage(systemName: "arrow.left"),
+        style: .plain,
+        target: nil,
+        action: nil)
 
     override func configureHierarchy() {
 
@@ -29,7 +34,7 @@ final class DetailViewController: BaseViewController {
     }
 
     override func configureNavigation() {
-
+        navigationItem.leftBarButtonItem = barButton
     }
 
     init(viewModel: DetailViewModel) {
@@ -38,8 +43,16 @@ final class DetailViewController: BaseViewController {
     }
 
     private func bind() {
-        let input = DetailViewModel.Input()
+        let input = DetailViewModel.Input(
+            barButtonTapped: barButton.rx.tap)
         let output = viewModel.transform(input: input)
+
+        output.action
+            .bind(with: self) { owner, action in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
 
         output.data
             .withLatestFrom(output.data)

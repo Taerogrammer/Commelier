@@ -12,11 +12,16 @@ final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let id: Observable<String>
 
-    struct Input {
+    enum SettingAction {
+        case popViewController
+    }
 
+    struct Input {
+        let barButtonTapped: ControlEvent<Void>
     }
 
     struct Output {
+        let action: PublishRelay<SettingAction>
         let data: Observable<[CoingeckoCoinResponse]>
     }
 
@@ -25,7 +30,14 @@ final class DetailViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
+        let action = PublishRelay<SettingAction>()
         let result = PublishRelay<[CoingeckoCoinResponse]>()
+
+        input.barButtonTapped
+            .bind(with: self) { owner, _ in
+                action.accept(SettingAction.popViewController)
+            }
+            .disposed(by: disposeBag)
 
         id
             .flatMapLatest { id -> Single<[CoingeckoCoinResponse]> in
@@ -38,6 +50,8 @@ final class DetailViewModel: ViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(data: result.asObservable())
+        return Output(
+            action: action,
+            data: result.asObservable())
     }
 }
