@@ -9,8 +9,27 @@ import UIKit
 import SnapKit
 
 final class SegCoinView: BaseView {
+    lazy var coinCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: createFlowLayout())
 
-    override func configureView() {
-        backgroundColor = .customBlue
+    override func configureHierarchy() {
+        self.addSubview(coinCollectionView)
+    }
+    override func configureLayout() {
+        coinCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(self.safeAreaLayoutGuide)
+        }
+    }
+}
+
+// MARK: - collection view
+extension SegCoinView {
+    private func createFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 48.0)
+        layout.scrollDirection = .vertical
+
+        return layout
     }
 }

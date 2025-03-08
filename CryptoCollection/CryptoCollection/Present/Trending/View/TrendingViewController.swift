@@ -60,7 +60,6 @@ final class TrendingViewController: BaseViewController {
                 owner.view.endEditing(true)
                 switch action {
                 case .navigateToDetail(let text):
-                    print("String", text)
                     let vm = SearchViewModel(searchText: text)
                     let vc = SearchViewController(viewModel: vm)
                     vc.searchBar.text = text
