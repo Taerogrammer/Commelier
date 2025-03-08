@@ -9,12 +9,14 @@ import UIKit
 import Kingfisher
 import SnapKit
 import RealmSwift
+import RxSwift
 
 final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
-    let image = CircleImage(frame: .zero)
-    let symbol = UILabel()
-    let name = UILabel()
-    let rank = rankLabel()
+    private var disposeBag = DisposeBag()
+    private let image = CircleImage(frame: .zero)
+    private let symbol = UILabel()
+    private let name = UILabel()
+    private let rank = rankLabel()
     let favorite = UIButton()
 
     override func configureHierarchy() {
@@ -52,6 +54,11 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         name.textColor = UIColor.customGray
         favorite.setImage(UIImage(systemName: "star"), for: .normal)
         favorite.tintColor = UIColor.customBlack
+    }
+
+    // 중첩 구독 방지
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
     }
 }
 

@@ -118,7 +118,8 @@ final class SearchViewController: BaseViewController {
 
     private func bind() {
         let input = SearchViewModel.Input(
-            barButtonTapped: barButton.rx.tap)
+            barButtonTapped: barButton.rx.tap,
+            itemSelectedTapped: segCoinView.coinCollectionView.rx.itemSelected)
         let output = viewModel.transform(input: input)
 
         output.action
