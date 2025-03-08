@@ -16,10 +16,15 @@ final class SegCoinView: BaseView {
     override func configureHierarchy() {
         self.addSubview(coinCollectionView)
     }
+
     override func configureLayout() {
         coinCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(self.safeAreaLayoutGuide)
         }
+    }
+
+    override func configureView() {
+        coinCollectionView.showsVerticalScrollIndicator = false
     }
 }
 

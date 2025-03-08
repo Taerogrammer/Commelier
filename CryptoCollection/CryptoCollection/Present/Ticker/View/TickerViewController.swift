@@ -36,6 +36,7 @@ final class TickerViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.rowHeight = 44
         tableView.tableHeaderView = headerView
+        tableView.showsVerticalScrollIndicator = false
     }
 
     override func configureNavigation() {

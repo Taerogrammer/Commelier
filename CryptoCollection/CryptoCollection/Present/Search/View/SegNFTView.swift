@@ -9,8 +9,18 @@ import UIKit
 import SnapKit
 
 final class SegNFTView: BaseView {
+    private let label = UILabel()
 
+    override func configureHierarchy() {
+        addSubview(label)
+    }
+
+    override func configureLayout() {
+        label.snp.makeConstraints { make in
+            make.center.equalTo(safeAreaLayoutGuide)
+        }
+    }
     override func configureView() {
-        backgroundColor = .red
+        label.text = "NFT 항목은 준비중입니다."
     }
 }
