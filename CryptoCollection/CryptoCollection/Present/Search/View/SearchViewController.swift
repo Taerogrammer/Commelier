@@ -16,6 +16,11 @@ final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
     private let disposeBag = DisposeBag()
     private let searchBar = UISearchBar()
+    private let barButton = UIBarButtonItem(
+        image: UIImage(systemName: "arrow.left"),
+        style: .plain,
+        target: nil,
+        action: nil)
 
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -23,20 +28,31 @@ final class SearchViewController: BaseViewController {
     }
 
     override func configureView() {
+        bind()
     }
 
     override func configureNavigation() {
         navigationItem.titleView = searchBar
-        let image = UIImage(systemName: "arrow.left")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(popViewController))
-    }
-
-    @objc private func popViewController() {
-        navigationController?.popViewController(animated: true)
+        navigationItem.leftBarButtonItem = barButton
     }
 
     private func configureSearchBar() {
 
     }
 
+    private func bind() {
+        let input = SearchViewModel.Input(
+            barButtonTapped: barButton.rx.tap)
+        let output = viewModel.transform(input: input)
+
+        output.action
+            .bind(with: self) { owner, action in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+    }
+
 }
+
+
