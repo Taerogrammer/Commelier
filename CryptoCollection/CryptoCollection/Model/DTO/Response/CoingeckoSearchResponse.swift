@@ -15,6 +15,6 @@ struct CoinData: Decodable {
     let id: String
     let name: String
     let symbol: String
-    let market_cap_rank: Int
+    let market_cap_rank: Int?
     let thumb: String
 }
