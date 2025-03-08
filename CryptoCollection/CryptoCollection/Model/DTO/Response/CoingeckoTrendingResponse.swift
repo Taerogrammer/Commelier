@@ -8,11 +8,11 @@
 import Foundation
 
 struct CoingeckoTrendingResponse: Decodable {
-    let coins: [Item]
+    let coins: [CoinItem]
     let nfts: [Nft]
 }
 
-struct Item: Decodable {
+struct CoinItem: Decodable {
     let item: Coin
 }
 
