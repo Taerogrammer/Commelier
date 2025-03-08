@@ -70,6 +70,7 @@ final class SearchViewController: BaseViewController {
         underLineView.backgroundColor = UIColor.black
         grayLineView.backgroundColor = UIColor.customGray
         segCoinView.coinCollectionView.register(SearchCoinCollectionViewCell.self, forCellWithReuseIdentifier: SearchCoinCollectionViewCell.identifier)
+        segCoinView.coinCollectionView.keyboardDismissMode = .onDrag
         bind()
         configureSearchBar()
         configureSegmentControl()
