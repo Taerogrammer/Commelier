@@ -50,6 +50,8 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
         name.textColor = UIColor.customGray
+        favorite.setImage(UIImage(systemName: "star"), for: .normal)
+        favorite.tintColor = UIColor.customBlack
     }
 }
 
