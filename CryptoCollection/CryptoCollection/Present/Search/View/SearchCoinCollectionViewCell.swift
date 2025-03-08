@@ -50,12 +50,16 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
         name.textColor = UIColor.customGray
+    }
+}
 
-        image.image = UIImage(systemName: "person.fill")
-        symbol.text = "BTC"
-        name.text = "Bitcoin"
-        rank.text = "#1"
-        favorite.setImage(UIImage(systemName: "start"), for: .normal)
-        favorite.tintColor = .customBlack
+
+// MARK: - configure cell
+extension SearchCoinCollectionViewCell {
+    func configureCell(with item: CoinData) {
+        image.kf.setImage(with: URL(string: item.thumb))
+        symbol.text = item.symbol
+        name.text = item.name
+        if let rankInt = item.market_cap_rank { rank.text = "#\(rankInt)" }
     }
 }

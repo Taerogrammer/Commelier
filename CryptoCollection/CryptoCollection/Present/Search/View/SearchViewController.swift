@@ -130,8 +130,7 @@ final class SearchViewController: BaseViewController {
             .bind(to: segCoinView.coinCollectionView.rx.items(
                 cellIdentifier: SearchCoinCollectionViewCell.identifier,
                 cellType: SearchCoinCollectionViewCell.self)) { index, element, cell in
-                    cell.name.text = element.name
-
+                    cell.configureCell(with: element)
                 }
                 .disposed(by: disposeBag)
     }
