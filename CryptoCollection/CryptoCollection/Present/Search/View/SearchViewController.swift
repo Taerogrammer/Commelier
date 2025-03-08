@@ -69,6 +69,7 @@ final class SearchViewController: BaseViewController {
     override func configureView() {
         underLineView.backgroundColor = UIColor.black
         grayLineView.backgroundColor = UIColor.customGray
+        segCoinView.coinCollectionView.register(SearchCoinCollectionViewCell.self, forCellWithReuseIdentifier: SearchCoinCollectionViewCell.identifier)
         bind()
         configureSearchBar()
         configureSegmentControl()
@@ -114,6 +115,31 @@ final class SearchViewController: BaseViewController {
 
     }
 
+    private func bind() {
+        let input = SearchViewModel.Input(
+            barButtonTapped: barButton.rx.tap)
+        let output = viewModel.transform(input: input)
+
+        output.action
+            .bind(with: self) { owner, action in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        output.data
+            .bind(to: segCoinView.coinCollectionView.rx.items(
+                cellIdentifier: SearchCoinCollectionViewCell.identifier,
+                cellType: SearchCoinCollectionViewCell.self)) { index, element, cell in
+                    cell.name.text = element.name
+
+                }
+                .disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - @objc
+extension SearchViewController {
     @objc private func changeUnderLinePosition(_ segment: UISegmentedControl) {
         print("INDEX", segment.selectedSegmentIndex)
         let segWidth = segment.frame.width / 3
@@ -142,19 +168,4 @@ final class SearchViewController: BaseViewController {
             segTickerView.isHidden = true
         }
     }
-
-    private func bind() {
-        let input = SearchViewModel.Input(
-            barButtonTapped: barButton.rx.tap)
-        let output = viewModel.transform(input: input)
-
-        output.action
-            .bind(with: self) { owner, action in
-                owner.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-    }
-
 }
-
-

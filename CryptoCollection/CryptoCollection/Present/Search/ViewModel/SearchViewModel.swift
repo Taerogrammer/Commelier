@@ -10,12 +10,11 @@ import RxSwift
 
 final class SearchViewModel: ViewModel {
     private let disposeBag = DisposeBag()
+    private var searchText: Observable<String>
 
     enum SettingAction {
         case popViewController
     }
-
-    private var searchText: String
 
     struct Input {
         let barButtonTapped: ControlEvent<Void>
@@ -23,22 +22,36 @@ final class SearchViewModel: ViewModel {
 
     struct Output {
         let action: PublishRelay<SettingAction>
+        let data: Observable<[CoinData]>
     }
 
     init(searchText: String) {
-        self.searchText = searchText
+        self.searchText = Observable.just(searchText)
     }
 
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
+        let result = BehaviorRelay<[CoinData]>(value: [])
+
         input.barButtonTapped
             .bind(with: self) { owner, _ in
                 action.accept(SettingAction.popViewController)
             }
             .disposed(by: disposeBag)
 
+        searchText
+            .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
+                return NetworkManager.shared.getItem(
+                    api: CoingeckoRouter.getSearch(query: query),
+                    type: CoingeckoSearchResponse.self)
+            }
+            .subscribe(with: self) { owner, data in
+                result.accept(data.coins)
+            }
+            .disposed(by: disposeBag)
 
         return Output(
-            action: action)
+            action: action,
+            data: result.asObservable())
     }
 }
