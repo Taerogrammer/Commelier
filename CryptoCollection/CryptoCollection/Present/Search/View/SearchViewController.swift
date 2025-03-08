@@ -135,6 +135,14 @@ final class SearchViewController: BaseViewController {
                     cell.configureCell(with: element)
                 }
                 .disposed(by: disposeBag)
+
+        segCoinView.coinCollectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                let vc = DetailViewController()
+
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
 }

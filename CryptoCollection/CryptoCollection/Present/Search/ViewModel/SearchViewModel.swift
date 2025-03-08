@@ -5,6 +5,7 @@
 //  Created by 김태형 on 3/8/25.
 //
 
+import Foundation
 import RxCocoa
 import RxSwift
 
@@ -18,6 +19,7 @@ final class SearchViewModel: ViewModel {
 
     struct Input {
         let barButtonTapped: ControlEvent<Void>
+        let itemSelectedTapped: ControlEvent<IndexPath>
     }
 
     struct Output {
@@ -47,6 +49,13 @@ final class SearchViewModel: ViewModel {
             }
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
+            }
+            .disposed(by: disposeBag)
+
+        input.itemSelectedTapped
+            .bind(with: self) { owner, indexPath in
+                print("indexPath", indexPath)
+
             }
             .disposed(by: disposeBag)
 
