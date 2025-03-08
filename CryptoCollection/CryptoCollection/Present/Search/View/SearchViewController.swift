@@ -21,15 +21,57 @@ final class SearchViewController: BaseViewController {
         style: .plain,
         target: nil,
         action: nil)
+    private let segment = UISegmentedControl()
+    private let grayLineView = BaseView()
+    private let underLineView = BaseView()
+    private let segCoinView = SegCoinView()
+    private let segNFTView = SegNFTView()
+    private let segTickerView = SegTickerView()
 
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
         super.init()
     }
 
+    override func configureHierarchy() {
+        [segment, grayLineView, underLineView, segCoinView, segNFTView, segTickerView].forEach { view.addSubview($0) }
+    }
+
+    override func configureLayout() {
+        segment.snp.makeConstraints { make in
+            make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(44)
+        }
+        underLineView.snp.makeConstraints { make in
+            make.top.equalTo(segment.snp.bottom)
+            make.width.equalTo(segment).dividedBy(3)
+            make.height.equalTo(4)
+        }
+        grayLineView.snp.makeConstraints { make in
+            make.top.equalTo(segment.snp.bottom)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(2)
+        }
+        segCoinView.snp.makeConstraints { make in
+            make.top.equalTo(grayLineView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        segNFTView.snp.makeConstraints { make in
+            make.top.equalTo(grayLineView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        segTickerView.snp.makeConstraints { make in
+            make.top.equalTo(grayLineView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
     override func configureView() {
+        underLineView.backgroundColor = UIColor.black
+        grayLineView.backgroundColor = UIColor.customGray
         bind()
         configureSearchBar()
+        configureSegmentControl()
     }
 
     override func configureNavigation() {
@@ -50,6 +92,57 @@ final class SearchViewController: BaseViewController {
         searchBar.searchTextField.textColor = UIColor.customBlack
     }
 
+    private func configureSegmentControl() {
+        segment.insertSegment(withTitle: "코인", at: 0, animated: true)
+        segment.insertSegment(withTitle: "NFT", at: 1, animated: true)
+        segment.insertSegment(withTitle: "거래소", at: 2, animated: true)
+        segment.selectedSegmentIndex = 0
+        segCoinView.isHidden = false
+        segNFTView.isHidden = true
+        segTickerView.isHidden = true
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.customGray
+        ], for: .normal)
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.customBlack
+        ], for: .selected)
+        segment.selectedSegmentTintColor = .clear
+        segment.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+        segment.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+
+        segment.addTarget(self, action: #selector(changeUnderLinePosition), for: .valueChanged)
+
+    }
+
+    @objc private func changeUnderLinePosition(_ segment: UISegmentedControl) {
+        print("INDEX", segment.selectedSegmentIndex)
+        let segWidth = segment.frame.width / 3
+        let xPosition = segment.frame.origin.x + (segWidth * CGFloat(segment.selectedSegmentIndex))
+
+        UIView.animate(withDuration: 0.2) {
+            self.underLineView.frame.origin.x = xPosition
+        }
+
+        switch segment.selectedSegmentIndex {
+        case 0:
+            segCoinView.isHidden = false
+            segNFTView.isHidden = true
+            segTickerView.isHidden = true
+        case 1:
+            segCoinView.isHidden = true
+            segNFTView.isHidden = false
+            segTickerView.isHidden = true
+        case 2:
+            segCoinView.isHidden = true
+            segNFTView.isHidden = true
+            segTickerView.isHidden = false
+        default:
+            segCoinView.isHidden = false
+            segNFTView.isHidden = true
+            segTickerView.isHidden = true
+        }
+    }
+
     private func bind() {
         let input = SearchViewModel.Input(
             barButtonTapped: barButton.rx.tap)
@@ -60,7 +153,6 @@ final class SearchViewController: BaseViewController {
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
-
     }
 
 }
