@@ -38,7 +38,6 @@ final class DetailChartView: BaseView {
     }
 
     override func configureView() {
-        configureChartHostingView()
         moneyLabel.font = .boldSystemFont(ofSize: 26)
         rateLabel.font = .boldSystemFont(ofSize: 12)
         updateDateLabel.font = .systemFont(ofSize: 8)
@@ -69,9 +68,8 @@ final class DetailChartView: BaseView {
 
 // MARK: - Chart
 extension DetailChartView {
-    private func configureChartHostingView() {
-//        let chartView = ChartView()
-        let chartView = ChartView()
+    func configureChartHostingView(with data: [Double]) {
+        let chartView = ChartView(priceData: data)
         let controller = UIHostingController(rootView: chartView)
         self.chartsHostingController = controller
 

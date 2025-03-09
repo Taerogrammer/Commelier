@@ -121,6 +121,7 @@ final class DetailViewController: BaseViewController {
                 owner.chartView.moneyLabel.text = value.first?.current_price_description
                 owner.chartView.updateRateLabel(with: value.first?.price_change_percentage_24h_description ?? 0.0)
                 owner.chartView.updateDateLabel.text = value.first?.last_updated_description
+                owner.chartView.configureChartHostingView(with: value.first?.sparkline_in_7d.price ?? [])
             }
             .disposed(by: disposeBag)
 
