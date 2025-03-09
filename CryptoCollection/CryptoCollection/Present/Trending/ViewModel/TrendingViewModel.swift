@@ -23,10 +23,45 @@ final class TrendingViewModel: ViewModel {
 
     struct Output {
         let action: Observable<SettingAction>
+        let sectionResult: Observable<[TrendingSection]>
     }
 
     func transform(input: Input) -> Output {
         let action = PublishSubject<SettingAction>()
+        let result = PublishRelay<CoingeckoTrendingResponse>()
+        let trendingResult = PublishRelay<[TrendingSection]>()
+
+        NetworkManager.shared.getItem(
+            api: CoingeckoRouter.getTrending,
+            type: CoingeckoTrendingResponse.self)
+        .subscribe(with: self) { owner, value in
+            result.accept(value)
+        }
+        .disposed(by: disposeBag)
+
+        let sections = result
+            .map { response -> [TrendingSection] in
+                let coins = response.coins.map { coin in
+                    TrendingItem.coins(TrendingCoin(
+                        rank: "\(coin.item.score + 1)",
+                        imageURL: coin.item.thumb,
+                        symbol: coin.item.symbol,
+                        name: coin.item.name,
+                        rate: coin.item.data.price_change_percentage_24h.krw))
+                }
+                let nfts = response.nfts.map { nft in
+                    TrendingItem.nfts(TrendingNFT(
+                        imageURL: nft.thumb,
+                        name: nft.name,
+                        floorPrice: nft.data.floor_price,
+                        floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change))
+                }
+                return [
+                    TrendingSection(title: "인기 검색어", items: coins),
+                    TrendingSection(title: "인기 NFT", items: nfts)
+                ]
+            }
+
 
         input.searchBarTapped
             .withLatestFrom(input.searchText)
@@ -35,6 +70,12 @@ final class TrendingViewModel: ViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(action: action)
+        return Output(action: action,
+                      sectionResult: sections)
     }
+
+    private func getData() {
+        
+    }
+
 }

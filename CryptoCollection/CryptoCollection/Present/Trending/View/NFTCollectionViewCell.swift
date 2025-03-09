@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-final class NFTCollectionViewCell: BaseCollectionViewCell {
+final class NFTCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     let image = UIImageView()
     let symbol = UILabel()
     let floorPrice = UILabel()

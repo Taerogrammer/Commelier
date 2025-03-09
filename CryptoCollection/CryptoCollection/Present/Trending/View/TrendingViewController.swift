@@ -11,11 +11,41 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 
-final class TrendingViewController: BaseViewController {
-    enum Section: CaseIterable {
-        case coin
-        case nft
+struct TrendingSection {
+    let title: String
+    var items: [Item]
+}
+
+enum TrendingItem {
+    case coins(TrendingCoin)
+    case nfts(TrendingNFT)
+}
+
+struct TrendingCoin: Equatable {
+    let rank: String
+    let imageURL: String
+    let symbol: String
+    let name: String
+    let rate: Double
+}
+
+struct TrendingNFT: Equatable {
+    let imageURL: String
+    let name: String
+    let floorPrice: String
+    let floorPriceChange: String
+}
+
+extension TrendingSection: SectionModelType {
+    typealias Item = TrendingItem
+
+    init(original: TrendingSection, items: [TrendingItem]) {
+        self = original
+        self.items = items
     }
+}
+
+final class TrendingViewController: BaseViewController {
 
     private let searchBar = UISearchBar()
     private lazy var collectionView = UICollectionView(
@@ -23,20 +53,31 @@ final class TrendingViewController: BaseViewController {
         collectionViewLayout: createCompositionalLayout())
     private let viewModel = TrendingViewModel()
     private let disposeBag = DisposeBag()
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
+
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<TrendingSection>!
 
     override func configureHierarchy() {
-        view.addSubview(searchBar)
+        [searchBar, collectionView].forEach { view.addSubview($0) }
     }
 
     override func configureLayout() {
         searchBar.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
         }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 
     override func configureView() {
         configureSearchBar()
+        collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
+        collectionView.register(NFTCollectionViewCell.self, forCellWithReuseIdentifier: NFTCollectionViewCell.identifier)
+        collectionView.register(TrendingCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionHeaderView.identifier)
+        collectionView.isScrollEnabled = false
+        collectionView.showsVerticalScrollIndicator = false
+        configureDataSource()
     }
 
     override func configureNavigation() {
@@ -68,6 +109,11 @@ final class TrendingViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+
+        output.sectionResult
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -93,61 +139,73 @@ extension TrendingViewController {
 
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            if sectionIndex == 0 {
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+
+            switch sectionIndex {
+            case 0:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(44))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8)
 
-                let innerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/7), heightDimension: .fractionalHeight(1.0))
-                let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerSize, subitems: [item])
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [innerGroup])
-
-                let section = NSCollectionLayoutSection(group: group)
-
-                return section
-            } else {
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(80), heightDimension: .fractionalHeight(1.0))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(120))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44 * 7))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
                 let section = NSCollectionLayoutSection(group: group)
 
                 return section
+
+            case 1:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(80), heightDimension: .fractionalHeight(1.0))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(400), heightDimension: .absolute(120))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                group.interItemSpacing = .fixed(8)
+
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+
+                return section
+
+            default:
+                return nil
             }
         }
 
         return layout
     }
 
+}
+
+// MARK: - Data Source
+extension TrendingViewController {
     private func configureDataSource() {
-        let coinCellRegistration = UICollectionView.CellRegistration<CoinCollectionViewCell, Int> { cell, indexPath, itemIdentifier in
-            print("coinRegistration", indexPath)
-        }
+        dataSource = RxCollectionViewSectionedReloadDataSource<TrendingSection>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                switch item {
+                case .coins:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCollectionViewCell.identifier, for: indexPath) as! CoinCollectionViewCell
+                    cell.name.text = "테스트"
+                    cell.rank.text = "1"
 
-        let nftCellRegistration = UICollectionView.CellRegistration<NFTCollectionViewCell, Int> { cell, indexPath, itemIdentifier in
-            print("nftRegistration", indexPath)
-        }
-
-        // cellForItemAt
-        dataSource = UICollectionViewDiffableDataSource(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, itemIdentifier in
-                let section = Section.allCases[indexPath.section]
-
-                switch section {
-                case .coin:
-                    let cell = collectionView.dequeueConfiguredReusableCell(using: coinCellRegistration, for: indexPath, item: itemIdentifier)
-                    print("coin Reusable Cell", indexPath)
                     return cell
-                case .nft:
-                    let cell = collectionView.dequeueConfiguredReusableCell(using: nftCellRegistration, for: indexPath, item: itemIdentifier)
-                    print("nft Reusable Cell", indexPath)
+                case .nfts:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCollectionViewCell.identifier, for: indexPath) as! NFTCollectionViewCell
+                    cell.symbol.text = "ㅋㅋㅋㅋㅋ"
+                    cell.floorPrice.text = "12214"
+
                     return cell
                 }
-            })
+            },
+            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+                    let header = collectionView.dequeueReusableSupplementaryView(
+                        ofKind: kind,
+                        withReuseIdentifier: TrendingCollectionHeaderView.identifier,
+                        for: indexPath) as! TrendingCollectionHeaderView
+                header.configureTitle(with: dataSource[indexPath.section].title)
+
+                return header
+            }
+        )
     }
 }

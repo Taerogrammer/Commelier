@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-final class CoinCollectionViewCell: BaseCollectionViewCell {
+final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     let rank = UILabel()
     let image = CircleImage(frame: .zero)
     let symbol = UILabel()
