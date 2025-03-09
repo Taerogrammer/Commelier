@@ -31,7 +31,7 @@ final class DetailViewModel: ViewModel {
     struct Output {
         let action: PublishRelay<SettingAction>
         let data: Observable<[CoingeckoCoinResponse]>
-        let detailData: PublishRelay<[Section]>
+        let detailData: PublishRelay<[DetailSection]>
         let favoriteButtonResult: PublishRelay<SettingAction>
     }
 
@@ -43,7 +43,7 @@ final class DetailViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
         let result = PublishRelay<[CoingeckoCoinResponse]>()
-        let detailResult = PublishRelay<[Section]>()
+        let detailResult = PublishRelay<[DetailSection]>()
         let favoriteButtonResult = PublishRelay<SettingAction>()
 
         input.barButtonTapped
@@ -68,16 +68,16 @@ final class DetailViewModel: ViewModel {
             .map { $0.first }
             .subscribe(with: self) { owner, result in
                 detailResult.accept([
-                    Section(name: "종목정보", items: [
-                        Information(title: "24시간 고가", money: result?.high_24h_description ?? "", date: ""),
-                        Information(title: "24시간 저가", money: result?.low_24h_description ?? "", date: ""),
-                        Information(title: "역대 최고가", money: result?.ath_description ?? "", date: result?.ath_date_description ?? ""),
-                        Information(title: "역대 최소가", money: result?.atl_description ?? "", date: result?.atl_date_description ?? "")
+                    DetailSection(title: "종목정보", items: [
+                        DetailInformation(title: "24시간 고가", money: result?.high_24h_description ?? "", date: ""),
+                        DetailInformation(title: "24시간 저가", money: result?.low_24h_description ?? "", date: ""),
+                        DetailInformation(title: "역대 최고가", money: result?.ath_description ?? "", date: result?.ath_date_description ?? ""),
+                        DetailInformation(title: "역대 최소가", money: result?.atl_description ?? "", date: result?.atl_date_description ?? "")
                     ]),
-                    Section(name: "투자지표", items: [
-                        Information(title: "시가총액", money: result?.market_cap_description ?? "", date: ""),
-                        Information(title: "완전 희석 가치(FDV)", money: result?.fully_diluted_valuation_description ?? "", date: ""),
-                        Information(title: "총 거래량", money: result?.total_volume_description ?? "", date: "")
+                    DetailSection(title: "투자지표", items: [
+                        DetailInformation(title: "시가총액", money: result?.market_cap_description ?? "", date: ""),
+                        DetailInformation(title: "완전 희석 가치(FDV)", money: result?.fully_diluted_valuation_description ?? "", date: ""),
+                        DetailInformation(title: "총 거래량", money: result?.total_volume_description ?? "", date: "")
                     ])
                 ])
             }

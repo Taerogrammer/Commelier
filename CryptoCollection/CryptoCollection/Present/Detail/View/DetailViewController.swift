@@ -15,21 +15,21 @@ import Toast
 
 import RealmSwift
 
-struct Section {
-    let name: String
+struct DetailSection {
+    let title: String
     var items: [Item]
 }
 
-struct Information: Equatable {
+struct DetailInformation: Equatable {
     let title: String
     let money: String
     let date: String
 }
 
-extension Section: SectionModelType {
-    typealias Item = Information
+extension DetailSection: SectionModelType {
+    typealias Item = DetailInformation
 
-    init(original: Section, items: [Information]) {
+    init(original: DetailSection, items: [DetailInformation]) {
         self = original
         self.items = items
     }
@@ -55,7 +55,7 @@ final class DetailViewController: BaseViewController {
     private var redStyle = ToastStyle()
     private var grayStyle = ToastStyle()
 
-    private var dataSource: RxCollectionViewSectionedReloadDataSource<Section>!
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
 
     private let realm = try! Realm()
 
@@ -233,7 +233,7 @@ extension DetailViewController {
 // MARK: - Data Source
 extension DetailViewController {
     private func configureDataSource() {
-        dataSource = RxCollectionViewSectionedReloadDataSource<Section>(
+        dataSource = RxCollectionViewSectionedReloadDataSource<DetailSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.identifier, for: indexPath) as! DetailCollectionViewCell
 
@@ -248,7 +248,7 @@ extension DetailViewController {
                     ofKind: kind,
                     withReuseIdentifier: DetailCollectionHeaderView.identifier,
                     for: indexPath) as! DetailCollectionHeaderView
-                header.configureTitle(with: dataSource[indexPath.section].name)
+                header.configureTitle(with: dataSource[indexPath.section].title)
 
                 return header
             }
