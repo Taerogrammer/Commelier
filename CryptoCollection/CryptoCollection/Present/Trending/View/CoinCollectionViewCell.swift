@@ -10,56 +10,69 @@ import Kingfisher
 import SnapKit
 
 final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
-    let rank = UILabel()
-    let image = CircleImage(frame: .zero)
-    let symbol = UILabel()
-    let name = UILabel()
-    let rate = UILabel()
+    let rankLabel = UILabel()
+    let thumbnailImage = CircleImage(frame: .zero)
+    let symbolLabel = UILabel()
+    let nameLabel = UILabel()
+    let rateLabel = UILabel()
 
     override func configureHierarchy() {
-        [rank, image, symbol, name, rate].forEach { contentView.addSubview($0) }
+        [rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel].forEach { contentView.addSubview($0) }
     }
 
     override func configureLayout() {
-        rank.snp.makeConstraints { make in
+        rankLabel.snp.makeConstraints { make in
             make.leading.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
-        image.snp.makeConstraints { make in
-            make.leading.equalTo(rank.snp.trailing).offset(8)
+        thumbnailImage.snp.makeConstraints { make in
+            make.leading.equalTo(rankLabel.snp.trailing).offset(8)
             make.centerY.equalTo(safeAreaLayoutGuide)
             make.size.equalTo(26)
         }
-        symbol.snp.makeConstraints { make in
-            make.leading.equalTo(image.snp.trailing).offset(4)
+        symbolLabel.snp.makeConstraints { make in
+            make.leading.equalTo(thumbnailImage.snp.trailing).offset(4)
             make.centerY.equalTo(safeAreaLayoutGuide).offset(-4)
         }
-        name.snp.makeConstraints { make in
-            make.leading.equalTo(symbol)
+        nameLabel.snp.makeConstraints { make in
+            make.leading.equalTo(symbolLabel)
             make.centerY.equalTo(safeAreaLayoutGuide).offset(4)
         }
-        rate.snp.makeConstraints { make in
+        rateLabel.snp.makeConstraints { make in
             make.trailing.equalTo(safeAreaLayoutGuide).inset(12)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
     }
 
     override func configureView() {
-        rank.font = .systemFont(ofSize: 12)
-        symbol.font = .boldSystemFont(ofSize: 12)
-        name.font = .systemFont(ofSize: 9)
-        rate.font = .boldSystemFont(ofSize: 9)
+        rankLabel.font = .systemFont(ofSize: 12)
+        symbolLabel.font = .boldSystemFont(ofSize: 12)
+        nameLabel.font = .systemFont(ofSize: 9)
+        rateLabel.font = .boldSystemFont(ofSize: 9)
     }
 }
 
 // MARK: - configure cell
 extension CoinCollectionViewCell {
     func configureCell(with coin: TrendingCoin) {
-        rank.text = coin.rank
-        image.kf.setImage(with: URL(string: coin.imageURL))
-        symbol.text = coin.symbol
-        name.text = coin.name
-        // 우선
-        rate.text = coin.rate.formatted()
+        rankLabel.text = coin.rank
+        thumbnailImage.kf.setImage(with: URL(string: coin.imageURL))
+        symbolLabel.text = coin.symbol
+        nameLabel.text = coin.name
+        updateRateLabel(with: coin.rate)
+    }
+
+    private func updateRateLabel(with number: Double) {
+        let rounded = round(number * 100) / 100
+        if rounded == 0.00 {
+            rateLabel.textColor = UIColor.customBlack
+            rateLabel.text = "\(rounded)%"
+        } else if rounded > 0 {
+            rateLabel.textColor = UIColor.customRed
+            rateLabel.text = "▲ \(rounded)%"
+        } else {
+            rateLabel.textColor = UIColor.customBlue
+            rateLabel.text = "▼ \(abs(rounded))%"
+        }
     }
 }
