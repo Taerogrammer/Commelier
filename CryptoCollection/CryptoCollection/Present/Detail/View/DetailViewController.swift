@@ -73,16 +73,20 @@ final class DetailViewController: BaseViewController {
         collectionView.snp.makeConstraints { make in
             make.width.equalTo(containerView)
             make.top.equalTo(chartView.snp.bottom).offset(8)
-            make.height.equalTo(360)
+            make.height.equalTo(480)
             make.bottom.equalTo(containerView).inset(20)
         }
     }
 
     override func configureView() {
         collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.identifier)
+        collectionView.register(
+            DetailCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: DetailCollectionHeaderView.identifier)
         collectionView.layer.cornerRadius = 8
         collectionView.layer.masksToBounds = true
-        collectionView.contentInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
         configureDataSource()
@@ -151,6 +155,9 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+
             switch sectionIndex {
             case 0: // 종목정보
                 let itemSize = NSCollectionLayoutSize(
@@ -160,7 +167,9 @@ extension DetailViewController {
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
                 let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [header]
 
                 return section
             case 1: // 투자지표
@@ -172,6 +181,7 @@ extension DetailViewController {
                     widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [header]
 
                 return section
             default:
@@ -195,6 +205,15 @@ extension DetailViewController {
                 cell.date.text = item.date
 
                 return cell
+            },
+            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: DetailCollectionHeaderView.identifier,
+                    for: indexPath) as! DetailCollectionHeaderView
+                header.configureTitle(with: dataSource[indexPath.section].name)
+
+                return header
             }
         )
     }
