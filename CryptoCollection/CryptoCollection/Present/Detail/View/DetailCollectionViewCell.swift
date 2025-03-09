@@ -41,6 +41,7 @@ final class DetailCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable 
         title.textColor = UIColor.customGray
         money.textColor = UIColor.customBlack
         date.textColor = UIColor.customGray
+        backgroundColor = UIColor.customWhiteGray
 
         title.text = "24시간 고가"
         money.text = "$123,123,123"

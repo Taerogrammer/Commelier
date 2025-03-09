@@ -80,6 +80,10 @@ final class DetailViewController: BaseViewController {
 
     override func configureView() {
         collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.identifier)
+        collectionView.layer.cornerRadius = 8
+        collectionView.layer.masksToBounds = true
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        collectionView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
         configureDataSource()
         bind()
@@ -150,7 +154,7 @@ extension DetailViewController {
             switch sectionIndex {
             case 0: // 종목정보
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1/2), heightDimension: .fractionalHeight(1.0))
+                    widthDimension: .absolute((UIScreen.main.bounds.width - 32) / 2), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
@@ -161,7 +165,7 @@ extension DetailViewController {
                 return section
             case 1: // 투자지표
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                    widthDimension: .absolute(UIScreen.main.bounds.width - 32), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
