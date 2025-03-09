@@ -22,7 +22,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
     override func configureLayout() {
         rank.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).inset(12)
+            make.leading.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
         image.snp.makeConstraints { make in
