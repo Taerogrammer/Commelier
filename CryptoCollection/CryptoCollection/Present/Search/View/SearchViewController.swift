@@ -206,24 +206,12 @@ final class SearchViewController: BaseViewController {
                 }
                 .disposed(by: disposeBag)
 
-//        segCoinView.coinCollectionView.rx.itemSelected
-//            .withLatestFrom(output.data) { indexPath, data in
-//                data[indexPath.item].id
-//            }
-//            .bind(with: self) { owner, id in
-//                let vm = DetailViewModel(id: id)
-//                let vc = DetailViewController(viewModel: vm)
-//
-//                owner.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
-
         segCoinView.coinCollectionView.rx.itemSelected
-            .withLatestFrom(output.data)
+            .withLatestFrom(output.data) { indexPath, data in
+                data[indexPath.item]
+            }
             .bind(with: self) { owner, data in
-                let vm = DetailViewModel(
-                    id: data.first?.id ?? "",
-                    coinData: data.first!)
+                let vm = DetailViewModel(id: data.id, coinData: data)
                 let vc = DetailViewController(viewModel: vm)
 
                 owner.navigationController?.pushViewController(vc, animated: true)
