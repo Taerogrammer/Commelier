@@ -23,7 +23,7 @@ struct CoingeckoCoinResponse: Decodable {
     let atl_date: String
     let market_cap: Double
     let fully_diluted_valuation: Double
-    let total_volume: Double
+    let total_volume: Double?
 
     var current_price_description: String {
         return "￦" + current_price.formatted()
@@ -59,6 +59,7 @@ struct CoingeckoCoinResponse: Decodable {
         return "￦" + fully_diluted_valuation.formatted()
     }
     var total_volume_description: String {
+        guard let total_volume = total_volume else { return "정보 없음" }
         return "￦" + total_volume.formatted()
     }
 }
