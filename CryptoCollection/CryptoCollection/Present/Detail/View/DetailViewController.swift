@@ -50,7 +50,6 @@ final class DetailViewController: BaseViewController {
 
     private var dataSource: RxCollectionViewSectionedReloadDataSource<Section>!
 
-
     override func configureHierarchy() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -113,38 +112,21 @@ final class DetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-
         output.data
             .withLatestFrom(output.data)
             .bind(with: self) { owner, value in
                 owner.titleView.image.kf.setImage(with: URL(string: value.first!.image))
                 owner.titleView.id.text = value.first?.symbol.uppercased()
                 owner.navigationItem.titleView = owner.titleView
+                owner.chartView.moneyLabel.text = value.first?.current_price_description
+                // TODO: 메서드 구현 필요
+                owner.chartView.rateLabel.text = value.first?.price_change_percentage_24h_description
+                // TODO: 메서드 구현 필요
+                owner.chartView.updateDateLabel.text = value.first?.last_updated_description
             }
             .disposed(by: disposeBag)
 
-        output.data
-            .bind(with: self) { owner, value in
-                print("value", value)
-            }
-            .disposed(by: disposeBag)
-
-        let dummyData = Observable.just([
-            Section(name: "종목정보", items: [
-                Information(title: "24시간 고가", money: "$123,123,123", date: ""),
-                Information(title: "24시간 저가", money: "$123,123,123", date: ""),
-                Information(title: "역대 최고가", money: "$123,123,123,123", date: "2025-03-08"),
-                Information(title: "역대 최저가", money: "$123,123", date: "2025-03-08")
-            ]),
-            Section(name: "투자지표", items: [
-                Information(title: "시가총액", money: "$2,123,123,123,123,123", date: ""),
-                Information(title: "완전 희석 가치(FDV)", money: "$2,123,123,123,123,123", date: "-"),
-                Information(title: "AAA", money: "%215,512,512,512,512", date: ""),
-                Information(title: "QQQQQ", money: "2.1%", date: "")
-            ])
-        ])
-
-        dummyData
+        output.detailData
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
