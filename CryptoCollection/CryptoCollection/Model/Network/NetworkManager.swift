@@ -38,6 +38,8 @@ final class NetworkManager {
                         case 404:
                             print("404")
                             value(.failure(APIError.notFound))
+                        case 429:
+                            value(.failure(APIError.tooManyRequest))
                         default:
                             value(.failure(APIError.networkError))
                         }
