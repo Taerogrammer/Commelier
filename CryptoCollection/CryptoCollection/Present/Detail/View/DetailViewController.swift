@@ -11,6 +11,9 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 import SnapKit
+import Toast
+
+import RealmSwift
 
 struct Section {
     let name: String
@@ -41,14 +44,20 @@ final class DetailViewController: BaseViewController {
         style: .plain,
         target: nil,
         action: nil)
+    private let favoriteButton = UIBarButtonItem()
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
     private let chartView = DetailChartView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
+    private var blueStyle = ToastStyle()
+    private var redStyle = ToastStyle()
+    private var grayStyle = ToastStyle()
 
     private var dataSource: RxCollectionViewSectionedReloadDataSource<Section>!
+
+    private let realm = try! Realm()
 
     override func configureHierarchy() {
         view.addSubview(scrollView)
@@ -90,10 +99,15 @@ final class DetailViewController: BaseViewController {
         scrollView.showsVerticalScrollIndicator = false
         configureDataSource()
         bind()
+
+        blueStyle.messageColor = UIColor.customBlue
+        redStyle.messageColor = UIColor.customRed
+        grayStyle.messageColor = UIColor.customBlack
     }
 
     override func configureNavigation() {
         navigationItem.leftBarButtonItem = barButton
+        navigationItem.rightBarButtonItem = favoriteButton
     }
 
     init(viewModel: DetailViewModel) {
@@ -103,7 +117,8 @@ final class DetailViewController: BaseViewController {
 
     private func bind() {
         let input = DetailViewModel.Input(
-            barButtonTapped: barButton.rx.tap)
+            barButtonTapped: barButton.rx.tap,
+            favoriteButtonTapped: favoriteButton.rx.tap)
         let output = viewModel.transform(input: input)
 
         output.action
@@ -129,6 +144,45 @@ final class DetailViewController: BaseViewController {
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        output.data
+            .bind(with: self) { owner, value in
+                owner.updateFavoriteButton(id: value.first?.id ?? "")
+            }
+            .disposed(by: disposeBag)
+
+        output.favoriteButtonResult
+            .bind(with: self) { owner, action in
+                switch action {
+                case .popViewController:
+                    break
+                case .itemAdded:
+                    owner.view.makeToast(
+                        "즐겨찾기에 추가되었습니다",
+                        duration: 2.0,
+                        position: .bottom,
+                        style: owner.blueStyle)
+                    owner.favoriteButton.image = UIImage(systemName: "star.fill")
+                case .itemDeleted:
+                    owner.view.makeToast(
+                        "즐겨찾기에서 제거되었습니다",
+                        duration: 2.0,
+                        position: .bottom,
+                        style: owner.redStyle)
+                    owner.favoriteButton.image = UIImage(systemName: "star")
+                case .itemError:
+                    owner.view.makeToast(
+                        "다시 한 번 시도해주세요.",
+                        duration: 2.0,
+                        position: .bottom,
+                        style: owner.grayStyle)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func updateFavoriteButton(id: String) {
+        let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
+        favoriteButton.image = UIImage(systemName: isLiked ? "star.fill" : "star")
     }
 }
 

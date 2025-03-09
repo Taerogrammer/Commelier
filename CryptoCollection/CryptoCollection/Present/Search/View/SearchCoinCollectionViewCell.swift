@@ -75,6 +75,7 @@ extension SearchCoinCollectionViewCell {
         updateFavoriteButton(id: item.id)
     }
 
+    //
     func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.setImage(UIImage(systemName: isLiked ? "star.fill" : "star"), for: .normal)
