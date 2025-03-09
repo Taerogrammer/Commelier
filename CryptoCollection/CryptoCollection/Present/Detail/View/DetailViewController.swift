@@ -121,7 +121,6 @@ final class DetailViewController: BaseViewController {
                 owner.chartView.moneyLabel.text = value.first?.current_price_description
                 // TODO: 메서드 구현 필요
                 owner.chartView.rateLabel.text = value.first?.price_change_percentage_24h_description
-                // TODO: 메서드 구현 필요
                 owner.chartView.updateDateLabel.text = value.first?.last_updated_description
             }
             .disposed(by: disposeBag)

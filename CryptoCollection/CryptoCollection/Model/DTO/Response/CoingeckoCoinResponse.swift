@@ -34,7 +34,7 @@ struct CoingeckoCoinResponse: Decodable {
     }
     // TODO: 구현 필요
     var last_updated_description: String {
-        return ""
+        return String.convertChartDate(date: last_updated)
     }
     var high_24h_description: String {
         return "￦" + high_24h.formatted()
@@ -46,13 +46,13 @@ struct CoingeckoCoinResponse: Decodable {
         return "￦" + ath.formatted()
     }
     var ath_date_description: String {
-        return String.convertDate(date: ath_date)
+        return String.convertPriceDate(date: ath_date)
     }
     var atl_description: String {
         return "￦" + atl.formatted()
     }
     var atl_date_description: String {
-        return String.convertDate(date: atl_date)
+        return String.convertPriceDate(date: atl_date)
     }
     var market_cap_description: String {
         return "￦" + market_cap.formatted()
