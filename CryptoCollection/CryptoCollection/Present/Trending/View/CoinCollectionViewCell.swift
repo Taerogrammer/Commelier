@@ -49,11 +49,17 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         symbol.font = .boldSystemFont(ofSize: 12)
         name.font = .systemFont(ofSize: 9)
         rate.font = .boldSystemFont(ofSize: 9)
+    }
+}
 
-        rank.text = "9"
-        image.image = UIImage(systemName: "heart.fill")
-        symbol.text = "OM"
-        name.text = "MANTRA"
-        rate.text = "0.00%"
+// MARK: - configure cell
+extension CoinCollectionViewCell {
+    func configureCell(with coin: TrendingCoin) {
+        rank.text = coin.rank
+        image.kf.setImage(with: URL(string: coin.imageURL))
+        symbol.text = coin.symbol
+        name.text = coin.name
+        // 우선
+        rate.text = coin.rate.formatted()
     }
 }

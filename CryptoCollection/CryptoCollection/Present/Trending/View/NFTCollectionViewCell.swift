@@ -47,10 +47,15 @@ final class NFTCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         symbol.textColor = UIColor.customGray
         floorPrice.font = .systemFont(ofSize: 9)
         floorPricePercentage.font = .boldSystemFont(ofSize: 9)
+    }
+}
 
-        image.image = UIImage(systemName: "star")
-        symbol.text = "Meebits"
-        floorPrice.text = "0.66 ETH"
-        floorPricePercentage.text = "^ 48.17%"
+// MARK: - configure cell
+extension NFTCollectionViewCell {
+    func configureCell(with nft: TrendingNFT) {
+        image.kf.setImage(with: URL(string: nft.imageURL))
+        symbol.text = nft.name
+        floorPrice.text = nft.floorPrice
+        floorPricePercentage.text = nft.floorPriceChange
     }
 }

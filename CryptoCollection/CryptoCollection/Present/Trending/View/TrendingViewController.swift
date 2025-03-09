@@ -183,16 +183,15 @@ extension TrendingViewController {
         dataSource = RxCollectionViewSectionedReloadDataSource<TrendingSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 switch item {
-                case .coins:
+                case .coins(let coin):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCollectionViewCell.identifier, for: indexPath) as! CoinCollectionViewCell
-                    cell.name.text = "테스트"
-                    cell.rank.text = "1"
+                    cell.configureCell(with: coin)
 
                     return cell
-                case .nfts:
+
+                case .nfts(let nft):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCollectionViewCell.identifier, for: indexPath) as! NFTCollectionViewCell
-                    cell.symbol.text = "ㅋㅋㅋㅋㅋ"
-                    cell.floorPrice.text = "12214"
+                    cell.configureCell(with: nft)
 
                     return cell
                 }
