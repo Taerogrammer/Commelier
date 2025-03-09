@@ -74,7 +74,7 @@ final class TickerViewModel: ViewModel {
                       buttonStatus: buttonStatus.asObservable())
     }
 
-    func getData() {
+    private func getData() {
         NetworkManager.shared.getItem(
             api: UpbitRouter.getMarket(),
             type: [UpbitMarketResponse].self)
