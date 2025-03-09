@@ -99,6 +99,11 @@ final class SearchViewController: BaseViewController {
         searchBar.endEditing(true)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        segCoinView.coinCollectionView.reloadData()
+    }
+
     private func configureSearchBar() {
         searchBar.searchBarStyle = .minimal
         searchBar.searchTextField.borderStyle = .none
