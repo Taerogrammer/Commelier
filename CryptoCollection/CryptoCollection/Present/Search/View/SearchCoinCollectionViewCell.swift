@@ -12,15 +12,17 @@ import RealmSwift
 import RxSwift
 
 final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
-    private var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     private let image = CircleImage(frame: .zero)
     private let symbol = UILabel()
     private let name = UILabel()
     private let rank = rankLabel()
-    let favorite = UIButton()
+    let favoriteButton = UIButton()
+
+    private let realm = try! Realm()
 
     override func configureHierarchy() {
-        [image, symbol, name, rank, favorite].forEach { contentView.addSubview($0) }
+        [image, symbol, name, rank, favoriteButton].forEach { contentView.addSubview($0) }
     }
 
     override func configureLayout() {
@@ -41,7 +43,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
             make.leading.equalTo(symbol.snp.trailing).offset(8)
             make.centerY.equalTo(symbol)
         }
-        favorite.snp.makeConstraints { make in
+        favoriteButton.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(24)
             make.size.equalTo(20)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
@@ -52,8 +54,8 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
         name.textColor = UIColor.customGray
-        favorite.setImage(UIImage(systemName: "star"), for: .normal)
-        favorite.tintColor = UIColor.customBlack
+        favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
+        favoriteButton.tintColor = UIColor.customBlack
     }
 
     // 중첩 구독 방지
@@ -70,5 +72,11 @@ extension SearchCoinCollectionViewCell {
         symbol.text = item.symbol
         name.text = item.name
         if let rankInt = item.market_cap_rank { rank.text = "#\(rankInt)" }
+        updateFavoriteButton(id: item.id)
+    }
+
+    func updateFavoriteButton(id: String) {
+        let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
+        favoriteButton.setImage(UIImage(systemName: isLiked ? "star.fill" : "star"), for: .normal)
     }
 }

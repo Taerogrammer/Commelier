@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import RealmSwift
 import RxCocoa
 import RxSwift
 
 final class SearchViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var searchText: Observable<String>
+//    private let favoriteCoinRepository = FavoriteCoinRepository()
 
     enum SettingAction {
         case popViewController
@@ -22,6 +24,7 @@ final class SearchViewModel: ViewModel {
         let searchText: ControlProperty<String>
         let barButtonTapped: ControlEvent<Void>
         let itemSelectedTapped: ControlEvent<IndexPath>
+//        let favoriteButtonTapped: PublishSubject<CoinData>
     }
 
     struct Output {
