@@ -119,8 +119,7 @@ final class DetailViewController: BaseViewController {
                 owner.titleView.id.text = value.first?.symbol.uppercased()
                 owner.navigationItem.titleView = owner.titleView
                 owner.chartView.moneyLabel.text = value.first?.current_price_description
-                // TODO: 메서드 구현 필요
-                owner.chartView.rateLabel.text = value.first?.price_change_percentage_24h_description
+                owner.chartView.updateRateLabel(with: value.first?.price_change_percentage_24h_description ?? 0.0)
                 owner.chartView.updateDateLabel.text = value.first?.last_updated_description
             }
             .disposed(by: disposeBag)

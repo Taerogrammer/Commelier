@@ -51,6 +51,20 @@ final class DetailChartView: BaseView {
         updateDateLabel.text = "2/15 18:00:45 업데이트"
     }
 
+    func updateRateLabel(with number: Double) {
+        let rounded = round(number * 100) / 100
+        if rounded == 0.00 {
+            rateLabel.textColor = UIColor.customBlack
+            rateLabel.text = "\(rounded)%"
+        } else if rounded > 0 {
+            rateLabel.textColor = UIColor.customRed
+            rateLabel.text = "▲ \(rounded)%"
+        } else {
+            rateLabel.textColor = UIColor.customBlue
+            rateLabel.text = "▼ \(abs(rounded))%"
+        }
+    }
+
 }
 
 // MARK: - Chart

@@ -28,11 +28,9 @@ struct CoingeckoCoinResponse: Decodable {
     var current_price_description: String {
         return "￦" + current_price.formatted()
     }
-    // TODO: 구현 필요
-    var price_change_percentage_24h_description: String {
-        return "100%"
+    var price_change_percentage_24h_description: Double {
+        return price_change_percentage_24h
     }
-    // TODO: 구현 필요
     var last_updated_description: String {
         return String.convertChartDate(date: last_updated)
     }
