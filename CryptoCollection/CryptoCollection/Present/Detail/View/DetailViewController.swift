@@ -59,6 +59,11 @@ final class DetailViewController: BaseViewController {
 
     private let realm = try! Realm()
 
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
+
     override func configureHierarchy() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -98,7 +103,6 @@ final class DetailViewController: BaseViewController {
         collectionView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
         configureDataSource()
-        bind()
 
         blueStyle.messageColor = UIColor.customBlue
         redStyle.messageColor = UIColor.customRed
@@ -110,12 +114,7 @@ final class DetailViewController: BaseViewController {
         navigationItem.rightBarButtonItem = favoriteButton
     }
 
-    init(viewModel: DetailViewModel) {
-        self.viewModel = viewModel
-        super.init()
-    }
-
-    private func bind() {
+    override func bind() {
         let input = DetailViewModel.Input(
             barButtonTapped: barButton.rx.tap,
             favoriteButtonTapped: favoriteButton.rx.tap)
@@ -179,7 +178,10 @@ final class DetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
+}
 
+// MARK: - configure view
+extension DetailViewController {
     private func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.image = UIImage(systemName: isLiked ? "star.fill" : "star")

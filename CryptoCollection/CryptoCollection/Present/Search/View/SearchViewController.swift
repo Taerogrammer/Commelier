@@ -82,7 +82,6 @@ final class SearchViewController: BaseViewController {
         grayLineView.backgroundColor = UIColor.customGray
         segCoinView.coinCollectionView.register(SearchCoinCollectionViewCell.self, forCellWithReuseIdentifier: SearchCoinCollectionViewCell.identifier)
         segCoinView.coinCollectionView.keyboardDismissMode = .onDrag
-        bind()
         configureSearchBar()
         configureSegmentControl()
 
@@ -104,38 +103,7 @@ final class SearchViewController: BaseViewController {
         segCoinView.coinCollectionView.reloadData()
     }
 
-    private func configureSearchBar() {
-        searchBar.searchBarStyle = .minimal
-        searchBar.searchTextField.borderStyle = .none
-        searchBar.setImage(UIImage(), for: .search, state: .normal)
-        searchBar.searchTextField.clearButtonMode = .never
-        searchBar.searchTextField.font = .systemFont(ofSize: 12)
-        searchBar.searchTextField.textColor = UIColor.customBlack
-    }
-
-    private func configureSegmentControl() {
-        segment.insertSegment(withTitle: "코인", at: 0, animated: true)
-        segment.insertSegment(withTitle: "NFT", at: 1, animated: true)
-        segment.insertSegment(withTitle: "거래소", at: 2, animated: true)
-        segment.selectedSegmentIndex = 0
-        segCoinView.isHidden = false
-        segNFTView.isHidden = true
-        segTickerView.isHidden = true
-        segment.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.customGray
-        ], for: .normal)
-        segment.setTitleTextAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.customBlack
-        ], for: .selected)
-        segment.selectedSegmentTintColor = .clear
-        segment.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
-        segment.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
-
-        segment.addTarget(self, action: #selector(changeUnderLinePosition), for: .valueChanged)
-
-    }
-
-    private func bind() {
+    override func bind() {
         let input = SearchViewModel.Input(
             searchBarTapped: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text.orEmpty,
@@ -223,7 +191,39 @@ final class SearchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
+}
 
+// MARK: - configure view
+extension SearchViewController {
+    private func configureSearchBar() {
+        searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.setImage(UIImage(), for: .search, state: .normal)
+        searchBar.searchTextField.clearButtonMode = .never
+        searchBar.searchTextField.font = .systemFont(ofSize: 12)
+        searchBar.searchTextField.textColor = UIColor.customBlack
+    }
+
+    private func configureSegmentControl() {
+        segment.insertSegment(withTitle: "코인", at: 0, animated: true)
+        segment.insertSegment(withTitle: "NFT", at: 1, animated: true)
+        segment.insertSegment(withTitle: "거래소", at: 2, animated: true)
+        segment.selectedSegmentIndex = 0
+        segCoinView.isHidden = false
+        segNFTView.isHidden = true
+        segTickerView.isHidden = true
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.customGray
+        ], for: .normal)
+        segment.setTitleTextAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.customBlack
+        ], for: .selected)
+        segment.selectedSegmentTintColor = .clear
+        segment.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+        segment.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+
+        segment.addTarget(self, action: #selector(changeUnderLinePosition), for: .valueChanged)
+    }
 }
 
 // MARK: - @objc

@@ -16,6 +16,7 @@ class BaseViewController: UIViewController, ViewConfiguration {
         configureView()
         configureNavigation()
         configureDefaultSetting()
+        bind()
     }
 
     init() {
@@ -39,6 +40,8 @@ class BaseViewController: UIViewController, ViewConfiguration {
         view.backgroundColor = UIColor.white
         navigationController?.navigationBar.tintColor = UIColor.customBlack
     }
+
+    func bind() { }
 
     deinit {
         print(#function, self)

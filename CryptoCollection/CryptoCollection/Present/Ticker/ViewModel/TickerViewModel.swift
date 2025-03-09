@@ -26,13 +26,10 @@ final class TickerViewModel: ViewModel {
 
     struct Output {
         let data: Observable<[UpbitMarketResponse]>
-        let timer: Observable<Int>
         let buttonStatus: Observable<ButtonStatus>
     }
 
     func transform(input: Input) -> Output {
-        let timer = Observable<Int>.interval(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
-
         input.priceTapped
             .when(.recognized)
             .subscribe(with: self) { owner, _ in
@@ -59,6 +56,25 @@ final class TickerViewModel: ViewModel {
          .timer 메서드로 구현하면 0초부터 시작은 하나 늦게 호출됨.
          처음은 전자의 식으로 호출 후 5초 뒤부턴 timer 식 호출
          */
+        getData()
+
+        /*
+         timer를 Disposable로 선언 후 명시적으로 dispose() 시켜줌
+         */
+        getDataByTimer()
+
+        let sortedData = Observable
+            .combineLatest(data, buttonStatus)
+            .map { data, buttonStatus in
+                return self.sortData(data: data, status: buttonStatus)
+            }
+            .asObservable()
+
+        return Output(data: sortedData,
+                      buttonStatus: buttonStatus.asObservable())
+    }
+
+    func getData() {
         NetworkManager.shared.getItem(
             api: UpbitRouter.getMarket(),
             type: [UpbitMarketResponse].self)
@@ -70,38 +86,16 @@ final class TickerViewModel: ViewModel {
             print("onDisposed")
         }
         .disposed(by: disposeBag)
+    }
 
-        /*
-         timer를 Disposable로 선언 후 명시적으로 dispose() 시켜줌
-         */
-        disposable = timer
-            .subscribe(with: self) { owner, value in
-                print("Timer:", value)
-                NetworkManager.shared.getItem(
-                    api: UpbitRouter.getMarket(),
-                    type: [UpbitMarketResponse].self)
-                .subscribe(with: self) { owner, value in
-                    owner.data.accept(value)
-                } onFailure: { owner, error in
-                    print("failed", error)
-                } onDisposed: { owner in
-                    print("onDisposed")
-                }
-                .disposed(by: owner.disposeBag)
+    func getDataByTimer() {
+        disposeTimer()
+        disposable = Observable<Int>.interval(.seconds(2), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
+            .subscribe(with: self) { owner, val in
+                owner.getData()
             } onDisposed: { owner in
-                print("Timer onDisposed")
+                print("Timer Disposed")
             }
-
-        let sortedData = Observable
-            .combineLatest(data, buttonStatus)
-            .map { data, buttonStatus in
-                return self.sortData(data: data, status: buttonStatus)
-            }
-            .asObservable()
-
-        return Output(data: sortedData,
-                      timer: timer,
-                      buttonStatus: buttonStatus.asObservable())
     }
 
     func disposeTimer() {

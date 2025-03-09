@@ -23,8 +23,6 @@ final class TrendingViewController: BaseViewController {
         collectionViewLayout: createCompositionalLayout())
     private let viewModel = TrendingViewModel()
     private let disposeBag = DisposeBag()
-
-
     private var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
 
     override func configureHierarchy() {
@@ -39,7 +37,6 @@ final class TrendingViewController: BaseViewController {
 
     override func configureView() {
         configureSearchBar()
-        bind()
     }
 
     override func configureNavigation() {
@@ -49,7 +46,7 @@ final class TrendingViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 
-    private func bind() {
+    override func bind() {
         let input = TrendingViewModel.Input(
             searchBarTapped: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text.orEmpty)
@@ -71,13 +68,15 @@ final class TrendingViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
-
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+}
 
+// MARK: - configure view
+extension TrendingViewController {
     private func configureSearchBar() {
         searchBar.clipsToBounds = true
         searchBar.searchBarStyle = .minimal
@@ -151,5 +150,4 @@ final class TrendingViewController: BaseViewController {
                 }
             })
     }
-
 }

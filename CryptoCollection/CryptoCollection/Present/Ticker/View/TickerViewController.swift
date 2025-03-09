@@ -48,16 +48,14 @@ final class TickerViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        bind()
+        viewModel.getDataByTimer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        tableView.dataSource = nil
-        tableView.delegate = nil
         viewModel.disposeTimer()
     }
 
-    private func bind() {
+    override func bind() {
         let input = TickerViewModel.Input(
             priceTapped: headerView.priceButton.rx.tapGesture(),
             changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
@@ -85,7 +83,6 @@ final class TickerViewController: BaseViewController {
                 owner.headerView.accButton.buttonStatus(status: status.acc)
             }
             .disposed(by: disposeBag)
-
     }
 
 }
