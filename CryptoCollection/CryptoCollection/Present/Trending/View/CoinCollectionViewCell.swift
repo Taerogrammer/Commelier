@@ -25,23 +25,33 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
             make.leading.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
+
         thumbnailImage.snp.makeConstraints { make in
             make.leading.equalTo(rankLabel.snp.trailing).offset(8)
             make.centerY.equalTo(safeAreaLayoutGuide)
             make.size.equalTo(26)
         }
+
         symbolLabel.snp.makeConstraints { make in
             make.leading.equalTo(thumbnailImage.snp.trailing).offset(4)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(-4)
+            make.centerY.equalTo(safeAreaLayoutGuide).offset(-6)
         }
+
         nameLabel.snp.makeConstraints { make in
             make.leading.equalTo(symbolLabel)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(4)
+            make.centerY.equalTo(safeAreaLayoutGuide).offset(6)
         }
+
         rateLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(12)
+            make.leading.greaterThanOrEqualTo(nameLabel.snp.trailing).offset(8)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
+
+        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        rateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        rateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     override func configureView() {
