@@ -242,12 +242,21 @@ extension DetailViewController {
 
                 return cell
             },
-            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
                 let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: DetailCollectionHeaderView.identifier,
                     for: indexPath) as! DetailCollectionHeaderView
                 header.configureTitle(with: dataSource[indexPath.section].title)
+
+                header.moreButton.rx.tap
+                    .bind { [weak self] _ in
+                        self?.view.makeToast(
+                            "준비 중입니다",
+                            duration: 2.0,
+                            position: .bottom)
+                    }
+                    .disposed(by: self?.disposeBag ?? DisposeBag())
 
                 return header
             }

@@ -7,11 +7,13 @@
 
 import UIKit
 import SnapKit
+import RxCocoa
+import RxSwift
 
 final class DetailCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
 
     private let titleLabel = UILabel()
-    private let moreButton = UIButton()
+    let moreButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
