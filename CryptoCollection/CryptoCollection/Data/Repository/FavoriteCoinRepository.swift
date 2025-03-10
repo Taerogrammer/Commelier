@@ -12,6 +12,8 @@ protocol FavoriteCoinRepositoryProtocol {
     func getFileURL()
     func getAll() -> Results<FavoriteCoin>
     func createItem(favoriteCoin: FavoriteCoin)
+    func deleteItem(favoriteCoin: FavoriteCoin)
+    func isItemInRealm(id: String) -> Bool
 }
 
 final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
@@ -22,6 +24,10 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
 
     func getAll() -> Results<FavoriteCoin> {
         return realm.objects(FavoriteCoin.self)
+    }
+
+    func isItemInRealm(id: String) -> Bool {
+        return realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
     }
 
     func createItem(favoriteCoin: FavoriteCoin) {
@@ -36,5 +42,15 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
         }
     }
 
-
+    func deleteItem(favoriteCoin: FavoriteCoin) {
+        do {
+            try realm.write {
+                let favCoin = favoriteCoin
+                realm.delete(favCoin)
+                print("Deleted!!")
+            }
+        } catch {
+            print("Favorite Coin Deleted Fail")
+        }
+    }
 }
