@@ -30,12 +30,13 @@ final class TrendingViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let action = PublishSubject<SettingAction>()
         let result = PublishRelay<CoingeckoTrendingResponse>()
-
+        LoadingIndicator.showLoading()
         NetworkManager.shared.getItem(
             api: CoingeckoRouter.getTrending,
             type: CoingeckoTrendingResponse.self)
         .subscribe(with: self) { owner, value in
             result.accept(value)
+            LoadingIndicator.hideLoading()
         }
         .disposed(by: disposeBag)
 

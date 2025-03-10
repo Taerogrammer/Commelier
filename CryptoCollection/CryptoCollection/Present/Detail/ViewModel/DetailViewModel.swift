@@ -52,6 +52,7 @@ final class DetailViewModel: ViewModel {
 
         id
             .flatMapLatest { id -> Single<[CoingeckoCoinResponse]> in
+                LoadingIndicator.showLoading()
                 return NetworkManager.shared.getItem(
                     api: CoingeckoRouter.getCoinInformation(ids: id),
                     type: [CoingeckoCoinResponse].self)
@@ -66,6 +67,7 @@ final class DetailViewModel: ViewModel {
                     id: data.id,
                     symbol: data.symbol,
                     image: data.image))
+                LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
 

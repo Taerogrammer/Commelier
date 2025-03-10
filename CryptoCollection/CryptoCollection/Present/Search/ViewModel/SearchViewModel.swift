@@ -42,12 +42,14 @@ final class SearchViewModel: ViewModel {
         input.searchBarTapped
             .withLatestFrom(input.searchText)
             .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
+                LoadingIndicator.showLoading()
                 return NetworkManager.shared.getItem(
                     api: CoingeckoRouter.getSearch(query: query),
                     type: CoingeckoSearchResponse.self)
             }
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
+                LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
 
@@ -59,12 +61,14 @@ final class SearchViewModel: ViewModel {
 
         searchText
             .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
+                LoadingIndicator.showLoading()
                 return NetworkManager.shared.getItem(
                     api: CoingeckoRouter.getSearch(query: query),
                     type: CoingeckoSearchResponse.self)
             }
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
+                LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
 
