@@ -90,6 +90,15 @@ final class TrendingViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getDataByTimer()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.disposeTimer()
+    }
+
     override func bind() {
         disposeBag = DisposeBag()
 

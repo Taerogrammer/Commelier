@@ -12,6 +12,9 @@ import Foundation
 final class TrendingViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let error = PublishRelay<APIError>()
+    private var disposable: Disposable?
+    let result = PublishRelay<CoingeckoTrendingResponse>()
+
 
     enum SettingAction {
         case navigateToDetail(String)
@@ -31,19 +34,8 @@ final class TrendingViewModel: ViewModel {
 
     func transform(input: Input) -> Output {
         let action = PublishSubject<SettingAction>()
-        let result = PublishRelay<CoingeckoTrendingResponse>()
-        LoadingIndicator.showLoading()
-        NetworkManager.shared.getItem(
-            api: CoingeckoRouter.getTrending,
-            type: CoingeckoTrendingResponse.self)
-        .subscribe(with: self) { owner, value in
-            result.accept(value)
-            LoadingIndicator.hideLoading()
-        } onFailure: { owner, error in
-            owner.error.accept(error as! APIError)
-            LoadingIndicator.hideLoading()
-        }
-        .disposed(by: disposeBag)
+        getData()
+        getDataByTimer()
 
         let sections = result
             .map { response -> [TrendingSection] in
@@ -82,7 +74,30 @@ final class TrendingViewModel: ViewModel {
     }
 
     private func getData() {
-        
+        LoadingIndicator.showLoading()
+        NetworkManager.shared.getItem(
+            api: CoingeckoRouter.getTrending,
+            type: CoingeckoTrendingResponse.self)
+        .subscribe(with: self) { owner, value in
+            owner.result.accept(value)
+            LoadingIndicator.hideLoading()
+        } onFailure: { owner, error in
+            owner.error.accept(error as! APIError)
+            LoadingIndicator.hideLoading()
+        }
+        .disposed(by: disposeBag)
+    }
+
+    func getDataByTimer() {
+        disposeTimer()
+        disposable = Observable<Int>.interval(.seconds(600), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+            .subscribe(with: self, onNext: { owner, sec in
+                owner.getData()
+            })
+    }
+
+    func disposeTimer() {
+        disposable?.dispose()
     }
 
 }
