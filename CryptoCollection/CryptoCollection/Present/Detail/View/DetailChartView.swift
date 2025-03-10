@@ -44,10 +44,6 @@ final class DetailChartView: BaseView {
 
         moneyLabel.textColor = UIColor.customBlack
         updateDateLabel.textColor = UIColor.customGray
-
-        moneyLabel.text = "$140,123,123"
-        rateLabel.text = "^0.98%"
-        updateDateLabel.text = "2/15 18:00:45 업데이트"
     }
 
     func updateRateLabel(with number: Double) {
