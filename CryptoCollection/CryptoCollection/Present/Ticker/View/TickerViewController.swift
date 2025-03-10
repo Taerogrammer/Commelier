@@ -83,6 +83,23 @@ final class TickerViewController: BaseViewController {
                 owner.headerView.accButton.buttonStatus(status: status.acc)
             }
             .disposed(by: disposeBag)
+
+        output.error
+            .bind(with: self) { owner, error in
+                owner.viewModel.disposeTimer()
+                let vc = AlertViewController()
+                vc.delegate = owner
+                vc.modalPresentationStyle = .overFullScreen
+                owner.present(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
+}
+
+// MARK: - delegate
+extension TickerViewController: AlertViewDismissDelegate {
+    func alertViewDismiss() {
+        viewModel.getDataByTimer()
+    }
 }

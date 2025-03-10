@@ -124,6 +124,7 @@ final class SearchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // TODO: cell VM 분리
         output.data
             .bind(to: segCoinView.coinCollectionView.rx.items(
                 cellIdentifier: SearchCoinCollectionViewCell.identifier,

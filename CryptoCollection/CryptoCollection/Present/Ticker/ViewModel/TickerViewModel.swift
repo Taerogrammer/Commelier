@@ -17,6 +17,7 @@ final class TickerViewModel: ViewModel {
         price: .unClicked,
         changedPrice: .unClicked,
         acc: .unClicked))
+    private let error = PublishRelay<APIError>()
 
     struct Input {
         let priceTapped: TapControlEvent
@@ -27,6 +28,7 @@ final class TickerViewModel: ViewModel {
     struct Output {
         let data: Observable<[UpbitMarketResponse]>
         let buttonStatus: Observable<ButtonStatus>
+        let error: Observable<APIError>
     }
 
     func transform(input: Input) -> Output {
@@ -71,7 +73,8 @@ final class TickerViewModel: ViewModel {
             .asObservable()
 
         return Output(data: sortedData,
-                      buttonStatus: buttonStatus.asObservable())
+                      buttonStatus: buttonStatus.asObservable(),
+                      error: error.asObservable())
     }
 
     private func getData() {
@@ -81,7 +84,7 @@ final class TickerViewModel: ViewModel {
         .subscribe(with: self) { owner, value in
             owner.data.accept(value)
         } onFailure: { owner, error in
-            print("failed", error)
+            owner.error.accept(error as! APIError)
         } onDisposed: { owner in
             print("onDisposed")
         }
