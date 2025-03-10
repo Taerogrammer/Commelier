@@ -184,7 +184,7 @@ final class SearchViewController: BaseViewController {
                 data[indexPath.item]
             }
             .bind(with: self) { owner, data in
-                let vm = DetailViewModel(id: data.id, coinData: data)
+                let vm = DetailViewModel(id: data.id)
                 let vc = DetailViewController(viewModel: vm)
 
                 owner.navigationController?.pushViewController(vc, animated: true)
