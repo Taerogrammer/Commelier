@@ -10,7 +10,7 @@ import SnapKit
 
 
 final class AlertViewController: BaseViewController {
-    private let alertView = AlertView()
+    let alertView = AlertView()
     weak var delegate: AlertViewDismissDelegate?
 
     override func viewDidLoad() {
@@ -26,7 +26,7 @@ final class AlertViewController: BaseViewController {
         alertView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(32)
-            make.height.equalToSuperview().multipliedBy(0.25)
+            make.height.equalToSuperview().multipliedBy(0.20)
         }
     }
 

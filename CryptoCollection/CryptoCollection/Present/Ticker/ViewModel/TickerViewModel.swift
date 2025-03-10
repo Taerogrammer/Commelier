@@ -85,8 +85,6 @@ final class TickerViewModel: ViewModel {
             owner.data.accept(value)
         } onFailure: { owner, error in
             owner.error.accept(error as! APIError)
-        } onDisposed: { owner in
-            print("onDisposed")
         }
         .disposed(by: disposeBag)
     }
@@ -96,8 +94,6 @@ final class TickerViewModel: ViewModel {
         disposable = Observable<Int>.interval(.seconds(2), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
             .subscribe(with: self) { owner, val in
                 owner.getData()
-            } onDisposed: { owner in
-                print("Timer Disposed")
             }
     }
 
@@ -147,7 +143,6 @@ final class TickerViewModel: ViewModel {
             switch status.price {
             case .unClicked: break
             case .upClicked:
-                print("price - upClicked")
                 return data.sorted { $0.trade_price < $1.trade_price }
             case .downClicked:
                 return data.sorted { $0.trade_price > $1.trade_price }
@@ -164,7 +159,6 @@ final class TickerViewModel: ViewModel {
             case .upClicked:
                 return data.sorted { $0.acc_trade_price_24h < $1.acc_trade_price_24h }
             case .downClicked:
-                print("acc - downClicked")
                 return data.sorted { $0.acc_trade_price_24h > $1.acc_trade_price_24h }
             }
         }

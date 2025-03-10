@@ -10,9 +10,9 @@ import SnapKit
 
 final class AlertView: BaseView {
     private let stackView = UIStackView()
-    let titleLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let lineView = BaseView()
     let messageLabel = UILabel()
-    let lineView = BaseView()
     let retryButton = UIButton()
     
     override func configureHierarchy() {

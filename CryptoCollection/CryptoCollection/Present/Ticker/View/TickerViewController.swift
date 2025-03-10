@@ -88,6 +88,7 @@ final class TickerViewController: BaseViewController {
             .bind(with: self) { owner, error in
                 owner.viewModel.disposeTimer()
                 let vc = AlertViewController()
+                vc.alertView.messageLabel.text = error.description
                 vc.delegate = owner
                 vc.modalPresentationStyle = .overFullScreen
                 owner.present(vc, animated: true)
