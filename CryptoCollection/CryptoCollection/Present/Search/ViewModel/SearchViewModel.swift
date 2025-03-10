@@ -23,8 +23,7 @@ final class SearchViewModel: ViewModel {
         let searchBarTapped: ControlEvent<Void>
         let searchText: ControlProperty<String>
         let barButtonTapped: ControlEvent<Void>
-        let itemSelectedTapped: ControlEvent<IndexPath>
-//        let favoriteButtonTapped: PublishSubject<CoinData>
+        let itemSelectedTapped: ControlEvent<IndexPath> 
     }
 
     struct Output {
@@ -66,13 +65,6 @@ final class SearchViewModel: ViewModel {
             }
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
-            }
-            .disposed(by: disposeBag)
-
-        input.itemSelectedTapped
-            .bind(with: self) { owner, indexPath in
-                print("indexPath", indexPath)
-
             }
             .disposed(by: disposeBag)
 
