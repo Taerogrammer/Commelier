@@ -27,6 +27,8 @@ final class NFTCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         }
         symbol.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(safeAreaLayoutGuide).inset(6)
+            make.trailing.equalTo(safeAreaLayoutGuide).offset(-6)
             make.top.equalTo(image.snp.bottom).offset(4)
         }
         floorPrice.snp.makeConstraints { make in
@@ -44,8 +46,10 @@ final class NFTCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         image.contentMode = .scaleAspectFit
         image.layer.cornerRadius = 8
         symbol.font = .boldSystemFont(ofSize: 9)
-        symbol.textColor = UIColor.customGray
+        symbol.textColor = UIColor.customBlack
+        symbol.textAlignment = .center
         floorPrice.font = .systemFont(ofSize: 9)
+        floorPrice.textColor = UIColor.customGray
         floorPricePercentage.font = .boldSystemFont(ofSize: 9)
     }
 }
