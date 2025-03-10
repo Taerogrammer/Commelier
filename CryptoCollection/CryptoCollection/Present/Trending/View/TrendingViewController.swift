@@ -117,6 +117,20 @@ final class TrendingViewController: BaseViewController {
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        collectionView.rx.itemSelected
+            .withLatestFrom(output.sectionResult) { indexPath, data in
+                data[indexPath.section].items[indexPath.item]
+            }
+            .asObservable()
+            .bind(with: self) { owner, item in
+                if case .coins(let coinData) = item {
+                    let vm = DetailViewModel(id: coinData.id)
+                    let vc = DetailViewController(viewModel: vm)
+
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
