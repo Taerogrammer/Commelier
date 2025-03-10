@@ -79,6 +79,7 @@ final class TrendingViewController: BaseViewController {
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
+        hideKeyBoardWhenTappedScreen()
     }
 
     override func configureNavigation() {
@@ -115,10 +116,6 @@ final class TrendingViewController: BaseViewController {
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 }
 
@@ -215,5 +212,18 @@ extension TrendingViewController {
                 return header
             }
         )
+    }
+}
+
+// MARK: - seach bar
+extension TrendingViewController {
+    private func hideKeyBoardWhenTappedScreen() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func tapHandler() {
+        searchBar.endEditing(true)
     }
 }
