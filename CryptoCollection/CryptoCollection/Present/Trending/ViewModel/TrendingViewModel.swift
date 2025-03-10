@@ -7,6 +7,7 @@
 
 import RxCocoa
 import RxSwift
+import Foundation
 
 final class TrendingViewModel: ViewModel {
     private let disposeBag = DisposeBag()
@@ -57,8 +58,8 @@ final class TrendingViewModel: ViewModel {
                         floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change_description))
                 }
                 return [
-                    TrendingSection(title: "인기 검색어", items: coins),
-                    TrendingSection(title: "인기 NFT", items: nfts)
+                    TrendingSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
+                    TrendingSection(title: "인기 NFT", updated: nil, items: nfts)
                 ]
             }
 

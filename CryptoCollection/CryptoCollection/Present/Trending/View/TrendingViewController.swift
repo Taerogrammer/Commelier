@@ -13,6 +13,7 @@ import RxSwift
 
 struct TrendingSection {
     let title: String
+    let updated: String?
     var items: [Item]
 }
 
@@ -209,7 +210,7 @@ extension TrendingViewController {
                         ofKind: kind,
                         withReuseIdentifier: TrendingCollectionHeaderView.identifier,
                         for: indexPath) as! TrendingCollectionHeaderView
-                header.configureTitle(with: dataSource[indexPath.section].title)
+                header.configureTitle(with: dataSource[indexPath.section].title, updateTime: dataSource[indexPath.section].updated)
 
                 return header
             }

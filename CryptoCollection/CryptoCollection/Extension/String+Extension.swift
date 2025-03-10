@@ -21,4 +21,10 @@ extension String {
         let convertedToDate: Date = dateFormatter.date(from: date) ?? Date()
         return dateFormatter.string(from: convertedToDate)
     }
+
+    static func convertUpdateDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd HH:mm 기준"
+        return dateFormatter.string(from: date)
+    }
 }

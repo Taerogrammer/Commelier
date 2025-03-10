@@ -37,7 +37,7 @@ extension TrendingCollectionHeaderView: ViewConfiguration {
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
         updateLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(36)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
     }
@@ -49,7 +49,9 @@ extension TrendingCollectionHeaderView: ViewConfiguration {
         updateLabel.textColor = UIColor.customGray
     }
 
-    func configureTitle(with title: String) {
+    func configureTitle(with title: String, updateTime: String?) {
         titleLabel.text = title
+        guard let updateTime = updateTime else { return }
+        updateLabel.text = updateTime
     }
 }
