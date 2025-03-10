@@ -11,6 +11,7 @@ import Foundation
 
 final class TrendingViewModel: ViewModel {
     private let disposeBag = DisposeBag()
+    private let error = PublishRelay<APIError>()
 
     enum SettingAction {
         case navigateToDetail(String)
@@ -25,6 +26,7 @@ final class TrendingViewModel: ViewModel {
     struct Output {
         let action: Observable<SettingAction>
         let sectionResult: Observable<[TrendingSection]>
+        let error: Observable<APIError>
     }
 
     func transform(input: Input) -> Output {
@@ -36,6 +38,9 @@ final class TrendingViewModel: ViewModel {
             type: CoingeckoTrendingResponse.self)
         .subscribe(with: self) { owner, value in
             result.accept(value)
+            LoadingIndicator.hideLoading()
+        } onFailure: { owner, error in
+            owner.error.accept(error as! APIError)
             LoadingIndicator.hideLoading()
         }
         .disposed(by: disposeBag)
@@ -72,7 +77,8 @@ final class TrendingViewModel: ViewModel {
             .disposed(by: disposeBag)
 
         return Output(action: action,
-                      sectionResult: sections)
+                      sectionResult: sections,
+                      error: error.asObservable())
     }
 
     private func getData() {

@@ -54,7 +54,7 @@ final class TrendingViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
     private let viewModel = TrendingViewModel()
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
     private var dataSource: RxCollectionViewSectionedReloadDataSource<TrendingSection>!
 
@@ -91,6 +91,8 @@ final class TrendingViewController: BaseViewController {
     }
 
     override func bind() {
+        disposeBag = DisposeBag()
+
         let input = TrendingViewModel.Input(
             searchBarTapped: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text.orEmpty)
@@ -129,6 +131,21 @@ final class TrendingViewController: BaseViewController {
 
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }
+            }
+            .disposed(by: disposeBag)
+
+        output.error
+            .bind(with: self) { owner, error in
+                let vc = AlertViewController()
+                vc.alertView.messageLabel.text = error.description
+                vc.modalPresentationStyle = .overFullScreen
+                vc.alertView.retryButton.rx.tap
+                    .bind(with: owner) { owner, _ in
+                        owner.bind()
+                        vc.dismiss(animated: true)
+                    }
+                    .disposed(by: owner.disposeBag)
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
