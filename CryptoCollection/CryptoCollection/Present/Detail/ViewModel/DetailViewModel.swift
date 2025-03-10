@@ -12,7 +12,6 @@ import RxSwift
 final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let id: Observable<String>
-//    private let coinData: Observable<CoinData>
     private let realm = try! Realm()
 
     enum SettingAction {
@@ -30,19 +29,18 @@ final class DetailViewModel: ViewModel {
 
     struct Output {
         let action: PublishRelay<SettingAction>
-        let data: Observable<[CoingeckoCoinResponse]>
+        let data: Observable<CoingeckoCoinResponse>
         let detailData: PublishRelay<[DetailSection]>
         let favoriteButtonResult: PublishRelay<SettingAction>
     }
 
     init(id: String) {
         self.id = Observable.just(id)
-//        self.coinData = Observable.just(coinData)
     }
 
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
-        let result = PublishRelay<[CoingeckoCoinResponse]>()
+        let result = PublishRelay<CoingeckoCoinResponse>()
         let detailResult = PublishRelay<[DetailSection]>()
         let favoriteButtonResult = PublishRelay<SettingAction>()
 
@@ -59,25 +57,27 @@ final class DetailViewModel: ViewModel {
                     type: [CoingeckoCoinResponse].self)
             }
             .bind(with: self) { owner, data in
+                guard let data = data.first else {
+                    print("no Data")
+                    return
+                }
                 result.accept(data)
             }
             .disposed(by: disposeBag)
 
         result
-            .asObservable()
-            .map { $0.first }
-            .subscribe(with: self) { owner, result in
+            .bind(with: self) { owner, response in
                 detailResult.accept([
                     DetailSection(title: "종목정보", items: [
-                        DetailInformation(title: "24시간 고가", money: result?.high_24h_description ?? "", date: ""),
-                        DetailInformation(title: "24시간 저가", money: result?.low_24h_description ?? "", date: ""),
-                        DetailInformation(title: "역대 최고가", money: result?.ath_description ?? "", date: result?.ath_date_description ?? ""),
-                        DetailInformation(title: "역대 최소가", money: result?.atl_description ?? "", date: result?.atl_date_description ?? "")
+                        DetailInformation(title: "24시간 고가", money: response.high_24h_description, date: ""),
+                        DetailInformation(title: "24시간 저가", money: response.low_24h_description, date: ""),
+                        DetailInformation(title: "역대 최고가", money: response.ath_description, date: response.ath_date_description),
+                        DetailInformation(title: "역대 최소가", money: response.atl_description, date: response.atl_date_description)
                     ]),
                     DetailSection(title: "투자지표", items: [
-                        DetailInformation(title: "시가총액", money: result?.market_cap_description ?? "", date: ""),
-                        DetailInformation(title: "완전 희석 가치(FDV)", money: result?.fully_diluted_valuation_description ?? "", date: ""),
-                        DetailInformation(title: "총 거래량", money: result?.total_volume_description ?? "", date: "")
+                        DetailInformation(title: "시가총액", money: response.market_cap_description, date: ""),
+                        DetailInformation(title: "완전 희석 가치(FDV)", money: response.fully_diluted_valuation_description, date: ""),
+                        DetailInformation(title: "총 거래량", money: response.total_volume_description, date: "")
                     ])
                 ])
             }

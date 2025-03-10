@@ -127,26 +127,25 @@ final class DetailViewController: BaseViewController {
             .disposed(by: disposeBag)
 
         output.data
-            .withLatestFrom(output.data)
-            .bind(with: self) { owner, value in
-                owner.titleView.image.kf.setImage(with: URL(string: value.first!.image))
-                owner.titleView.id.text = value.first?.symbol.uppercased()
+            .bind(with: self) { owner, response in
+                owner.titleView.image.kf.setImage(with: URL(string: response.image))
+                owner.titleView.id.text = response.symbol.uppercased()
                 owner.navigationItem.titleView = owner.titleView
-                owner.chartView.moneyLabel.text = value.first?.current_price_description
-                owner.chartView.updateRateLabel(with: value.first?.price_change_percentage_24h_description ?? 0.0)
-                owner.chartView.updateDateLabel.text = value.first?.last_updated_description
-                owner.chartView.configureChartHostingView(with: value.first?.sparkline_in_7d.price ?? [])
+                owner.chartView.moneyLabel.text = response.current_price_description
+                owner.chartView.updateRateLabel(with: response.price_change_percentage_24h_description)
+                owner.chartView.updateDateLabel.text = response.last_updated_description
+                owner.chartView.configureChartHostingView(with: response.sparkline_in_7d.price)
+            }
+            .disposed(by: disposeBag)
+
+        output.data
+            .bind(with: self) { owner, response in
+                owner.updateFavoriteButton(id: response.id)
             }
             .disposed(by: disposeBag)
 
         output.detailData
             .bind(to: collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        output.data
-            .bind(with: self) { owner, value in
-                owner.updateFavoriteButton(id: value.first?.id ?? "")
-            }
             .disposed(by: disposeBag)
 
         output.favoriteButtonResult
