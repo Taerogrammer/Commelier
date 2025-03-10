@@ -43,14 +43,17 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
     }
 
     func deleteItem(favoriteCoin: FavoriteCoin) {
-        do {
-            try realm.write {
-                let favCoin = favoriteCoin
-                realm.delete(favCoin)
-                print("Deleted!!")
+        if let deletedItem = realm.objects(FavoriteCoin.self)
+            .filter("id == %@", favoriteCoin.id)
+            .first {
+            do {
+                try realm.write {
+                    realm.delete(deletedItem)
+                    print("Deleted!!")
+                }
+            } catch {
+                print("Favorite Coin Deleted Fail")
             }
-        } catch {
-            print("Favorite Coin Deleted Fail")
         }
     }
 }
