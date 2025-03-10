@@ -156,10 +156,8 @@ final class SearchViewController: BaseViewController {
                                     try realm.write {
                                         let favoriteData = FavoriteCoin(
                                             id: element.id,
-                                            name: element.name,
                                             symbol: element.symbol,
-                                            market_cap_rank: element.market_cap_rank,
-                                            thumb: element.thumb)
+                                            image: element.thumb)
                                         realm.add(favoriteData)
                                         owner.view.makeToast(
                                             "즐겨찾기에 추가되었습니다",

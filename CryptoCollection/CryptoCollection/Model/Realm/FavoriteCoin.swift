@@ -10,18 +10,14 @@ import RealmSwift
 
 final class FavoriteCoin: Object {
     @Persisted(primaryKey: true) var id: String
-    @Persisted var name: String
     @Persisted var symbol: String
-    @Persisted var market_cap_rank: Int?
-    @Persisted var thumb: String
+    @Persisted var image: String
 
-    convenience init(id: String, name: String, symbol: String, market_cap_rank: Int? = nil, thumb: String) {
+    convenience init(id: String, symbol: String, image: String) {
         self.init()
         self.id = id
-        self.name = name
         self.symbol = symbol
-        self.market_cap_rank = market_cap_rank
-        self.thumb = thumb
+        self.image = image
     }
 
 }
