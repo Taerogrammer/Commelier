@@ -54,7 +54,7 @@ final class TrendingViewModel: ViewModel {
                         imageURL: nft.thumb,
                         name: nft.name,
                         floorPrice: nft.data.floor_price,
-                        floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change))
+                        floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change_description))
                 }
                 return [
                     TrendingSection(title: "인기 검색어", items: coins),

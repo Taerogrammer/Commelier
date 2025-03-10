@@ -56,6 +56,20 @@ extension NFTCollectionViewCell {
         image.kf.setImage(with: URL(string: nft.imageURL))
         symbol.text = nft.name
         floorPrice.text = nft.floorPrice
-        floorPricePercentage.text = nft.floorPriceChange
+        updateFloorPricePercentageLabel(rate: nft.floorPriceChange)
+    }
+
+    private func updateFloorPricePercentageLabel(rate: String) {
+        let doubleTypeRate = Double(rate) ?? 0.0
+        if doubleTypeRate > 0.0 {
+            floorPricePercentage.textColor = UIColor.customRed
+            floorPricePercentage.text = "▲ \(rate)%"
+        } else if doubleTypeRate == 0.0 {
+            floorPricePercentage.textColor = UIColor.customBlack
+            floorPricePercentage.text = "\(rate)%"
+        } else {
+            floorPricePercentage.textColor = UIColor.customBlue
+            floorPricePercentage.text = "▼ \(rate)%"
+        }
     }
 }
