@@ -26,22 +26,42 @@ final class NetworkManager {
                             switch response.result {
                             case .success(let data):
                                 value(.success(data))
-                            case .failure:
+                            case .failure(let error):
+                                print("failed with 200", error)
                                 value(.failure(APIError.decodingError))
                             }
                         case 400:
-                            print("400")
                             value(.failure(APIError.badRequest))
                         case 401:
-                            print("401")
                             value(.failure(APIError.unauthorized))
                         case 404:
-                            print("404")
                             value(.failure(APIError.notFound))
                         case 429:
                             value(.failure(APIError.tooManyRequest))
                         default:
-                            value(.failure(APIError.networkError))
+                            value(.failure(APIError.unknownError))
+                        }
+                    } else if let error = response.error {
+                        if let underlyingError = error.underlyingError {
+                            if let urlError = underlyingError as? URLError {
+                                switch urlError.code {
+                                case .notConnectedToInternet:
+                                    print("notConnectedToInternet")
+                                    value(.failure(APIError.notConnectedToInternet))
+                                case .networkConnectionLost:
+                                    print("networkConnectionLost")
+                                    value(.failure(APIError.networkConnectionLost))
+                                case .cannotConnectToHost:
+                                    print("cannotConnectToHost")
+                                    value(.failure(APIError.cannotConnectToHost))
+                                case .timedOut:
+                                    print("timedOut")
+                                    value(.failure(APIError.timedOut))
+                                default:
+                                    print("DEFAULT")
+                                    value(.failure(APIError.unknownError))
+                                }
+                            }
                         }
                     }
 //                    debugPrint(response.result)
