@@ -30,7 +30,6 @@ final class TrendingViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let action = PublishSubject<SettingAction>()
         let result = PublishRelay<CoingeckoTrendingResponse>()
-        let trendingResult = PublishRelay<[TrendingSection]>()
 
         NetworkManager.shared.getItem(
             api: CoingeckoRouter.getTrending,
@@ -44,6 +43,7 @@ final class TrendingViewModel: ViewModel {
             .map { response -> [TrendingSection] in
                 let coins = response.coins.map { coin in
                     TrendingItem.coins(TrendingCoin(
+                        id: coin.item.id,
                         rank: "\(coin.item.score + 1)",
                         imageURL: coin.item.thumb,
                         symbol: coin.item.symbol,
@@ -62,7 +62,6 @@ final class TrendingViewModel: ViewModel {
                     TrendingSection(title: "인기 NFT", updated: nil, items: nfts)
                 ]
             }
-
 
         input.searchBarTapped
             .withLatestFrom(input.searchText)

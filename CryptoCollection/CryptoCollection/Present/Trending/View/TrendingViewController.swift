@@ -23,6 +23,7 @@ enum TrendingItem {
 }
 
 struct TrendingCoin: Equatable {
+    let id: String
     let rank: String
     let imageURL: String
     let symbol: String
