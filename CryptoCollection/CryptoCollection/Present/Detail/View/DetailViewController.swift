@@ -37,7 +37,7 @@ extension DetailSection: SectionModelType {
 
 final class DetailViewController: BaseViewController {
     private let viewModel: DetailViewModel
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     private let titleView = DetailTitleView()
     private let barButton = UIBarButtonItem(
         image: UIImage(systemName: "arrow.left"),
@@ -115,6 +115,7 @@ final class DetailViewController: BaseViewController {
     }
 
     override func bind() {
+        disposeBag = DisposeBag()
         let input = DetailViewModel.Input(
             barButtonTapped: barButton.rx.tap,
             favoriteButtonTapped: favoriteButton.rx.tap)
@@ -174,6 +175,21 @@ final class DetailViewController: BaseViewController {
                         position: .bottom,
                         style: owner.grayStyle)
                 }
+            }
+            .disposed(by: disposeBag)
+
+        output.error
+            .bind(with: self) { owner, error in
+                let vc = AlertViewController()
+                vc.alertView.messageLabel.text = error.description
+                vc.modalPresentationStyle = .overFullScreen
+                vc.alertView.retryButton.rx.tap
+                    .bind(with: owner) { owner, _ in
+                        owner.bind()
+                        vc.dismiss(animated: true)
+                    }
+                    .disposed(by: owner.disposeBag)
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

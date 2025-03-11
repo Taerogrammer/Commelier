@@ -12,6 +12,7 @@ final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let id: Observable<String>
     private let favoriteCoinRepository = FavoriteCoinRepository()
+    private var error = PublishRelay<APIError>()
 
     enum SettingAction {
         case popViewController
@@ -23,7 +24,6 @@ final class DetailViewModel: ViewModel {
     struct Input {
         let barButtonTapped: ControlEvent<Void>
         let favoriteButtonTapped: ControlEvent<Void>
-        
     }
 
     struct Output {
@@ -31,6 +31,7 @@ final class DetailViewModel: ViewModel {
         let data: Observable<CoingeckoCoinResponse>
         let detailData: PublishRelay<[DetailSection]>
         let favoriteButtonResult: PublishRelay<SettingAction>
+        let error: Observable<APIError>
     }
 
     init(id: String) {
@@ -57,7 +58,7 @@ final class DetailViewModel: ViewModel {
                     api: CoingeckoRouter.getCoinInformation(ids: id),
                     type: [CoingeckoCoinResponse].self)
             }
-            .bind(with: self) { owner, data in
+            .subscribe(with: self) { owner, data in
                 guard let data = data.first else {
                     print("no Data")
                     return
@@ -67,6 +68,9 @@ final class DetailViewModel: ViewModel {
                     id: data.id,
                     symbol: data.symbol,
                     image: data.image))
+                LoadingIndicator.hideLoading()
+            } onError: { owner, error in
+                owner.error.accept(error as! APIError)
                 LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
@@ -107,6 +111,7 @@ final class DetailViewModel: ViewModel {
             action: action,
             data: result.asObservable(),
             detailData: detailResult,
-            favoriteButtonResult: favoriteButtonResult)
+            favoriteButtonResult: favoriteButtonResult,
+            error: error.asObservable())
     }
 }
