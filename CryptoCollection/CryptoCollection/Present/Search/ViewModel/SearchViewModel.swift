@@ -42,6 +42,7 @@ final class SearchViewModel: ViewModel {
 
         input.searchBarTapped
             .withLatestFrom(input.searchText)
+            .distinctUntilChanged()
             .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
                 LoadingIndicator.showLoading()
                 return NetworkManager.shared.getItem(
