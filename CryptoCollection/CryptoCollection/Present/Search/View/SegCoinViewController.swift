@@ -8,18 +8,18 @@
 import UIKit
 import SnapKit
 
-final class SegCoinView: BaseView {
+final class SegCoinViewController: BaseViewController {
     lazy var coinCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createFlowLayout())
 
     override func configureHierarchy() {
-        self.addSubview(coinCollectionView)
+        view.addSubview(coinCollectionView)
     }
 
     override func configureLayout() {
         coinCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(self.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
@@ -29,7 +29,7 @@ final class SegCoinView: BaseView {
 }
 
 // MARK: - collection view
-extension SegCoinView {
+extension SegCoinViewController {
     private func createFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 48.0)

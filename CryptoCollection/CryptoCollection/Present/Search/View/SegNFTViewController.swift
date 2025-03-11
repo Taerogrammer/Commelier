@@ -8,16 +8,16 @@
 import UIKit
 import SnapKit
 
-final class SegNFTView: BaseView {
+final class SegNFTViewController: BaseViewController {
     private let label = UILabel()
 
     override func configureHierarchy() {
-        addSubview(label)
+        view.addSubview(label)
     }
 
     override func configureLayout() {
         label.snp.makeConstraints { make in
-            make.center.equalTo(safeAreaLayoutGuide)
+            make.center.equalTo(view.safeAreaLayoutGuide)
         }
     }
     override func configureView() {
