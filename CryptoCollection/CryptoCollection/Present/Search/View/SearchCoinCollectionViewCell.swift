@@ -10,6 +10,7 @@ import Kingfisher
 import SnapKit
 import RealmSwift
 import RxSwift
+import Toast
 
 final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     var disposeBag = DisposeBag()
@@ -18,8 +19,10 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
     private let name = UILabel()
     private let rank = rankLabel()
     let favoriteButton = UIButton()
-
+    private var viewModel: SearchCoinCollectionCellViewModel?
     private let realm = try! Realm()
+    private var blueStyle = ToastStyle()
+    private var redStyle = ToastStyle()
 
     override func configureHierarchy() {
         [image, symbol, name, rank, favoriteButton].forEach { contentView.addSubview($0) }
@@ -56,11 +59,42 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         name.textColor = UIColor.customGray
         favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
         favoriteButton.tintColor = UIColor.customBlack
+        blueStyle.messageColor = UIColor.customBlue
+        redStyle.messageColor = UIColor.customRed
     }
 
     // 중첩 구독 방지
     override func prepareForReuse() {
         disposeBag = DisposeBag()
+    }
+
+    func bind(with viewModel: SearchCoinCollectionCellViewModel) {
+        self.viewModel = viewModel
+        let input = SearchCoinCollectionCellViewModel.Input(
+            favoriteButtonTapped: favoriteButton.rx.tap)
+        let output = viewModel.transform(input: input)
+
+        output.favoriteButtonResult
+            .bind(with: self) { owner, action in
+                let scenes = UIApplication.shared.connectedScenes
+                guard let windowScene = scenes.first as? UIWindowScene, let window = windowScene.windows.last else { return }
+
+                switch action {
+                case .itemAdded:
+
+                    window.rootViewController?.view.makeToast("즐겨찾기에서 추가되었습니다",
+                                                              duration: 2.0,
+                                                              position: .top,
+                                                              style: owner.blueStyle)
+                case .itemDeleted:
+                    window.rootViewController?.view.makeToast("즐겨찾기에서 제거되었습니다",
+                                                              duration: 2.0,
+                                                              position: .top,
+                                                              style: owner.redStyle)
+                }
+                owner.updateFavoriteButton(id: owner.viewModel?.coinData.id ?? "")
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -75,7 +109,6 @@ extension SearchCoinCollectionViewCell {
         updateFavoriteButton(id: item.id)
     }
 
-    //
     func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.setImage(UIImage(systemName: isLiked ? "star.fill" : "star"), for: .normal)

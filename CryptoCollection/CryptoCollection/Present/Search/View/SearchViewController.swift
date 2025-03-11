@@ -12,8 +12,6 @@ import RxSwift
 import SnapKit
 import Toast
 
-import RealmSwift
-
 final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
     private var disposeBag = DisposeBag()
@@ -38,7 +36,6 @@ final class SearchViewController: BaseViewController {
     }
     var currentPage: Int = 0 {
       didSet {
-        print(oldValue, self.currentPage)
         let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
         self.pageViewController.setViewControllers(
           [segViewControllers[self.currentPage]],
@@ -48,11 +45,6 @@ final class SearchViewController: BaseViewController {
         )
       }
     }
-
-    ///
-    private let favoriteButtonTapped = PublishSubject<CoinData>()
-    private let realm = try! Realm()
-    ///
 
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
@@ -146,57 +138,13 @@ final class SearchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        // TODO: cell VM 분리
         output.data
             .bind(to: segCoinViewController.coinCollectionView.rx.items(
                 cellIdentifier: SearchCoinCollectionViewCell.identifier,
                 cellType: SearchCoinCollectionViewCell.self)) { index, element, cell in
                     cell.configureCell(with: element)
-                    /// Realm
-                    cell.favoriteButton.rx.tapGesture()
-                        .when(.recognized)
-                        .subscribe(with: self) { owner, _ in
-                            let realm = owner.realm
-
-                            if let deletedItem = realm.objects(FavoriteCoin.self)
-                                .filter("id == %@", element.id)
-                                .first {
-                                // Realm Delete
-                                do {
-                                    try realm.write {
-                                        realm.delete(deletedItem)
-                                        owner.view.makeToast(
-                                            "즐겨찾기에서 제거되었습니다",
-                                            duration: 2.0,
-                                            position: .bottom,
-                                            style: owner.redStyle)
-                                    }
-                                } catch {
-                                    print("realm Deleted Error", error)
-                                }
-                            } else {
-                                do {
-                                    try realm.write {
-                                        let favoriteData = FavoriteCoin(
-                                            id: element.id,
-                                            symbol: element.symbol,
-                                            image: element.thumb)
-                                        realm.add(favoriteData)
-                                        owner.view.makeToast(
-                                            "즐겨찾기에 추가되었습니다",
-                                            duration: 2.0,
-                                            position: .bottom,
-                                            style: owner.blueStyle)
-                                    }
-                                } catch {
-                                    print("Realm Create Failed", error)
-                                }
-                            }
-                            // 셀 버튼 업데이트 메서드
-                            cell.updateFavoriteButton(id: element.id)
-                        }
-                        .disposed(by: cell.disposeBag)
-                    ///
+                    cell.bind(with: SearchCoinCollectionCellViewModel(coinData: element))
+                    cell.updateFavoriteButton(id: element.id)
                 }
                 .disposed(by: disposeBag)
 

@@ -158,14 +158,14 @@ final class DetailViewController: BaseViewController {
                     owner.view.makeToast(
                         "즐겨찾기에 추가되었습니다",
                         duration: 2.0,
-                        position: .bottom,
+                        position: .top,
                         style: owner.blueStyle)
                     owner.favoriteButton.image = UIImage(systemName: "star.fill")
                 case .itemDeleted:
                     owner.view.makeToast(
                         "즐겨찾기에서 제거되었습니다",
                         duration: 2.0,
-                        position: .bottom,
+                        position: .top,
                         style: owner.redStyle)
                     owner.favoriteButton.image = UIImage(systemName: "star")
                 case .itemError:
