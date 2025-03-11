@@ -18,7 +18,7 @@ import RealmSwift
 // TODO: - Realm 리팩토링
 final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     let searchBar = UISearchBar()
     private let barButton = UIBarButtonItem(
         image: UIImage(systemName: "arrow.left"),
@@ -104,6 +104,8 @@ final class SearchViewController: BaseViewController {
     }
 
     override func bind() {
+        disposeBag = DisposeBag()
+
         let input = SearchViewModel.Input(
             searchBarTapped: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text.orEmpty,
@@ -121,6 +123,21 @@ final class SearchViewController: BaseViewController {
         output.action
             .bind(with: self) { owner, action in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        output.error
+            .bind(with: self) { owner, error in
+                let vc = AlertViewController()
+                vc.alertView.messageLabel.text = error.description
+                vc.modalPresentationStyle = .overFullScreen
+                vc.alertView.retryButton.rx.tap
+                    .bind(with: owner) { owner, _ in
+                        owner.bind()
+                        vc.dismiss(animated: true)
+                    }
+                    .disposed(by: owner.disposeBag)
+                owner.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
 

@@ -13,7 +13,7 @@ import RxSwift
 final class SearchViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var searchText: Observable<String>
-//    private let favoriteCoinRepository = FavoriteCoinRepository()
+    private let error = PublishRelay<APIError>()
 
     enum SettingAction {
         case popViewController
@@ -29,6 +29,7 @@ final class SearchViewModel: ViewModel {
     struct Output {
         let action: PublishRelay<SettingAction>
         let data: Observable<[CoinData]>
+        let error: Observable<APIError>
     }
 
     init(searchText: String) {
@@ -69,11 +70,15 @@ final class SearchViewModel: ViewModel {
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
                 LoadingIndicator.hideLoading()
+            } onError: { [weak self] _, error in
+                self?.error.accept(error as! APIError)
+                LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
 
         return Output(
             action: action,
-            data: result.asObservable())
+            data: result.asObservable(),
+            error: error.asObservable())
     }
 }
