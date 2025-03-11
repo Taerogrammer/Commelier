@@ -17,7 +17,22 @@
 		16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB22D799BB000AC3458 /* Kingfisher */; };
 		16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB52D799BEA00AC3458 /* RxCocoa */; };
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
+		16C8DD932D7FB53A00907D86 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 16158CA12D799A6000AC3458 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		16C8DD942D7FB53A00907D86 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				16C8DD932D7FB53A00907D86 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		16158C852D79992E00AC3458 /* CryptoCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +106,7 @@
 				16158C812D79992E00AC3458 /* Sources */,
 				16158C822D79992E00AC3458 /* Frameworks */,
 				16158C832D79992E00AC3458 /* Resources */,
+				16C8DD942D7FB53A00907D86 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
