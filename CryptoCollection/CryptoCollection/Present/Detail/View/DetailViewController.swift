@@ -97,8 +97,6 @@ final class DetailViewController: BaseViewController {
             DetailCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: DetailCollectionHeaderView.identifier)
-        collectionView.layer.cornerRadius = 8
-        collectionView.layer.masksToBounds = true
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false

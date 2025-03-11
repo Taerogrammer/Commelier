@@ -42,5 +42,12 @@ final class DetailCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable 
         money.textColor = UIColor.customBlack
         date.textColor = UIColor.customGray
         backgroundColor = UIColor.customWhiteGray
+
+        contentView.layer.cornerRadius = 4
+        contentView.layer.masksToBounds = true
+        contentView.layer.backgroundColor = UIColor.clear.cgColor
+        layer.cornerRadius = 4
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.customBlack.cgColor
     }
 }
