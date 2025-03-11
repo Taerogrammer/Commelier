@@ -35,7 +35,6 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
             try realm.write {
                 let favCoin = favoriteCoin
                 realm.add(favCoin)
-                print("Created!!", getFileURL())
             }
         } catch {
             print("Favorite Coin Create Fail")
@@ -49,7 +48,6 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
             do {
                 try realm.write {
                     realm.delete(deletedItem)
-                    print("Deleted!!")
                 }
             } catch {
                 print("Favorite Coin Deleted Fail")

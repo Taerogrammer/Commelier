@@ -29,6 +29,7 @@ final class TickerHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, Vi
     func configureHierarchy() {
         [coinLabel, priceButton, changedPriceButton, accButton].forEach { contentView.addSubview($0) }
     }
+
     func configureLayout() {
         coinLabel.snp.makeConstraints { make in
             make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(16)
@@ -50,8 +51,8 @@ final class TickerHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, Vi
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
         }
-
     }
+
     func configureView() {
         contentView.backgroundColor = .customWhiteGray
         coinLabel.textAlignment = .left
@@ -61,5 +62,4 @@ final class TickerHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, Vi
         changedPriceButton.title.text = "전일대비"
         accButton.title.text = "거래대금"
     }
-
 }

@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-
 final class AlertViewController: BaseViewController {
     let alertView = AlertView()
     weak var delegate: AlertViewDismissDelegate?

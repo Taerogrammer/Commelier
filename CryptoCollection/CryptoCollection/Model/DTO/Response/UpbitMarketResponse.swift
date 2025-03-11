@@ -38,25 +38,11 @@ struct UpbitMarketResponse: Decodable {
     }
 }
 
-// TODO: 숫자 변환
-/*
- 세자리 쉼표
- 소수점 2자리까지 표시
- 값 상승: 빨간색 (+, 세모)
- 값 하락: 파랑색 (-, 세모)
- 값 유지: 검정색 ()
-
-
- 반올림 했을 때 0이라도 -가 나타날 수 있음
- 
- */
-
 func numberConverter(number: Double) -> String {
 
     return (round(number * 100) / 100).formatted()
 }
 
-// 반올림해서 0.00인 경우 -부호 제거
 func rateConverter(number: Double) -> String {
     return round(number * 100) / 100 == 0.00 ? "0.00" : String(format: "%.2f", (round(number * 100) / 100))
 }

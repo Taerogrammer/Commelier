@@ -5,16 +5,15 @@
 //  Created by 김태형 on 3/8/25.
 //
 
+import Foundation
 import RxCocoa
 import RxSwift
-import Foundation
 
 final class TrendingViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
-
 
     enum SettingAction {
         case navigateToDetail(String)
@@ -99,5 +98,4 @@ final class TrendingViewModel: ViewModel {
     func disposeTimer() {
         disposable?.dispose()
     }
-
 }

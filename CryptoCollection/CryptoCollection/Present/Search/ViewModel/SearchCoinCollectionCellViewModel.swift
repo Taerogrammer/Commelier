@@ -5,9 +5,9 @@
 //  Created by 김태형 on 3/11/25.
 //
 
+import RealmSwift
 import RxCocoa
 import RxSwift
-import RealmSwift
 
 final class SearchCoinCollectionCellViewModel: ViewModel {
     private let disposeBag = DisposeBag()
@@ -55,6 +55,5 @@ final class SearchCoinCollectionCellViewModel: ViewModel {
         return Output(
             favoriteButtonResult: favoriteButtonResult)
     }
-
 
 }

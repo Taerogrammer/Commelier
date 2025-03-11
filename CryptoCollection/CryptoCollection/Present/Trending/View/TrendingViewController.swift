@@ -55,7 +55,6 @@ final class TrendingViewController: BaseViewController {
         collectionViewLayout: createCompositionalLayout())
     private let viewModel = TrendingViewModel()
     private var disposeBag = DisposeBag()
-
     private var dataSource: RxCollectionViewSectionedReloadDataSource<TrendingSection>!
 
     override func configureHierarchy() {
@@ -101,7 +100,6 @@ final class TrendingViewController: BaseViewController {
 
     override func bind() {
         disposeBag = DisposeBag()
-
         let input = TrendingViewModel.Input(
             searchBarTapped: searchBar.rx.searchButtonClicked,
             searchText: searchBar.rx.text.orEmpty)

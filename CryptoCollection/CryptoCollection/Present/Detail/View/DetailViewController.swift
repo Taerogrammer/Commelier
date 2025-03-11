@@ -7,13 +7,12 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 import RxCocoa
 import RxDataSources
 import RxSwift
 import SnapKit
 import Toast
-
-import RealmSwift
 
 struct DetailSection {
     let title: String
@@ -54,9 +53,7 @@ final class DetailViewController: BaseViewController {
     private var blueStyle = ToastStyle()
     private var redStyle = ToastStyle()
     private var grayStyle = ToastStyle()
-
     private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
-
     private let realm = try! Realm()
 
     init(viewModel: DetailViewModel) {
