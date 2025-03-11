@@ -52,6 +52,9 @@ final class SearchViewModel: ViewModel {
             .subscribe(with: self) { owner, data in
                 result.accept(data.coins)
                 LoadingIndicator.hideLoading()
+            } onError: { [weak self] _, error in
+                self?.error.accept(error as! APIError)
+                LoadingIndicator.hideLoading()
             }
             .disposed(by: disposeBag)
 
