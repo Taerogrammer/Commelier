@@ -42,6 +42,8 @@ final class SearchViewModel: ViewModel {
 
         input.searchBarTapped
             .withLatestFrom(input.searchText)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { $0.count >= 1 }
             .distinctUntilChanged()
             .flatMapLatest { query -> Single<CoingeckoSearchResponse> in
                 LoadingIndicator.showLoading()
