@@ -64,7 +64,7 @@ final class TrendingViewModel: ViewModel {
         input.searchBarTapped
             .withLatestFrom(input.searchText)
             .bind(with: self) { owner, text in
-                action.onNext(text.count >= 2 ? SettingAction.navigateToDetail(text) : SettingAction.showAlert)
+                action.onNext(text.trimmingCharacters(in: .whitespacesAndNewlines).count >= 1 ? SettingAction.navigateToDetail(text) : SettingAction.showAlert)
             }
             .disposed(by: disposeBag)
 

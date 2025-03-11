@@ -10,7 +10,6 @@ import RxCocoa
 import RxGesture
 import RxSwift
 import SnapKit
-import Toast
 
 final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
@@ -29,8 +28,6 @@ final class SearchViewController: BaseViewController {
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal)
-    private var blueStyle = ToastStyle()
-    private var redStyle = ToastStyle()
     var segViewControllers: [BaseViewController] {
         [segCoinViewController, segNFTViewController, segTickerViewController]
     }
@@ -82,9 +79,6 @@ final class SearchViewController: BaseViewController {
         segCoinViewController.coinCollectionView.register(SearchCoinCollectionViewCell.self, forCellWithReuseIdentifier: SearchCoinCollectionViewCell.identifier)
         segCoinViewController.coinCollectionView.keyboardDismissMode = .onDrag
         configureSearchBar()
-
-        blueStyle.messageColor = UIColor.customBlue
-        redStyle.messageColor = UIColor.customRed
     }
 
     override func configureNavigation() {
