@@ -1,8 +1,8 @@
-# CryptoCollection
+# CrypMulator
 
-### 가상 화폐에 관심있다면? CryptoCollection을 통해 가상 화폐에 대한 실시간 정보를 확인해보세요!
+### 가상 화폐에 관심있다면? CrypMulator를 통해 가상 화폐에 대한 실시간 정보를 확인해보세요!
 
-CryptoCollection은 코인과 NFT 등의 정보를 실시간으로 조회하고, 관심 목록을 관리할 수 있는 iOS 앱입니다.
+CrypMulator는 코인과 NFT 등의 정보를 실시간으로 조회하고, 관심 목록을 관리할 수 있는 iOS 앱입니다.
 
 <br><br><br>
 
