@@ -53,18 +53,6 @@ final class TickerViewModel: ViewModel {
             }
             .disposed(by: disposeBag)
 
-        // TODO: 방법 고민해보기
-        /*
-         .timer 메서드로 구현하면 0초부터 시작은 하나 늦게 호출됨.
-         처음은 전자의 식으로 호출 후 5초 뒤부턴 timer 식 호출
-         */
-        getData()
-
-        /*
-         timer를 Disposable로 선언 후 명시적으로 dispose() 시켜줌
-         */
-        getDataByTimer()
-
         let sortedData = Observable
             .combineLatest(data, buttonStatus)
             .map { data, buttonStatus in
@@ -77,23 +65,19 @@ final class TickerViewModel: ViewModel {
                       error: error.asObservable())
     }
 
-    private func getData() {
-        NetworkManager.shared.getItem(
-            api: UpbitRouter.getMarket(),
-            type: [UpbitMarketResponse].self)
-        .subscribe(with: self) { owner, value in
-            owner.data.accept(value)
-        } onFailure: { owner, error in
-            owner.error.accept(error as! APIError)
-        }
-        .disposed(by: disposeBag)
-    }
-
     func getDataByTimer() {
         disposeTimer()
-        disposable = Observable<Int>.interval(.seconds(5), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
+        disposable = Observable<Int>.interval(.seconds(2), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
+            .startWith(0)
             .subscribe(with: self) { owner, val in
-                owner.getData()
+                NetworkManager.shared.getItem(
+                    api: UpbitRouter.getMarket(), type: [UpbitMarketResponse].self)
+                .subscribe(with: owner) { owner, value in
+                    owner.data.accept(value)
+                } onFailure: { owner, error in
+                    owner.error.accept(error as! APIError)
+                }
+                .disposed(by: owner.disposeBag)
             }
     }
 
