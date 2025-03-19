@@ -35,26 +35,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		16158C852D79992E00AC3458 /* CryptoCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		16158C852D79992E00AC3458 /* CrypMulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrypMulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		16158E402D79CDDC00AC3458 /* Exceptions for "CryptoCollection" folder in "CryptoCollection" target */ = {
+		16158E402D79CDDC00AC3458 /* Exceptions for "CrypMulator" folder in "CrypMulator" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 16158C842D79992E00AC3458 /* CryptoCollection */;
+			target = 16158C842D79992E00AC3458 /* CrypMulator */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		16158E262D79CDDC00AC3458 /* CryptoCollection */ = {
+		16158E262D79CDDC00AC3458 /* CrypMulator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				16158E402D79CDDC00AC3458 /* Exceptions for "CryptoCollection" folder in "CryptoCollection" target */,
+				16158E402D79CDDC00AC3458 /* Exceptions for "CrypMulator" folder in "CrypMulator" target */,
 			);
-			path = CryptoCollection;
+			path = CrypMulator;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -83,7 +83,7 @@
 		16158C7C2D79992E00AC3458 = {
 			isa = PBXGroup;
 			children = (
-				16158E262D79CDDC00AC3458 /* CryptoCollection */,
+				16158E262D79CDDC00AC3458 /* CrypMulator */,
 				16158C862D79992E00AC3458 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,7 +91,7 @@
 		16158C862D79992E00AC3458 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				16158C852D79992E00AC3458 /* CryptoCollection.app */,
+				16158C852D79992E00AC3458 /* CrypMulator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,9 +99,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		16158C842D79992E00AC3458 /* CryptoCollection */ = {
+		16158C842D79992E00AC3458 /* CrypMulator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 16158C982D79993000AC3458 /* Build configuration list for PBXNativeTarget "CryptoCollection" */;
+			buildConfigurationList = 16158C982D79993000AC3458 /* Build configuration list for PBXNativeTarget "CrypMulator" */;
 			buildPhases = (
 				16158C812D79992E00AC3458 /* Sources */,
 				16158C822D79992E00AC3458 /* Frameworks */,
@@ -113,9 +113,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				16158E262D79CDDC00AC3458 /* CryptoCollection */,
+				16158E262D79CDDC00AC3458 /* CrypMulator */,
 			);
-			name = CryptoCollection;
+			name = CrypMulator;
 			packageProductDependencies = (
 				16158C9E2D799A2600AC3458 /* Toast */,
 				16158CA12D799A6000AC3458 /* RealmSwift */,
@@ -129,7 +129,7 @@
 				16158CB72D799BEA00AC3458 /* RxSwift */,
 			);
 			productName = CryptoCollection;
-			productReference = 16158C852D79992E00AC3458 /* CryptoCollection.app */;
+			productReference = 16158C852D79992E00AC3458 /* CrypMulator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -147,7 +147,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 16158C802D79992E00AC3458 /* Build configuration list for PBXProject "CryptoCollection" */;
+			buildConfigurationList = 16158C802D79992E00AC3458 /* Build configuration list for PBXProject "CrypMulator" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -171,7 +171,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				16158C842D79992E00AC3458 /* CryptoCollection */,
+				16158C842D79992E00AC3458 /* CrypMulator */,
 			);
 		};
 /* End PBXProject section */
@@ -206,7 +206,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CryptoCollection/Info.plist;
+				INFOPLIST_FILE = CrypMulator/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -239,7 +239,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CryptoCollection/Info.plist;
+				INFOPLIST_FILE = CrypMulator/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -385,7 +385,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		16158C802D79992E00AC3458 /* Build configuration list for PBXProject "CryptoCollection" */ = {
+		16158C802D79992E00AC3458 /* Build configuration list for PBXProject "CrypMulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16158C9B2D79993000AC3458 /* Debug */,
@@ -394,7 +394,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		16158C982D79993000AC3458 /* Build configuration list for PBXNativeTarget "CryptoCollection" */ = {
+		16158C982D79993000AC3458 /* Build configuration list for PBXNativeTarget "CrypMulator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				16158C992D79993000AC3458 /* Debug */,
