@@ -32,7 +32,7 @@ final class TickerViewController: BaseViewController {
 
     override func configureNavigation() {
         let titleLabel = UILabel()
-        titleLabel.text = "거래소"
+        titleLabel.text = StringLiteral.NavigationTitle.ticker
         titleLabel.font = .boldSystemFont(ofSize: 16)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }

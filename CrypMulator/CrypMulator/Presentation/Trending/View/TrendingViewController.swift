@@ -84,7 +84,7 @@ final class TrendingViewController: BaseViewController {
 
     override func configureNavigation() {
         let titleLabel = UILabel()
-        titleLabel.text = "가상자산 / 심볼 검색"
+        titleLabel.text = StringLiteral.NavigationTitle.information
         titleLabel.font = .boldSystemFont(ofSize: 16)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
