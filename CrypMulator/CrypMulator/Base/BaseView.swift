@@ -13,6 +13,7 @@ class BaseView: UIView, ViewConfiguration {
         configureHierarchy()
         configureLayout()
         configureView()
+        bind()
     }
 
     @available(*, unavailable)
@@ -25,4 +26,6 @@ class BaseView: UIView, ViewConfiguration {
     func configureLayout() { }
 
     func configureView() { }
+
+    func bind() { }
 }
