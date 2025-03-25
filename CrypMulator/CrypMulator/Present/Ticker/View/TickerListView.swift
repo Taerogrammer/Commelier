@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 final class TickerListView: BaseView {
-    private let viewModel = TickerViewModel()
+    let tickerListViewModel = TickerListViewModel()
     private var disposeBag = DisposeBag()
     let headerView = TickerHeaderView()
     let tickerTableView = UITableView()
@@ -40,5 +40,35 @@ final class TickerListView: BaseView {
         tickerTableView.showsVerticalScrollIndicator = false
     }
 
+    override func bind() {
+        let input = TickerListViewModel.Input(
+            priceTapped: headerView.priceButton.rx.tapGesture(),
+            changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
+            accTapped: headerView.accButton.rx.tapGesture()
+        )
+        let output = tickerListViewModel.transform(input: input)
+
+        output.data
+            .bind(to: tickerTableView.rx.items(
+                cellIdentifier: TickerTableViewCell.identifier,
+                cellType: TickerTableViewCell.self)) { index, element, cell in
+                    cell.name.text = element.market
+                    cell.price.text = element.trade_price_description
+                    cell.changeRate.text = element.signed_change_rate_description
+                    cell.changePrice.text = element.signed_change_price_description
+                    cell.tradePrice.text = element.acc_trade_price_24h_description
+                    cell.updateColor(number: element.signed_change_rate)
+                }
+                .disposed(by: disposeBag)
+
+        output.buttonStatus
+            .subscribe(with: self) { owner, status in
+                owner.headerView.priceButton.buttonStatus(status: status.price)
+                owner.headerView.changedPriceButton.buttonStatus(status: status.changedPrice)
+                owner.headerView.accButton.buttonStatus(status: status.acc)
+            }
+            .disposed(by: disposeBag)
+
+    }
 
 }
