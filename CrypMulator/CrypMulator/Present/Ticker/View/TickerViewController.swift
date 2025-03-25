@@ -61,17 +61,6 @@ final class TickerViewController: BaseViewController {
                 print("error", error)
             }
             .disposed(by: disposeBag)
-
-//        output.error
-//            .bind(with: self) { owner, error in
-//                owner.tickerListViewModel.disposeTimer()
-//                let vc = AlertViewController()
-//                vc.alertView.messageLabel.text = error.description
-//                vc.delegate = owner
-//                vc.modalPresentationStyle = .overFullScreen
-//                owner.present(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
     }
 
 }
