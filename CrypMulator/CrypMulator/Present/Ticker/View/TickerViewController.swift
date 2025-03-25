@@ -11,32 +11,23 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewController: BaseViewController {
-    private let tableView = UITableView()
-    private let viewModel = TickerViewModel()
-    private var disposeBag = DisposeBag()
-    private let headerView = TickerHeaderView()
+    private let tickerViewModel = TickerViewModel()
+    private let disposeBag = DisposeBag()
+    private lazy var tickerListView = TickerListView(
+        tickerListViewModel: tickerViewModel.tickerListViewModel)
 
     override func configureHierarchy() {
-        view.addSubview(tableView)
-        view.addSubview(headerView)
+        view.addSubViews([tickerListView])
     }
 
     override func configureLayout() {
-        tableView.snp.makeConstraints { make in
+        tickerListView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        headerView.snp.makeConstraints { make in
-            make.width.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44)
         }
     }
 
     override func configureView() {
-        tableView.register(TickerTableViewCell.self, forCellReuseIdentifier: TickerTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.rowHeight = 44
-        tableView.tableHeaderView = headerView
-        tableView.showsVerticalScrollIndicator = false
+
     }
 
     override func configureNavigation() {
@@ -48,50 +39,26 @@ final class TickerViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getDataByTimer()
+        tickerListView.tickerListViewModel.getDataByTimer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.disposeTimer()
+        tickerListView.tickerListViewModel.disposeTimer()
     }
 
     override func bind() {
-        let input = TickerViewModel.Input(
-            priceTapped: headerView.priceButton.rx.tapGesture(),
-            changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
-            accTapped: headerView.accButton.rx.tapGesture()
-        )
-        let output = viewModel.transform(input: input)
-
-        output.data
-            .bind(to:tableView.rx.items(
-                cellIdentifier: TickerTableViewCell.identifier,
-                cellType: TickerTableViewCell.self)) { index, element, cell in
-                    cell.name.text = element.market
-                    cell.price.text = element.trade_price_description
-                    cell.changeRate.text = element.signed_change_rate_description
-                    cell.changePrice.text = element.signed_change_price_description
-                    cell.tradePrice.text = element.acc_trade_price_24h_description
-                    cell.updateColor(number: element.signed_change_rate)
-                }
-                .disposed(by: disposeBag)
-
-        output.buttonStatus
-            .subscribe(with: self) { owner, status in
-                owner.headerView.priceButton.buttonStatus(status: status.price)
-                owner.headerView.changedPriceButton.buttonStatus(status: status.changedPrice)
-                owner.headerView.accButton.buttonStatus(status: status.acc)
-            }
-            .disposed(by: disposeBag)
+        let input = TickerViewModel.Input()
+        let output = tickerViewModel.transform(input: input)
 
         output.error
             .bind(with: self) { owner, error in
-                owner.viewModel.disposeTimer()
+                owner.tickerViewModel.tickerListViewModel.disposeTimer()
                 let vc = AlertViewController()
                 vc.alertView.messageLabel.text = error.description
                 vc.delegate = owner
                 vc.modalPresentationStyle = .overFullScreen
                 owner.present(vc, animated: true)
+                print("error", error)
             }
             .disposed(by: disposeBag)
     }
@@ -101,6 +68,6 @@ final class TickerViewController: BaseViewController {
 // MARK: - delegate
 extension TickerViewController: AlertViewDismissDelegate {
     func alertViewDismiss() {
-        viewModel.getDataByTimer()
+        tickerListView.tickerListViewModel.getDataByTimer()
     }
 }
