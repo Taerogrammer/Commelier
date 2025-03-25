@@ -9,7 +9,7 @@ import RxCocoa
 import RxSwift
 import RxGesture
 
-final class TickerViewModel: ViewModel {
+final class TickerListViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private var disposable: Disposable?
     private let data = PublishRelay<[UpbitMarketResponse]>()

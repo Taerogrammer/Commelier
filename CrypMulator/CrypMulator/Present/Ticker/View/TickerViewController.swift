@@ -11,32 +11,23 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewController: BaseViewController {
-    private let tableView = UITableView()
-    private let viewModel = TickerViewModel()
+    private let viewModel = TickerListViewModel()
     private var disposeBag = DisposeBag()
-    private let headerView = TickerHeaderView()
+
+    private let tickerListView = TickerListView()
 
     override func configureHierarchy() {
-        view.addSubview(tableView)
-        view.addSubview(headerView)
+        view.addSubview(tickerListView)
     }
 
     override func configureLayout() {
-        tableView.snp.makeConstraints { make in
+        tickerListView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        headerView.snp.makeConstraints { make in
-            make.width.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44)
         }
     }
 
     override func configureView() {
-        tableView.register(TickerTableViewCell.self, forCellReuseIdentifier: TickerTableViewCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.rowHeight = 44
-        tableView.tableHeaderView = headerView
-        tableView.showsVerticalScrollIndicator = false
+
     }
 
     override func configureNavigation() {
@@ -56,15 +47,15 @@ final class TickerViewController: BaseViewController {
     }
 
     override func bind() {
-        let input = TickerViewModel.Input(
-            priceTapped: headerView.priceButton.rx.tapGesture(),
-            changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
-            accTapped: headerView.accButton.rx.tapGesture()
+        let input = TickerListViewModel.Input(
+            priceTapped: tickerListView.headerView.priceButton.rx.tapGesture(),
+            changedPriceTapped: tickerListView.headerView.changedPriceButton.rx.tapGesture(),
+            accTapped: tickerListView.headerView.accButton.rx.tapGesture()
         )
         let output = viewModel.transform(input: input)
 
         output.data
-            .bind(to:tableView.rx.items(
+            .bind(to:tickerListView.tickerTableView.rx.items(
                 cellIdentifier: TickerTableViewCell.identifier,
                 cellType: TickerTableViewCell.self)) { index, element, cell in
                     cell.name.text = element.market
@@ -78,9 +69,9 @@ final class TickerViewController: BaseViewController {
 
         output.buttonStatus
             .subscribe(with: self) { owner, status in
-                owner.headerView.priceButton.buttonStatus(status: status.price)
-                owner.headerView.changedPriceButton.buttonStatus(status: status.changedPrice)
-                owner.headerView.accButton.buttonStatus(status: status.acc)
+                owner.tickerListView.headerView.priceButton.buttonStatus(status: status.price)
+                owner.tickerListView.headerView.changedPriceButton.buttonStatus(status: status.changedPrice)
+                owner.tickerListView.headerView.accButton.buttonStatus(status: status.acc)
             }
             .disposed(by: disposeBag)
 
