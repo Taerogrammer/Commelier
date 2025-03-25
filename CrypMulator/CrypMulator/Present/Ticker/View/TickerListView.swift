@@ -13,7 +13,7 @@ import RxSwift
 final class TickerListView: BaseView {
     private var disposeBag = DisposeBag()
     let tickerListViewModel: TickerListViewModel
-    let headerView = TickerHeaderView()
+    let headerView = TickerListHeaderView()
     let tickerTableView = UITableView()
 
     init(tickerListViewModel: TickerListViewModel) {

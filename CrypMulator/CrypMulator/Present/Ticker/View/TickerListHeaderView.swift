@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TickerHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, ViewConfiguration {
+final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, ViewConfiguration {
     let coinLabel = UILabel()
     let priceButton = CoinFilterButton()
     let changedPriceButton = CoinFilterButton()
