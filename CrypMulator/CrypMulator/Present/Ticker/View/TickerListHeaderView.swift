@@ -15,6 +15,8 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
     let changedPriceButton = CoinFilterButton()
     let accButton = CoinFilterButton()
 
+    private let bottomLine = BaseView()
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         configureHierarchy()
@@ -28,7 +30,7 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
     }
     
     func configureHierarchy() {
-        addSubViews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton])
+        addSubViews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton, bottomLine])
     }
 
     func configureLayout() {
@@ -59,15 +61,19 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
             make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
             make.centerY.equalTo(coinLabel)
         }
+        bottomLine.snp.makeConstraints { make in
+            make.bottom.horizontalEdges.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
     }
 
     func configureView() {
-        contentView.backgroundColor = .customWhiteGray
         coinLabel.textAlignment = .left
         coinLabel.text = "코인"
         coinLabel.font = .boldSystemFont(ofSize: 14)
         priceButton.title.text = "현재가"
         changedPriceButton.title.text = "전일대비"
         accButton.title.text = "거래대금"
+        bottomLine.backgroundColor = .customGray
     }
 }
