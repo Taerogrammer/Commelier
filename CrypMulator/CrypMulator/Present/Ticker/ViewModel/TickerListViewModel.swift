@@ -10,14 +10,19 @@ import RxSwift
 import RxGesture
 
 final class TickerListViewModel: ViewModel {
-    private let disposeBag = DisposeBag()
     private var disposable: Disposable?
+    private let disposeBag = DisposeBag()
     private let data = PublishRelay<[UpbitMarketResponse]>()
     private let buttonStatus = BehaviorRelay<ButtonStatus>(value: ButtonStatus(
         price: .unClicked,
         changedPrice: .unClicked,
         acc: .unClicked))
-    private let error = PublishRelay<APIError>()
+    private let errorRelay = PublishRelay<APIError>()
+
+    // 외부에서 사용할 에러 stream
+    var errorStream: Observable<APIError> {
+        return errorRelay.asObservable()
+    }
 
     struct Input {
         let priceTapped: TapControlEvent
@@ -62,7 +67,7 @@ final class TickerListViewModel: ViewModel {
 
         return Output(data: sortedData,
                       buttonStatus: buttonStatus.asObservable(),
-                      error: error.asObservable())
+                      error: errorRelay.asObservable())
     }
 
     func getDataByTimer() {
@@ -75,7 +80,7 @@ final class TickerListViewModel: ViewModel {
                 .subscribe(with: owner) { owner, value in
                     owner.data.accept(value)
                 } onFailure: { owner, error in
-                    owner.error.accept(error as! APIError)
+                    owner.errorRelay.accept(error as! APIError)
                 }
                 .disposed(by: owner.disposeBag)
             }

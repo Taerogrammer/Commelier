@@ -11,7 +11,10 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewController: BaseViewController {
-    private let tickerListView = TickerListView()
+    private let tickerViewModel = TickerViewModel()
+    private let disposeBag = DisposeBag()
+    private lazy var tickerListView = TickerListView(
+        tickerListViewModel: tickerViewModel.tickerListViewModel)
 
     override func configureHierarchy() {
         view.addSubview(tickerListView)
@@ -44,6 +47,21 @@ final class TickerViewController: BaseViewController {
     }
 
     override func bind() {
+        let input = TickerViewModel.Input()
+        let output = tickerViewModel.transform(input: input)
+
+        output.error
+            .bind(with: self) { owner, error in
+                owner.tickerViewModel.tickerListViewModel.disposeTimer()
+                let vc = AlertViewController()
+                vc.alertView.messageLabel.text = error.description
+                vc.delegate = owner
+                vc.modalPresentationStyle = .overFullScreen
+                owner.present(vc, animated: true)
+                print("error", error)
+            }
+            .disposed(by: disposeBag)
+
 //        output.error
 //            .bind(with: self) { owner, error in
 //                owner.tickerListViewModel.disposeTimer()
