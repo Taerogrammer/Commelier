@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, ViewConfiguration {
-    let coinLabel = UILabel()
+    private let portfolioSummaryView = PortfolioSummaryView()
+    private let coinLabel = UILabel()
     let priceButton = CoinFilterButton()
     let changedPriceButton = CoinFilterButton()
     let accButton = CoinFilterButton()
@@ -27,29 +28,36 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
     }
     
     func configureHierarchy() {
-        [coinLabel, priceButton, changedPriceButton, accButton].forEach { contentView.addSubview($0) }
+        addSubViews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton])
     }
 
     func configureLayout() {
+        portfolioSummaryView.snp.makeConstraints { make in
+            make.horizontalEdges.top.equalTo(contentView.safeAreaLayoutGuide)
+            make.height.equalTo(60)
+        }
         coinLabel.snp.makeConstraints { make in
             make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(16)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
+            make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
+            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
         }
         priceButton.snp.makeConstraints { make in
             make.trailing.equalTo(changedPriceButton.snp.leading).offset(-8)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.centerY.equalTo(coinLabel)
         }
         changedPriceButton.snp.makeConstraints { make in
             make.trailing.equalTo(accButton.snp.leading).offset(-8)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.centerY.equalTo(coinLabel)
         }
         accButton.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(16)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide)
+            make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
+            make.centerY.equalTo(coinLabel)
         }
     }
 

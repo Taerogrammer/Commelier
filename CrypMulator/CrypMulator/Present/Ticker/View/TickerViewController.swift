@@ -17,7 +17,7 @@ final class TickerViewController: BaseViewController {
         tickerListViewModel: tickerViewModel.tickerListViewModel)
 
     override func configureHierarchy() {
-        view.addSubview(tickerListView)
+        view.addSubViews([tickerListView])
     }
 
     override func configureLayout() {

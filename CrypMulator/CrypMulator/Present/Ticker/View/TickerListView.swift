@@ -31,7 +31,7 @@ final class TickerListView: BaseView {
         }
         headerView.snp.makeConstraints { make in
             make.width.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(44)
+            make.height.equalTo(96)
         }
     }
 
