@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class TrendingViewModel: ViewModel {
+final class InformationViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
@@ -19,7 +19,7 @@ final class TrendingViewModel: ViewModel {
     }
 
     struct Output {
-        let sectionResult: Observable<[TrendingSection]>
+        let sectionResult: Observable<[InformationSection]>
         let error: Observable<APIError>
     }
 
@@ -28,9 +28,9 @@ final class TrendingViewModel: ViewModel {
         getDataByTimer()
 
         let sections = result
-            .map { response -> [TrendingSection] in
+            .map { response -> [InformationSection] in
                 let coins = response.coins.map { coin in
-                    TrendingItem.coins(TrendingCoin(
+                    InformationItem.coins(RankInformation(
                         id: coin.item.id,
                         rank: "\(coin.item.score + 1)",
                         imageURL: coin.item.thumb,
@@ -40,7 +40,7 @@ final class TrendingViewModel: ViewModel {
                 }
 
                 return [
-                    TrendingSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
+                    InformationSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
                 ]
             }
 

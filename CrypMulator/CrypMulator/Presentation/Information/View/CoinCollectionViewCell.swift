@@ -64,7 +64,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
 // MARK: - configure cell
 extension CoinCollectionViewCell {
-    func configureCell(with coin: TrendingCoin) {
+    func configureCell(with coin: RankInformation) {
         rankLabel.text = coin.rank
         thumbnailImage.kf.setImage(with: URL(string: coin.imageURL))
         symbolLabel.text = coin.symbol

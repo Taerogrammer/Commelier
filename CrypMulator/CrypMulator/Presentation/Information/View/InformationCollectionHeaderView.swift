@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TrendingCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
+final class InformationCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
     private let titleLabel = UILabel()
     private let updateLabel = UILabel()
 
@@ -26,7 +26,7 @@ final class TrendingCollectionHeaderView: UICollectionReusableView, ReuseIdentif
 }
 
 // MARK: - configure view
-extension TrendingCollectionHeaderView: ViewConfiguration {
+extension InformationCollectionHeaderView: ViewConfiguration {
     func configureHierarchy() {
         [titleLabel, updateLabel].forEach { addSubview($0) }
     }

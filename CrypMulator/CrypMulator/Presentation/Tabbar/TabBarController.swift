@@ -17,7 +17,7 @@ final class TabBarController: UITabBarController {
 
     private func configureTabBar() {
         let tickerVC = UINavigationController(rootViewController: TickerViewController())
-        let trendingVC = UINavigationController(rootViewController: TrendingViewController())
+        let trendingVC = UINavigationController(rootViewController: InformationViewController())
         let portfolioVC = UINavigationController(rootViewController: PortfolioViewController())
 
         tickerVC.tabBarItem.title = StringLiteral.TabBar.ticker

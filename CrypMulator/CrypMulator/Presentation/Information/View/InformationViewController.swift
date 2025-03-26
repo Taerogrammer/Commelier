@@ -11,17 +11,17 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 
-struct TrendingSection {
+struct InformationSection {
     let title: String
     let updated: String?
     var items: [Item]
 }
 
-enum TrendingItem {
-    case coins(TrendingCoin)
+enum InformationItem {
+    case coins(RankInformation)
 }
 
-struct TrendingCoin: Equatable {
+struct RankInformation: Equatable {
     let id: String
     let rank: String
     let imageURL: String
@@ -30,23 +30,23 @@ struct TrendingCoin: Equatable {
     let rate: Double
 }
 
-extension TrendingSection: SectionModelType {
-    typealias Item = TrendingItem
+extension InformationSection: SectionModelType {
+    typealias Item = InformationItem
 
-    init(original: TrendingSection, items: [TrendingItem]) {
+    init(original: InformationSection, items: [InformationItem]) {
         self = original
         self.items = items
     }
 }
 
-final class TrendingViewController: BaseViewController {
+final class InformationViewController: BaseViewController {
 
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
-    private let viewModel = TrendingViewModel()
+    private let viewModel = InformationViewModel()
     private var disposeBag = DisposeBag()
-    private var dataSource: RxCollectionViewSectionedReloadDataSource<TrendingSection>!
+    private var dataSource: RxCollectionViewSectionedReloadDataSource<InformationSection>!
 
     override func configureHierarchy() {
         view.addSubview(collectionView)
@@ -60,7 +60,7 @@ final class TrendingViewController: BaseViewController {
 
     override func configureView() {
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
-        collectionView.register(TrendingCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionHeaderView.identifier)
+        collectionView.register(InformationCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: InformationCollectionHeaderView.identifier)
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
@@ -84,7 +84,7 @@ final class TrendingViewController: BaseViewController {
 
     override func bind() {
         disposeBag = DisposeBag()
-        let input = TrendingViewModel.Input()
+        let input = InformationViewModel.Input()
         let output = viewModel.transform(input: input)
 
         output.sectionResult
@@ -124,7 +124,7 @@ final class TrendingViewController: BaseViewController {
 }
 
 // MARK: - configure view
-extension TrendingViewController {
+extension InformationViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
@@ -159,9 +159,9 @@ extension TrendingViewController {
 }
 
 // MARK: - Data Source
-extension TrendingViewController {
+extension InformationViewController {
     private func configureDataSource() {
-        dataSource = RxCollectionViewSectionedReloadDataSource<TrendingSection>(
+        dataSource = RxCollectionViewSectionedReloadDataSource<InformationSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 switch item {
                 case .coins(let coin):
@@ -174,8 +174,8 @@ extension TrendingViewController {
             configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
                     let header = collectionView.dequeueReusableSupplementaryView(
                         ofKind: kind,
-                        withReuseIdentifier: TrendingCollectionHeaderView.identifier,
-                        for: indexPath) as! TrendingCollectionHeaderView
+                        withReuseIdentifier: InformationCollectionHeaderView.identifier,
+                        for: indexPath) as! InformationCollectionHeaderView
                 header.configureTitle(with: dataSource[indexPath.section].title, updateTime: dataSource[indexPath.section].updated)
 
                 return header
