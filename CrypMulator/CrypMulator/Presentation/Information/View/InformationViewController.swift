@@ -71,7 +71,7 @@ final class InformationViewController: BaseViewController {
         let titleLabel = UILabel()
         titleLabel.text = StringLiteral.NavigationTitle.information
         titleLabel.font = SystemFont.Navigation.title
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.titleView = titleLabel
     }
 
     override func viewWillAppear(_ animated: Bool) {
