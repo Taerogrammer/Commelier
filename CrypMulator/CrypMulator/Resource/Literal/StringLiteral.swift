@@ -38,4 +38,14 @@ enum StringLiteral {
         static let priceChanged = "전일대비"
         static let tradeVolume = "거래대금"
     }
+
+    enum FavoriteMessage {
+        static let add = "즐겨찾기에 추가되었습니다"
+        static let remove = "즐겨찾기에서 제거되었습니다"
+    }
+
+    enum Information {
+        static let popular = "인기 검색어"
+        static let favorite = "즐겨찾기"
+    }
 }
