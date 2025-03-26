@@ -47,7 +47,7 @@ final class InformationViewModel: ViewModel {
                 let favoriteSection = self.loadFavoriteSection()
 
                 return [
-                    InformationSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins), favoriteSection
+                    InformationSection(title: StringLiteral.Information.popular, updated: .convertUpdateDate(date: Date()), items: coins), favoriteSection
                 ]
             }
 
@@ -87,7 +87,7 @@ final class InformationViewModel: ViewModel {
         let items = favorites.map { InformationItem.favorite($0) }
 
         return InformationSection(
-            title: "즐겨찾기",
+            title: StringLiteral.Information.favorite,
             updated: nil,
             items: Array(items)
         )

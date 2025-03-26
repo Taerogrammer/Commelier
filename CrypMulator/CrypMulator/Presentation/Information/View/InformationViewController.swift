@@ -70,7 +70,7 @@ final class InformationViewController: BaseViewController {
     override func configureNavigation() {
         let titleLabel = UILabel()
         titleLabel.text = StringLiteral.NavigationTitle.information
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = SystemFont.Navigation.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 

@@ -25,7 +25,7 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
     private var redStyle = ToastStyle()
 
     override func configureHierarchy() {
-        [image, name, transactionQuantity, favoriteButton].forEach { contentView.addSubview($0) }
+        contentView.addSubViews([image, name, transactionQuantity, favoriteButton])
     }
 
     override func configureLayout() {
@@ -78,12 +78,12 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
                 switch action {
                 case .itemAdded:
 
-                    window.rootViewController?.view.makeToast("즐겨찾기에서 추가되었습니다",
+                    window.rootViewController?.view.makeToast(StringLiteral.FavoriteMessage.add,
                                                               duration: 2.0,
                                                               position: .top,
                                                               style: owner.blueStyle)
                 case .itemDeleted:
-                    window.rootViewController?.view.makeToast("즐겨찾기에서 제거되었습니다",
+                    window.rootViewController?.view.makeToast(StringLiteral.FavoriteMessage.remove,
                                                               duration: 2.0,
                                                               position: .top,
                                                               style: owner.redStyle)
@@ -106,8 +106,6 @@ extension FavoriteCoinCollectionViewCell {
 
     func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
-        favoriteButton.setImage(UIImage(systemName: isLiked ? "star.fill" : "star"), for: .normal)
-
         favoriteButton.setImage(isLiked ? SystemIcon.heartFilled : SystemIcon.heart, for: .normal)
     }
 }
