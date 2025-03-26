@@ -38,6 +38,6 @@ final class DetailTitleView: BaseView {
         image.contentMode = .scaleAspectFit
         image.layer.cornerRadius = 14
         id.font = .boldSystemFont(ofSize: 16)
-        id.textColor = UIColor.customBlack
+        id.textColor = SystemColor.black
     }
 }

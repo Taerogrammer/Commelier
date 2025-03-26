@@ -99,9 +99,9 @@ final class DetailViewController: BaseViewController {
         scrollView.showsVerticalScrollIndicator = false
         configureDataSource()
 
-        blueStyle.messageColor = UIColor.customBlue
-        redStyle.messageColor = UIColor.customRed
-        grayStyle.messageColor = UIColor.customBlack
+        blueStyle.messageColor = SystemColor.blue
+        redStyle.messageColor = SystemColor.red
+        grayStyle.messageColor = SystemColor.black
     }
 
     override func configureNavigation() {

@@ -74,6 +74,6 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
         priceButton.title.text = StringLiteral.Ticker.currentPrice
         changedPriceButton.title.text = StringLiteral.Ticker.priceChanged
         accButton.title.text = StringLiteral.Ticker.tradeVolume
-        bottomLine.backgroundColor = .customGray
+        bottomLine.backgroundColor = SystemColor.gray
     }
 }

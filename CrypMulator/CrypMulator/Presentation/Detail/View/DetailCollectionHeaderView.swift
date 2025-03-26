@@ -47,13 +47,13 @@ extension DetailCollectionHeaderView: ViewConfiguration {
     
     func configureView() {
         titleLabel.font = .boldSystemFont(ofSize: 12)
-        titleLabel.textColor = UIColor.customBlack
+        titleLabel.textColor = SystemColor.black
         moreButton.setTitle("더보기 ", for: .normal)
         let image = SystemIcon.chevronRight.resizeImageTo(size: CGSize(width: 12, height: 12))
         moreButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         moreButton.setImage(image, for: .normal)
         moreButton.semanticContentAttribute = .forceRightToLeft
-        moreButton.setTitleColor(UIColor.customGray, for: .normal)
+        moreButton.setTitleColor(SystemColor.gray, for: .normal)
     }
 
     func configureTitle(with title: String) {

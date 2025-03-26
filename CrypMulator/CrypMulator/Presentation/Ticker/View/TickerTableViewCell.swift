@@ -66,14 +66,14 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
     func updateColor(number: Double) {
 
         if round(number * 100) / 100 == 0.00 {
-            changeRate.textColor = .customBlack
-            changePrice.textColor = .customBlack
+            changeRate.textColor = SystemColor.black
+            changePrice.textColor = SystemColor.black
         } else if round(number * 100) / 100 > 0 {
-            changeRate.textColor = .customRed
-            changePrice.textColor = .customRed
+            changeRate.textColor = SystemColor.red
+            changePrice.textColor = SystemColor.red
         } else {
-            changeRate.textColor = .customBlue
-            changePrice.textColor = .customBlue
+            changeRate.textColor = SystemColor.blue
+            changePrice.textColor = SystemColor.blue
         }
     }
 

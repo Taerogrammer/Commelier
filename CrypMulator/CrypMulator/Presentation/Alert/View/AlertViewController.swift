@@ -30,7 +30,7 @@ final class AlertViewController: BaseViewController {
     }
 
     override func configureView() {
-        view.backgroundColor = UIColor.customGray.withAlphaComponent(0.6)
+        view.backgroundColor = SystemColor.gray.withAlphaComponent(0.6)
         alertView.backgroundColor = UIColor.white
         alertView.retryButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
     }

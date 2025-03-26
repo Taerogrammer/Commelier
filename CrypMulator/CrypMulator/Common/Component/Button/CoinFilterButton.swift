@@ -44,8 +44,8 @@ final class CoinFilterButton: BaseView {
         downImage.image = SystemIcon.arrowDown
         upImage.contentMode = .scaleAspectFit
         downImage.contentMode = .scaleAspectFit
-        upImage.tintColor = .customGray
-        downImage.tintColor = .customGray
+        upImage.tintColor = SystemColor.gray
+        downImage.tintColor = SystemColor.gray
         buttonStatus(status: .unClicked)
     }
 
@@ -55,20 +55,20 @@ final class CoinFilterButton: BaseView {
             title.font = SystemFont.Body.primary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
-            upImage.tintColor = .customGray
-            downImage.tintColor = .customGray
+            upImage.tintColor = SystemColor.gray
+            downImage.tintColor = SystemColor.gray
         case .upClicked:
             title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
-            upImage.tintColor = .customBlack
-            downImage.tintColor = .customGray
+            upImage.tintColor = SystemColor.black
+            downImage.tintColor = SystemColor.gray
         case .downClicked:
             title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
-            upImage.tintColor = .customGray
-            downImage.tintColor = .customBlack
+            upImage.tintColor = SystemColor.gray
+            downImage.tintColor = SystemColor.black
         }
     }
 }

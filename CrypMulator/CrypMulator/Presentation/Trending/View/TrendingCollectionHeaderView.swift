@@ -44,9 +44,9 @@ extension TrendingCollectionHeaderView: ViewConfiguration {
 
     func configureView() {
         titleLabel.font = .boldSystemFont(ofSize: 12)
-        titleLabel.textColor = UIColor.customBlack
+        titleLabel.textColor = SystemColor.black
         updateLabel.font = .systemFont(ofSize: 12)
-        updateLabel.textColor = UIColor.customGray
+        updateLabel.textColor = SystemColor.gray
     }
 
     func configureTitle(with title: String, updateTime: String?) {

@@ -42,20 +42,20 @@ final class DetailChartView: BaseView {
         rateLabel.font = .boldSystemFont(ofSize: 12)
         updateDateLabel.font = .systemFont(ofSize: 8)
 
-        moneyLabel.textColor = UIColor.customBlack
-        updateDateLabel.textColor = UIColor.customGray
+        moneyLabel.textColor = SystemColor.black
+        updateDateLabel.textColor = SystemColor.gray
     }
 
     func updateRateLabel(with number: Double) {
         let rounded = round(number * 100) / 100
         if rounded == 0.00 {
-            rateLabel.textColor = UIColor.customBlack
+            rateLabel.textColor = SystemColor.black
             rateLabel.text = "\(rounded)%"
         } else if rounded > 0 {
-            rateLabel.textColor = UIColor.customRed
+            rateLabel.textColor = SystemColor.red
             rateLabel.text = "▲ \(rounded)%"
         } else {
-            rateLabel.textColor = UIColor.customBlue
+            rateLabel.textColor = SystemColor.blue
             rateLabel.text = "▼ \(abs(rounded))%"
         }
     }

@@ -38,16 +38,16 @@ final class DetailCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable 
         title.font = .systemFont(ofSize: 9)
         money.font = .boldSystemFont(ofSize: 12)
         date.font = .systemFont(ofSize: 6)
-        title.textColor = UIColor.customGray
-        money.textColor = UIColor.customBlack
-        date.textColor = UIColor.customGray
-        backgroundColor = UIColor.customWhiteGray
+        title.textColor = SystemColor.gray
+        money.textColor = SystemColor.black
+        date.textColor = SystemColor.gray
+        backgroundColor = SystemColor.whiteGray
 
         contentView.layer.cornerRadius = 4
         contentView.layer.masksToBounds = true
         contentView.layer.backgroundColor = UIColor.clear.cgColor
         layer.cornerRadius = 4
         layer.masksToBounds = false
-        layer.shadowColor = UIColor.customBlack.cgColor
+        layer.shadowColor = SystemColor.black.cgColor
     }
 }

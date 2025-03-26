@@ -21,9 +21,9 @@ final class rankLabel: UILabel {
         super.layoutSubviews()
         clipsToBounds = true
         font = .boldSystemFont(ofSize: 9)
-        textColor = UIColor.customGray
+        textColor = SystemColor.gray
         textAlignment = .center
-        backgroundColor = UIColor.customWhiteGray
+        backgroundColor = SystemColor.whiteGray
         layer.cornerRadius = 6
     }
 

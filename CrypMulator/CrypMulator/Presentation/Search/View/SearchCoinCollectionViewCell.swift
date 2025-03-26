@@ -56,11 +56,11 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
     override func configureView() {
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
-        name.textColor = UIColor.customGray
+        name.textColor = SystemColor.gray
         favoriteButton.setImage(SystemIcon.heart, for: .normal)
-        favoriteButton.tintColor = UIColor.customBlack
-        blueStyle.messageColor = UIColor.customBlue
-        redStyle.messageColor = UIColor.customRed
+        favoriteButton.tintColor = SystemColor.black
+        blueStyle.messageColor = SystemColor.blue
+        redStyle.messageColor = SystemColor.red
     }
 
     // 중첩 구독 방지

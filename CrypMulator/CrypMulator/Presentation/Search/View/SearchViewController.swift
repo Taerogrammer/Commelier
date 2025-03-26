@@ -65,7 +65,7 @@ final class SearchViewController: BaseViewController {
     }
 
     override func configureView() {
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.customGray], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: SystemColor.gray], for: .normal)
         segmentedControl.setTitleTextAttributes([
             .font: UIFont.boldSystemFont(ofSize: 12)
         ], for: .selected)
@@ -164,7 +164,7 @@ extension SearchViewController {
         searchBar.setImage(UIImage(), for: .search, state: .normal)
         searchBar.searchTextField.clearButtonMode = .never
         searchBar.searchTextField.font = .systemFont(ofSize: 12)
-        searchBar.searchTextField.textColor = UIColor.customBlack
+        searchBar.searchTextField.textColor = SystemColor.black
     }
 }
 

@@ -46,10 +46,10 @@ final class NFTCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         image.contentMode = .scaleAspectFit
         image.layer.cornerRadius = 8
         symbol.font = .boldSystemFont(ofSize: 9)
-        symbol.textColor = UIColor.customBlack
+        symbol.textColor = SystemColor.black
         symbol.textAlignment = .center
         floorPrice.font = .systemFont(ofSize: 9)
-        floorPrice.textColor = UIColor.customGray
+        floorPrice.textColor = SystemColor.gray
         floorPricePercentage.font = .boldSystemFont(ofSize: 9)
     }
 }
@@ -66,13 +66,13 @@ extension NFTCollectionViewCell {
     private func updateFloorPricePercentageLabel(rate: String) {
         let doubleTypeRate = Double(rate) ?? 0.0
         if doubleTypeRate > 0.0 {
-            floorPricePercentage.textColor = UIColor.customRed
+            floorPricePercentage.textColor = SystemColor.red
             floorPricePercentage.text = "▲ \(rate)%"
         } else if doubleTypeRate == 0.0 {
-            floorPricePercentage.textColor = UIColor.customBlack
+            floorPricePercentage.textColor = SystemColor.black
             floorPricePercentage.text = "\(rate)%"
         } else {
-            floorPricePercentage.textColor = UIColor.customBlue
+            floorPricePercentage.textColor = SystemColor.blue
             floorPricePercentage.text = "▼ \(rate)%"
         }
     }
