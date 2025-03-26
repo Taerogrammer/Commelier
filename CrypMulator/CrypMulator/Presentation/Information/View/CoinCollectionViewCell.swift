@@ -17,7 +17,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     let rateLabel = UILabel()
 
     override func configureHierarchy() {
-        [rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel].forEach { contentView.addSubview($0) }
+        contentView.addSubViews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
     }
 
     override func configureLayout() {
@@ -55,16 +55,16 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
-        rankLabel.font = .systemFont(ofSize: 12)
-        symbolLabel.font = .boldSystemFont(ofSize: 12)
-        nameLabel.font = .systemFont(ofSize: 9)
-        rateLabel.font = .boldSystemFont(ofSize: 9)
+        rankLabel.font = SystemFont.Body.content
+        symbolLabel.font = SystemFont.Body.boldContent
+        nameLabel.font = SystemFont.Body.small
+        rateLabel.font = SystemFont.Body.boldSmall
     }
 }
 
 // MARK: - configure cell
 extension CoinCollectionViewCell {
-    func configureCell(with coin: TrendingCoin) {
+    func configureCell(with coin: RankInformation) {
         rankLabel.text = coin.rank
         thumbnailImage.kf.setImage(with: URL(string: coin.imageURL))
         symbolLabel.text = coin.symbol
