@@ -49,7 +49,7 @@ extension DetailCollectionHeaderView: ViewConfiguration {
         titleLabel.font = .boldSystemFont(ofSize: 12)
         titleLabel.textColor = UIColor.customBlack
         moreButton.setTitle("더보기 ", for: .normal)
-        let image = UIImage(systemName: "chevron.right")?.resizeImageTo(size: CGSize(width: 12, height: 12))
+        let image = SystemIcon.chevronRight.resizeImageTo(size: CGSize(width: 12, height: 12))
         moreButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         moreButton.setImage(image, for: .normal)
         moreButton.semanticContentAttribute = .forceRightToLeft

@@ -15,7 +15,7 @@ final class SearchViewController: BaseViewController {
     private let viewModel: SearchViewModel
     private var disposeBag = DisposeBag()
     private let barButton = UIBarButtonItem(
-        image: UIImage(systemName: "arrow.left"),
+        image: SystemIcon.arrowLeft,
         style: .plain,
         target: nil,
         action: nil)

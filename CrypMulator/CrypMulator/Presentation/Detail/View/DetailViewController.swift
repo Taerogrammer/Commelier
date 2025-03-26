@@ -39,7 +39,7 @@ final class DetailViewController: BaseViewController {
     private var disposeBag = DisposeBag()
     private let titleView = DetailTitleView()
     private let barButton = UIBarButtonItem(
-        image: UIImage(systemName: "arrow.left"),
+        image: SystemIcon.arrowLeft,
         style: .plain,
         target: nil,
         action: nil)
@@ -155,14 +155,14 @@ final class DetailViewController: BaseViewController {
                         duration: 2.0,
                         position: .top,
                         style: owner.blueStyle)
-                    owner.favoriteButton.image = UIImage(systemName: "star.fill")
+                    owner.favoriteButton.image = SystemIcon.heartFilled
                 case .itemDeleted:
                     owner.view.makeToast(
                         "즐겨찾기에서 제거되었습니다",
                         duration: 2.0,
                         position: .top,
                         style: owner.redStyle)
-                    owner.favoriteButton.image = UIImage(systemName: "star")
+                    owner.favoriteButton.image = SystemIcon.heart
                 case .itemError:
                     owner.view.makeToast(
                         "다시 한 번 시도해주세요.",
@@ -194,7 +194,7 @@ final class DetailViewController: BaseViewController {
 extension DetailViewController {
     private func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
-        favoriteButton.image = UIImage(systemName: isLiked ? "star.fill" : "star")
+        favoriteButton.image = isLiked ? SystemIcon.heartFilled : SystemIcon.heart
     }
 }
 

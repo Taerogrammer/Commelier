@@ -40,8 +40,8 @@ final class CoinFilterButton: BaseView {
     override func configureView() {
         title.font = .systemFont(ofSize: 14)
         title.textAlignment = .right
-        upImage.image = UIImage(systemName: "arrowtriangle.up.fill")
-        downImage.image = UIImage(systemName: "arrowtriangle.down.fill")
+        upImage.image = SystemIcon.arrowUp
+        downImage.image = SystemIcon.arrowDown
         upImage.contentMode = .scaleAspectFit
         downImage.contentMode = .scaleAspectFit
         upImage.tintColor = .customGray
@@ -53,20 +53,20 @@ final class CoinFilterButton: BaseView {
         switch status {
         case .unClicked:
             title.font = .systemFont(ofSize: 14)
-            upImage.image = UIImage(systemName: "arrowtriangle.up.fill")
-            downImage.image = UIImage(systemName: "arrowtriangle.down.fill")
+            upImage.image = SystemIcon.arrowUp
+            downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customGray
             downImage.tintColor = .customGray
         case .upClicked:
             title.font = .boldSystemFont(ofSize: 14)
-            upImage.image = UIImage(systemName: "arrowtriangle.up.fill")
-            downImage.image = UIImage(systemName: "arrowtriangle.down.fill")
+            upImage.image = SystemIcon.arrowUp
+            downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customBlack
             downImage.tintColor = .customGray
         case .downClicked:
             title.font = .boldSystemFont(ofSize: 14)
-            upImage.image = UIImage(systemName: "arrowtriangle.up.fill")
-            downImage.image = UIImage(systemName: "arrowtriangle.down.fill")
+            upImage.image = SystemIcon.arrowUp
+            downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customGray
             downImage.tintColor = .customBlack
         }

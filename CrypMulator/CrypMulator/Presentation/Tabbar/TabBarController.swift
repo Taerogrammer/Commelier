@@ -21,11 +21,11 @@ final class TabBarController: UITabBarController {
         let portfolioVC = UINavigationController(rootViewController: PortfolioViewController())
 
         tickerVC.tabBarItem.title = "거래소"
-        tickerVC.tabBarItem.image = UIImage(systemName: "chart.line.uptrend.xyaxis")
+        tickerVC.tabBarItem.image = SystemIcon.chartLine
         trendingVC.tabBarItem.title = "코인정보"
-        trendingVC.tabBarItem.image = UIImage(systemName: "chart.bar.fill")
+        trendingVC.tabBarItem.image = SystemIcon.chartBarFilled
         portfolioVC.tabBarItem.title = "포트폴리오"
-        portfolioVC.tabBarItem.image = UIImage(systemName: "star")
+        portfolioVC.tabBarItem.image = SystemIcon.chartPie
 
         setViewControllers([tickerVC, trendingVC, portfolioVC], animated: true)
     }

@@ -165,7 +165,7 @@ extension TrendingViewController {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "검색어를 입력해주세요"
         searchBar.searchTextField.font = .systemFont(ofSize: 12)
-        searchBar.setImage(UIImage(systemName: "xmark"), for: .clear, state: .normal)
+        searchBar.setImage(SystemIcon.xmark, for: .clear, state: .normal)
         searchBar.tintColor = .customGray
         searchBar.searchTextField.borderStyle = .none
         searchBar.searchTextField.layer.borderWidth = 1

@@ -57,7 +57,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
         symbol.font = .boldSystemFont(ofSize: 14)
         name.font = .systemFont(ofSize: 12)
         name.textColor = UIColor.customGray
-        favoriteButton.setImage(UIImage(systemName: "star"), for: .normal)
+        favoriteButton.setImage(SystemIcon.heart, for: .normal)
         favoriteButton.tintColor = UIColor.customBlack
         blueStyle.messageColor = UIColor.customBlue
         redStyle.messageColor = UIColor.customRed
@@ -112,5 +112,7 @@ extension SearchCoinCollectionViewCell {
     func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.setImage(UIImage(systemName: isLiked ? "star.fill" : "star"), for: .normal)
+
+        favoriteButton.setImage(isLiked ? SystemIcon.heartFilled : SystemIcon.heart, for: .normal)
     }
 }
