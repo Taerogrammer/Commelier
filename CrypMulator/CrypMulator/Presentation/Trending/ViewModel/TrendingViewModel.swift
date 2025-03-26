@@ -15,24 +15,15 @@ final class TrendingViewModel: ViewModel {
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
 
-    enum SettingAction {
-        case navigateToDetail(String)
-        case showAlert
-    }
-
     struct Input {
-        let searchBarTapped: ControlEvent<Void>
-        let searchText: ControlProperty<String>
     }
 
     struct Output {
-        let action: Observable<SettingAction>
         let sectionResult: Observable<[TrendingSection]>
         let error: Observable<APIError>
     }
 
     func transform(input: Input) -> Output {
-        let action = PublishSubject<SettingAction>()
         getData()
         getDataByTimer()
 
@@ -53,15 +44,7 @@ final class TrendingViewModel: ViewModel {
                 ]
             }
 
-        input.searchBarTapped
-            .withLatestFrom(input.searchText)
-            .bind(with: self) { owner, text in
-                action.onNext(text.trimmingCharacters(in: .whitespacesAndNewlines).count >= 1 ? SettingAction.navigateToDetail(text) : SettingAction.showAlert)
-            }
-            .disposed(by: disposeBag)
-
-        return Output(action: action,
-                      sectionResult: sections,
+        return Output(sectionResult: sections,
                       error: error.asObservable())
     }
 

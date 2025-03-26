@@ -41,7 +41,6 @@ extension TrendingSection: SectionModelType {
 
 final class TrendingViewController: BaseViewController {
 
-    private let searchBar = UISearchBar()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
@@ -50,27 +49,21 @@ final class TrendingViewController: BaseViewController {
     private var dataSource: RxCollectionViewSectionedReloadDataSource<TrendingSection>!
 
     override func configureHierarchy() {
-        [searchBar, collectionView].forEach { view.addSubview($0) }
+        view.addSubview(collectionView)
     }
 
     override func configureLayout() {
-        searchBar.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
-        }
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
-            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
     override func configureView() {
-        configureSearchBar()
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
         collectionView.register(TrendingCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionHeaderView.identifier)
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
-        hideKeyBoardWhenTappedScreen()
     }
 
     override func configureNavigation() {
@@ -91,27 +84,8 @@ final class TrendingViewController: BaseViewController {
 
     override func bind() {
         disposeBag = DisposeBag()
-        let input = TrendingViewModel.Input(
-            searchBarTapped: searchBar.rx.searchButtonClicked,
-            searchText: searchBar.rx.text.orEmpty)
+        let input = TrendingViewModel.Input()
         let output = viewModel.transform(input: input)
-
-        output.action
-            .bind(with: self) { owner, action in
-                owner.view.endEditing(true)
-                switch action {
-                case .navigateToDetail(let text):
-                    let vm = SearchViewModel(searchText: text)
-                    let vc = SearchViewController(viewModel: vm)
-                    vc.searchBar.text = text
-
-                    owner.navigationController?.pushViewController(vc, animated: true)
-
-                case .showAlert:
-                    print("alert")
-                }
-            }
-            .disposed(by: disposeBag)
 
         output.sectionResult
             .bind(to: collectionView.rx.items(dataSource: dataSource))
@@ -151,20 +125,6 @@ final class TrendingViewController: BaseViewController {
 
 // MARK: - configure view
 extension TrendingViewController {
-    private func configureSearchBar() {
-        searchBar.clipsToBounds = true
-        searchBar.searchBarStyle = .minimal
-        searchBar.placeholder = "검색어를 입력해주세요"
-        searchBar.searchTextField.font = .systemFont(ofSize: 12)
-        searchBar.setImage(SystemIcon.xmark, for: .clear, state: .normal)
-        searchBar.tintColor = SystemColor.gray
-        searchBar.searchTextField.borderStyle = .none
-        searchBar.searchTextField.layer.borderWidth = 1
-        searchBar.searchTextField.layer.borderColor = SystemColor.gray.cgColor
-        searchBar.searchTextField.layer.cornerRadius = 16
-        searchBar.searchTextField.backgroundColor = .white
-    }
-
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
@@ -221,18 +181,5 @@ extension TrendingViewController {
                 return header
             }
         )
-    }
-}
-
-// MARK: - seach bar
-extension TrendingViewController {
-    private func hideKeyBoardWhenTappedScreen() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-
-    @objc private func tapHandler() {
-        searchBar.endEditing(true)
     }
 }
