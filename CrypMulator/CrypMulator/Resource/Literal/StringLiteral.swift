@@ -40,12 +40,12 @@ enum StringLiteral {
     }
 
     enum FavoriteMessage {
-        static let add = "즐겨찾기에 추가되었습니다"
-        static let remove = "즐겨찾기에서 제거되었습니다"
+        static let add = "관심 목록에 추가되었습니다"
+        static let remove = "관심 목록에서 제거되었습니다"
     }
 
     enum Information {
         static let popular = "인기 검색어"
-        static let favorite = "즐겨찾기"
+        static let favorite = "관심 목록"
     }
 }
