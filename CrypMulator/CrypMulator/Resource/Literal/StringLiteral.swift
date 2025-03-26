@@ -26,6 +26,8 @@ enum StringLiteral {
     }
 
     enum Portfolio {
+        static let totalAsset = "보유자산"
+        static let transaction = "거래내역"
         static let totalBuyPrice = "총 매수"
         static let totalEvaluation = "총 평가"
         static let profitLoss = "평가손익"
