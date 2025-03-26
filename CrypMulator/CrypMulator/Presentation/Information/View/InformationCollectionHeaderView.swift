@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TrendingCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
+final class InformationCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
     private let titleLabel = UILabel()
     private let updateLabel = UILabel()
 
@@ -26,9 +26,9 @@ final class TrendingCollectionHeaderView: UICollectionReusableView, ReuseIdentif
 }
 
 // MARK: - configure view
-extension TrendingCollectionHeaderView: ViewConfiguration {
+extension InformationCollectionHeaderView: ViewConfiguration {
     func configureHierarchy() {
-        [titleLabel, updateLabel].forEach { addSubview($0) }
+        addSubViews([titleLabel, updateLabel])
     }
 
     func configureLayout() {
@@ -43,9 +43,9 @@ extension TrendingCollectionHeaderView: ViewConfiguration {
     }
 
     func configureView() {
-        titleLabel.font = .boldSystemFont(ofSize: 12)
+        titleLabel.font = SystemFont.Title.small
         titleLabel.textColor = SystemColor.black
-        updateLabel.font = .systemFont(ofSize: 12)
+        updateLabel.font = SystemFont.Body.content
         updateLabel.textColor = SystemColor.gray
     }
 

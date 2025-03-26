@@ -9,37 +9,33 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class TrendingViewModel: ViewModel {
+final class InformationViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
+    private let repository: FavoriteCoinRepositoryProtocol
 
-    enum SettingAction {
-        case navigateToDetail(String)
-        case showAlert
+    init(repository: FavoriteCoinRepositoryProtocol) {
+        self.repository = repository
     }
 
     struct Input {
-        let searchBarTapped: ControlEvent<Void>
-        let searchText: ControlProperty<String>
     }
 
     struct Output {
-        let action: Observable<SettingAction>
-        let sectionResult: Observable<[TrendingSection]>
+        let sectionResult: Observable<[InformationSection]>
         let error: Observable<APIError>
     }
 
     func transform(input: Input) -> Output {
-        let action = PublishSubject<SettingAction>()
         getData()
         getDataByTimer()
 
         let sections = result
-            .map { response -> [TrendingSection] in
+            .map { response -> [InformationSection] in
                 let coins = response.coins.map { coin in
-                    TrendingItem.coins(TrendingCoin(
+                    InformationItem.coins(RankInformation(
                         id: coin.item.id,
                         rank: "\(coin.item.score + 1)",
                         imageURL: coin.item.thumb,
@@ -47,28 +43,15 @@ final class TrendingViewModel: ViewModel {
                         name: coin.item.name,
                         rate: coin.item.data.price_change_percentage_24h.krw))
                 }
-                let nfts = response.nfts.map { nft in
-                    TrendingItem.nfts(TrendingNFT(
-                        imageURL: nft.thumb,
-                        name: nft.name,
-                        floorPrice: nft.data.floor_price,
-                        floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change_description))
-                }
+
+                let favoriteSection = self.loadFavoriteSection()
+
                 return [
-                    TrendingSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
-                    TrendingSection(title: "인기 NFT", updated: nil, items: nfts)
+                    InformationSection(title: StringLiteral.Information.popular, updated: .convertUpdateDate(date: Date()), items: coins), favoriteSection
                 ]
             }
 
-        input.searchBarTapped
-            .withLatestFrom(input.searchText)
-            .bind(with: self) { owner, text in
-                action.onNext(text.trimmingCharacters(in: .whitespacesAndNewlines).count >= 1 ? SettingAction.navigateToDetail(text) : SettingAction.showAlert)
-            }
-            .disposed(by: disposeBag)
-
-        return Output(action: action,
-                      sectionResult: sections,
+        return Output(sectionResult: sections,
                       error: error.asObservable())
     }
 
@@ -97,5 +80,16 @@ final class TrendingViewModel: ViewModel {
 
     func disposeTimer() {
         disposable?.dispose()
+    }
+
+    private func loadFavoriteSection() -> InformationSection {
+        let favorites = repository.getAll()
+        let items = favorites.map { InformationItem.favorite($0) }
+
+        return InformationSection(
+            title: StringLiteral.Information.favorite,
+            updated: nil,
+            items: Array(items)
+        )
     }
 }

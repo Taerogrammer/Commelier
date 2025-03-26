@@ -34,7 +34,7 @@ final class TickerViewController: BaseViewController {
         let titleLabel = UILabel()
         titleLabel.text = StringLiteral.NavigationTitle.ticker
         titleLabel.font = SystemFont.Navigation.title
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.titleView = titleLabel
     }
 
     override func viewWillAppear(_ animated: Bool) {
