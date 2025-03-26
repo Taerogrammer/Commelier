@@ -19,7 +19,6 @@ struct TrendingSection {
 
 enum TrendingItem {
     case coins(TrendingCoin)
-    case nfts(TrendingNFT)
 }
 
 struct TrendingCoin: Equatable {
@@ -29,13 +28,6 @@ struct TrendingCoin: Equatable {
     let symbol: String
     let name: String
     let rate: Double
-}
-
-struct TrendingNFT: Equatable {
-    let imageURL: String
-    let name: String
-    let floorPrice: String
-    let floorPriceChange: String
 }
 
 extension TrendingSection: SectionModelType {
@@ -74,7 +66,6 @@ final class TrendingViewController: BaseViewController {
     override func configureView() {
         configureSearchBar()
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
-        collectionView.register(NFTCollectionViewCell.self, forCellWithReuseIdentifier: NFTCollectionViewCell.identifier)
         collectionView.register(TrendingCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TrendingCollectionHeaderView.identifier)
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
@@ -197,21 +188,6 @@ extension TrendingViewController {
 
                 return section
 
-            case 1:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(80), heightDimension: .fractionalHeight(1.0))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(400), heightDimension: .absolute(120))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                group.interItemSpacing = .fixed(8)
-
-                let section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
-                section.boundarySupplementaryItems = [header]
-
-                return section
-
             default:
                 return nil
             }
@@ -231,12 +207,6 @@ extension TrendingViewController {
                 case .coins(let coin):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCollectionViewCell.identifier, for: indexPath) as! CoinCollectionViewCell
                     cell.configureCell(with: coin)
-
-                    return cell
-
-                case .nfts(let nft):
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NFTCollectionViewCell.identifier, for: indexPath) as! NFTCollectionViewCell
-                    cell.configureCell(with: nft)
 
                     return cell
                 }

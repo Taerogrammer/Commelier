@@ -47,16 +47,9 @@ final class TrendingViewModel: ViewModel {
                         name: coin.item.name,
                         rate: coin.item.data.price_change_percentage_24h.krw))
                 }
-                let nfts = response.nfts.map { nft in
-                    TrendingItem.nfts(TrendingNFT(
-                        imageURL: nft.thumb,
-                        name: nft.name,
-                        floorPrice: nft.data.floor_price,
-                        floorPriceChange: nft.data.floor_price_in_usd_24h_percentage_change_description))
-                }
+
                 return [
                     TrendingSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
-                    TrendingSection(title: "인기 NFT", updated: nil, items: nfts)
                 ]
             }
 
