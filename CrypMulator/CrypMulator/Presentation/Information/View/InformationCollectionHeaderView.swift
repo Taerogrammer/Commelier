@@ -43,9 +43,9 @@ extension InformationCollectionHeaderView: ViewConfiguration {
     }
 
     func configureView() {
-        titleLabel.font = .boldSystemFont(ofSize: 12)
+        titleLabel.font = SystemFont.Title.small
         titleLabel.textColor = SystemColor.black
-        updateLabel.font = .systemFont(ofSize: 12)
+        updateLabel.font = SystemFont.Body.content
         updateLabel.textColor = SystemColor.gray
     }
 

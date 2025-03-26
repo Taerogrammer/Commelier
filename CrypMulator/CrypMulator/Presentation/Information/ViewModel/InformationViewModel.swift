@@ -14,6 +14,11 @@ final class InformationViewModel: ViewModel {
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
+    private let repository: FavoriteCoinRepositoryProtocol
+
+    init(repository: FavoriteCoinRepositoryProtocol) {
+        self.repository = repository
+    }
 
     struct Input {
     }
@@ -39,8 +44,10 @@ final class InformationViewModel: ViewModel {
                         rate: coin.item.data.price_change_percentage_24h.krw))
                 }
 
+                let favoriteSection = self.loadFavoriteSection()
+
                 return [
-                    InformationSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins),
+                    InformationSection(title: "인기 검색어", updated: .convertUpdateDate(date: Date()), items: coins), favoriteSection
                 ]
             }
 
@@ -73,5 +80,16 @@ final class InformationViewModel: ViewModel {
 
     func disposeTimer() {
         disposable?.dispose()
+    }
+
+    private func loadFavoriteSection() -> InformationSection {
+        let favorites = repository.getAll()
+        let items = favorites.map { InformationItem.favorite($0) }
+
+        return InformationSection(
+            title: "즐겨찾기",
+            updated: nil,
+            items: Array(items)
+        )
     }
 }

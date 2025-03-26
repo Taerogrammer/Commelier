@@ -12,51 +12,47 @@ import RealmSwift
 import RxSwift
 import Toast
 
+// TODO: - Realm 수정 필요
 final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     var disposeBag = DisposeBag()
     private let image = CircleImage(frame: .zero)
-    private let symbol = UILabel()
+    private let transactionQuantity = UILabel()
     private let name = UILabel()
-    private let rank = rankLabel()
-    let favoriteButton = UIButton()
+    private let favoriteButton = UIButton()
     private var viewModel: SearchCoinCollectionCellViewModel?
     private let realm = try! Realm()
     private var blueStyle = ToastStyle()
     private var redStyle = ToastStyle()
 
     override func configureHierarchy() {
-        [image, symbol, name, rank, favoriteButton].forEach { contentView.addSubview($0) }
+        [image, name, transactionQuantity, favoriteButton].forEach { contentView.addSubview($0) }
     }
 
     override func configureLayout() {
         image.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(24)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(8)
             make.size.equalTo(36)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
         }
-        symbol.snp.makeConstraints { make in
-            make.leading.equalTo(image.snp.trailing).offset(20)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide).offset(-8)
+        transactionQuantity.snp.makeConstraints { make in
+            make.leading.equalTo(name)
+            make.centerY.equalTo(contentView.safeAreaLayoutGuide).offset(9)
         }
         name.snp.makeConstraints { make in
-            make.leading.equalTo(symbol)
-            make.centerY.equalTo(contentView.safeAreaLayoutGuide).offset(8)
-        }
-        rank.snp.makeConstraints { make in
-            make.leading.equalTo(symbol.snp.trailing).offset(8)
-            make.centerY.equalTo(symbol)
+            make.leading.equalTo(image.snp.trailing).offset(20)
+            make.centerY.equalTo(contentView.safeAreaLayoutGuide).offset(-9)
         }
         favoriteButton.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(24)
-            make.size.equalTo(20)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(8)
+            make.size.equalTo(28)
             make.centerY.equalTo(contentView.safeAreaLayoutGuide)
         }
     }
 
     override func configureView() {
-        symbol.font = .boldSystemFont(ofSize: 14)
-        name.font = .systemFont(ofSize: 12)
-        name.textColor = SystemColor.gray
+        name.font = SystemFont.Body.boldPrimary
+        transactionQuantity.font = SystemFont.Body.content
+        transactionQuantity.textColor = SystemColor.gray
         favoriteButton.setImage(SystemIcon.heart, for: .normal)
         favoriteButton.tintColor = SystemColor.black
         blueStyle.messageColor = SystemColor.blue
@@ -103,9 +99,8 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
 extension FavoriteCoinCollectionViewCell {
     func configureCell(with item: CoinData) {
         image.kf.setImage(with: URL(string: item.thumb))
-        symbol.text = item.symbol
-        name.text = item.name
-        if let rankInt = item.market_cap_rank { rank.text = "#\(rankInt)" }
+        name.text = item.symbol
+        transactionQuantity.text = "0.000015 BTC"
         updateFavoriteButton(id: item.id)
     }
 

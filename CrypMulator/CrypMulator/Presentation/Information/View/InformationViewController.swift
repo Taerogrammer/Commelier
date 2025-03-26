@@ -19,6 +19,7 @@ struct InformationSection {
 
 enum InformationItem {
     case coins(RankInformation)
+    case favorite(FavoriteCoin)
 }
 
 struct RankInformation: Equatable {
@@ -44,7 +45,7 @@ final class InformationViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
-    private let viewModel = InformationViewModel()
+    private let viewModel = InformationViewModel(repository: FavoriteCoinRepository())
     private var disposeBag = DisposeBag()
     private var dataSource: RxCollectionViewSectionedReloadDataSource<InformationSection>!
 
@@ -60,8 +61,8 @@ final class InformationViewController: BaseViewController {
 
     override func configureView() {
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
+        collectionView.register(FavoriteCoinCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCoinCollectionViewCell.identifier)
         collectionView.register(InformationCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: InformationCollectionHeaderView.identifier)
-        collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
     }
@@ -149,7 +150,7 @@ extension InformationViewController {
                 return section
 
             case 1: // 관심 목록
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(56))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: itemSize,subitems: [item])
@@ -179,6 +180,20 @@ extension InformationViewController {
                 case .coins(let coin):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCollectionViewCell.identifier, for: indexPath) as! CoinCollectionViewCell
                     cell.configureCell(with: coin)
+
+                    return cell
+
+                case .favorite(let coin):
+                    let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: FavoriteCoinCollectionViewCell.identifier,
+                        for: indexPath
+                    ) as! FavoriteCoinCollectionViewCell
+
+                    let vm = SearchCoinCollectionCellViewModel(coinData:
+                                                                CoinData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
+                    )
+                    cell.configureCell(with: vm.coinData)
+                    cell.bind(with: vm)
 
                     return cell
                 }
