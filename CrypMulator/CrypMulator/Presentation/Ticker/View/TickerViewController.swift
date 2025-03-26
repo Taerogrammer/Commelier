@@ -31,10 +31,7 @@ final class TickerViewController: BaseViewController {
     }
 
     override func configureNavigation() {
-        let titleLabel = UILabel()
-        titleLabel.text = StringLiteral.NavigationTitle.ticker
-        titleLabel.font = SystemFont.Navigation.title
-        navigationItem.titleView = titleLabel
+        navigationItem.title = StringLiteral.NavigationTitle.ticker
     }
 
     override func viewWillAppear(_ animated: Bool) {

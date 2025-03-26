@@ -68,10 +68,7 @@ final class InformationViewController: BaseViewController {
     }
 
     override func configureNavigation() {
-        let titleLabel = UILabel()
-        titleLabel.text = StringLiteral.NavigationTitle.information
-        titleLabel.font = SystemFont.Navigation.title
-        navigationItem.titleView = titleLabel
+        navigationItem.title = StringLiteral.NavigationTitle.information
     }
 
     override func viewWillAppear(_ animated: Bool) {
