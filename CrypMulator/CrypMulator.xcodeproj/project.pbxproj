@@ -207,7 +207,7 @@
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CrypMulator/App/Setting/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
+				INFOPLIST_KEY_CFBundleDisplayName = CrypMulator;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -240,7 +240,7 @@
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CrypMulator/App/Setting/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
+				INFOPLIST_KEY_CFBundleDisplayName = CrypMulator;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
