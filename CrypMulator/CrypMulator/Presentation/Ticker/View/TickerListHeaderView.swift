@@ -68,9 +68,9 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
     }
 
     func configureView() {
-        coinLabel.textAlignment = .left
         coinLabel.text = StringLiteral.Ticker.coin
-        coinLabel.font = .boldSystemFont(ofSize: 14)
+        coinLabel.textAlignment = .left
+        coinLabel.font = SystemFont.Body.primary
         priceButton.title.text = StringLiteral.Ticker.currentPrice
         changedPriceButton.title.text = StringLiteral.Ticker.priceChanged
         accButton.title.text = StringLiteral.Ticker.tradeVolume

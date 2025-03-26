@@ -38,7 +38,7 @@ final class CoinFilterButton: BaseView {
         }
     }
     override func configureView() {
-        title.font = .systemFont(ofSize: 14)
+        title.font = SystemFont.Body.content
         title.textAlignment = .right
         upImage.image = SystemIcon.arrowUp
         downImage.image = SystemIcon.arrowDown
@@ -52,19 +52,19 @@ final class CoinFilterButton: BaseView {
     func buttonStatus(status: CoinFilterButtonStatus) {
         switch status {
         case .unClicked:
-            title.font = .systemFont(ofSize: 14)
+            title.font = SystemFont.Body.primary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customGray
             downImage.tintColor = .customGray
         case .upClicked:
-            title.font = .boldSystemFont(ofSize: 14)
+            title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customBlack
             downImage.tintColor = .customGray
         case .downClicked:
-            title.font = .boldSystemFont(ofSize: 14)
+            title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
             upImage.tintColor = .customGray

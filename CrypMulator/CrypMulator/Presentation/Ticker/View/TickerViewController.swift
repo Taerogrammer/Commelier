@@ -17,7 +17,7 @@ final class TickerViewController: BaseViewController {
         tickerListViewModel: tickerViewModel.tickerListViewModel)
 
     override func configureHierarchy() {
-        view.addSubViews([tickerListView])
+        view.addSubview(tickerListView)
     }
 
     override func configureLayout() {
@@ -33,7 +33,7 @@ final class TickerViewController: BaseViewController {
     override func configureNavigation() {
         let titleLabel = UILabel()
         titleLabel.text = StringLiteral.NavigationTitle.ticker
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = SystemFont.Navigation.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
     }
 

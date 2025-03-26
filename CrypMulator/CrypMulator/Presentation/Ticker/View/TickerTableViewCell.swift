@@ -50,11 +50,11 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
-        name.font = .boldSystemFont(ofSize: 12)
-        price.font = .systemFont(ofSize: 12)
-        changeRate.font = .systemFont(ofSize: 12)
-        changePrice.font = .systemFont(ofSize: 9)
-        tradePrice.font = .systemFont(ofSize: 12)
+        name.font = SystemFont.Body.boldContent
+        price.font = SystemFont.Body.content
+        changeRate.font = SystemFont.Body.content
+        changePrice.font = SystemFont.Body.small
+        tradePrice.font = SystemFont.Body.content
 
         name.textAlignment = .left
         price.textAlignment = .right
