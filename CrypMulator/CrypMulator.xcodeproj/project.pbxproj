@@ -42,7 +42,7 @@
 		16158E402D79CDDC00AC3458 /* Exceptions for "CrypMulator" folder in "CrypMulator" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				App/Setting/Info.plist,
 			);
 			target = 16158C842D79992E00AC3458 /* CrypMulator */;
 		};
@@ -206,7 +206,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CrypMulator/Info.plist;
+				INFOPLIST_FILE = CrypMulator/App/Setting/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -239,7 +239,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CrypMulator/Info.plist;
+				INFOPLIST_FILE = CrypMulator/App/Setting/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "김태형";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
