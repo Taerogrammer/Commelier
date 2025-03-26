@@ -12,7 +12,7 @@ import RealmSwift
 import RxSwift
 import Toast
 
-final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
+final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     var disposeBag = DisposeBag()
     private let image = CircleImage(frame: .zero)
     private let symbol = UILabel()
@@ -100,7 +100,7 @@ final class SearchCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifia
 
 
 // MARK: - configure cell
-extension SearchCoinCollectionViewCell {
+extension FavoriteCoinCollectionViewCell {
     func configureCell(with item: CoinData) {
         image.kf.setImage(with: URL(string: item.thumb))
         symbol.text = item.symbol

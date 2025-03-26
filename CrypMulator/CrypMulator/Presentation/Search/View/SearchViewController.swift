@@ -76,7 +76,7 @@ final class SearchViewController: BaseViewController {
         pageViewController.delegate = self
         pageViewController.dataSource = self
 
-        segCoinViewController.coinCollectionView.register(SearchCoinCollectionViewCell.self, forCellWithReuseIdentifier: SearchCoinCollectionViewCell.identifier)
+        segCoinViewController.coinCollectionView.register(FavoriteCoinCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCoinCollectionViewCell.identifier)
         segCoinViewController.coinCollectionView.keyboardDismissMode = .onDrag
         configureSearchBar()
     }
@@ -134,8 +134,8 @@ final class SearchViewController: BaseViewController {
 
         output.data
             .bind(to: segCoinViewController.coinCollectionView.rx.items(
-                cellIdentifier: SearchCoinCollectionViewCell.identifier,
-                cellType: SearchCoinCollectionViewCell.self)) { index, element, cell in
+                cellIdentifier: FavoriteCoinCollectionViewCell.identifier,
+                cellType: FavoriteCoinCollectionViewCell.self)) { index, element, cell in
                     cell.configureCell(with: element)
                     cell.bind(with: SearchCoinCollectionCellViewModel(coinData: element))
                     cell.updateFavoriteButton(id: element.id)
