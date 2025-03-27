@@ -99,7 +99,7 @@ final class TotalAssetView: BaseView {
         titleLabel.font = SystemFont.Title.large
         totalAssetTitleLabel.text = StringLiteral.Portfolio.totalAsset
         totalAssetTitleLabel.font = SystemFont.Title.small
-        totalAssetAmountLabel.text = "38,185 원"
+        totalAssetAmountLabel.text = "38,185 " + StringLiteral.Currency.won
         totalAssetAmountLabel.font = SystemFont.Title.large
         chargeButton.setTitle(StringLiteral.Button.charge, for: .normal)
         chargeButton.titleLabel?.font = SystemFont.Button.secondary
@@ -120,8 +120,8 @@ final class TotalAssetView: BaseView {
 
         realCurrencyLabel.font = SystemFont.Body.boldPrimary
         realCurrencyAmountLabel.font = SystemFont.Title.small
-        realCurrencyLabel.text = "KRW"
-        realCurrencyAmountLabel.text = "1,123,123 KRW"
+        realCurrencyLabel.text = StringLiteral.Currency.krw
+        realCurrencyAmountLabel.text = "1,123,123 " + StringLiteral.Currency.krw
 
         // coinAssetStackView (우측 스택)
         coinAssetStackView.axis = .vertical
@@ -130,8 +130,8 @@ final class TotalAssetView: BaseView {
 
         coinCurrencyLabel.font = SystemFont.Body.boldPrimary
         coinCurrencyAmountLabel.font = SystemFont.Title.small
-        coinCurrencyLabel.text = "가상 자산"
-        coinCurrencyAmountLabel.text = "1,123,123,123 KRW"
+        coinCurrencyLabel.text = StringLiteral.Portfolio.coinAsset
+        coinCurrencyAmountLabel.text = "1,123,123,123 " + StringLiteral.Currency.krw
 
         coinProfitLabel.font = SystemFont.Body.boldContent
         coinProfitLabel.textColor = SystemColor.gray
@@ -142,9 +142,9 @@ final class TotalAssetView: BaseView {
         coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
         coinProfitRatioAmountLabel.textAlignment = .right
 
-        coinProfitLabel.text = "평가손익"
-        coinProfitAmountLabel.text = "+4,234,234 KRW"
-        coinProfitRatioLabel.text = "수익률"
+        coinProfitLabel.text = StringLiteral.Portfolio.profitLoss
+        coinProfitAmountLabel.text = "+4,234,234 " + StringLiteral.Currency.krw
+        coinProfitRatioLabel.text = StringLiteral.Portfolio.yieldRate
         coinProfitRatioAmountLabel.text = "+ 55%"
     }
 

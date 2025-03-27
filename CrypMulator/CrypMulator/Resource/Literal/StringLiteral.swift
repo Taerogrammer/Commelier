@@ -11,6 +11,7 @@ enum StringLiteral {
 
     enum Currency {
         static let krw = "KRW"
+        static let won = "원"
     }
 
     enum NavigationTitle {
@@ -35,9 +36,10 @@ enum StringLiteral {
         static let profitLoss = "평가손익"
         static let yieldRate = "수익률"
         static let totalAsset = "총 보유자산"
+        static let coinAsset = "가상 자산"
+        static let chartText = "보유비중\n(%)"
         static let cumulativeProfit = "누적 손익"
         static let cumulativeRate = "누적 손익률"
-        static let chartText = "보유비중\n(%)"
     }
 
     enum Ticker {
