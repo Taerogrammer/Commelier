@@ -17,7 +17,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     let rateLabel = UILabel()
 
     override func configureHierarchy() {
-        contentView.addSubViews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
+        contentView.addSubviews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
     }
 
     override func configureLayout() {

@@ -22,7 +22,7 @@ final class TickerListView: BaseView {
     }
 
     override func configureHierarchy() {
-        addSubViews([headerView, tickerTableView])
+        addSubviews([headerView, tickerTableView])
     }
 
     override func configureLayout() {

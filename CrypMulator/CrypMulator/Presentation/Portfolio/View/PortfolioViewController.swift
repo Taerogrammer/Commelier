@@ -31,7 +31,7 @@ final class PortfolioViewController: BaseViewController {
     }
 
     override func configureHierarchy() {
-        view.addSubViews([segmentedControl, pageViewController.view])
+        view.addSubviews([segmentedControl, pageViewController.view])
 
     }
 

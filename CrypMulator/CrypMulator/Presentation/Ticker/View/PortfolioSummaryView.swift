@@ -21,7 +21,7 @@ final class PortfolioSummaryView: BaseView {
     private let bottomLine = BaseView()
 
     override func configureHierarchy() {
-        addSubViews([mainStack, bottomLine])
+        addSubviews([mainStack, bottomLine])
     }
 
     override func configureLayout() {

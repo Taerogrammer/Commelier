@@ -28,7 +28,7 @@ final class PortfolioMetricView: BaseView {
     }
 
     override func configureHierarchy() {
-        addSubViews([contentLabel, valueLabel])
+        addSubviews([contentLabel, valueLabel])
     }
 
     override func configureLayout() {

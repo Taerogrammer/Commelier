@@ -18,7 +18,7 @@ final class TickerListHeaderView: BaseView, ReuseIdentifiable {
     private let bottomLine = BaseView()
 
     override func configureHierarchy() {
-        addSubViews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton, bottomLine])
+        addSubviews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton, bottomLine])
     }
 
     override func configureLayout() {
