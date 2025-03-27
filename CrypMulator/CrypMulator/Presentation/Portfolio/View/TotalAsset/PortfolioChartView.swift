@@ -47,7 +47,7 @@ final class PortfolioChartView: BaseView {
         pieChartView.transparentCircleRadiusPercent = 0
         pieChartView.drawEntryLabelsEnabled = false
         pieChartView.legend.enabled = false
-        pieChartView.centerText = "보유비중\n(%)"
+        pieChartView.centerText = StringLiteral.Portfolio.chartText
 
         legendStackView.axis = .vertical
         legendStackView.spacing = 12
