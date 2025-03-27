@@ -26,7 +26,7 @@ enum StringLiteral {
     }
 
     enum Portfolio {
-        static let totalAsset = "보유내역"
+        static let assetOverview = "보유내역"
         static let portfolioRatio = "보유자산 포트폴리오"
         static let totalProfit = "투자손익"
         static let transaction = "거래내역"
@@ -34,6 +34,7 @@ enum StringLiteral {
         static let totalEvaluation = "총 평가"
         static let profitLoss = "평가손익"
         static let yieldRate = "수익률"
+        static let totalAsset = "총 보유자산"
     }
 
     enum Ticker {
@@ -51,5 +52,9 @@ enum StringLiteral {
     enum Information {
         static let popular = "인기 검색어"
         static let favorite = "관심 목록"
+    }
+
+    enum Button {
+        static let charge = "충전하기"
     }
 }

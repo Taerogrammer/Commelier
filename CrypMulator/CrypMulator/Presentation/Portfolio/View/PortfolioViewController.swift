@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 final class PortfolioViewController: BaseViewController {
-    private let segmentedControl = UnderlineSegmentedControl(items: [StringLiteral.Portfolio.totalAsset, StringLiteral.Portfolio.transaction])
+    private let segmentedControl = UnderlineSegmentedControl(items: [StringLiteral.Portfolio.assetOverview, StringLiteral.Portfolio.transaction])
     private let totalAssetViewController = TotalAssetViewController()
     private let transactionViewController = TransactionViewController()
     private lazy var pageViewController = UIPageViewController(

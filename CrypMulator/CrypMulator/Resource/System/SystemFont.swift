@@ -4,8 +4,8 @@ enum SystemFont {
 
     // MARK: - Display & Headlines
     enum Title {
-        static let large       = UIFont.systemFont(ofSize: 28, weight: .bold)   // 현재가, 총자산
-        static let medium      = UIFont.systemFont(ofSize: 20, weight: .bold)   // 상세 제목
+        static let large       = UIFont.systemFont(ofSize: 24, weight: .bold)   // 현재가, 총자산
+        static let medium      = UIFont.systemFont(ofSize: 18, weight: .bold)   // 상세 제목
         static let small       = UIFont.systemFont(ofSize: 16, weight: .bold)   // 섹션 제목
     }
 
