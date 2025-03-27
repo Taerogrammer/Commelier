@@ -26,7 +26,7 @@ final class PortfolioSummaryView: BaseView {
 
     override func configureLayout() {
         mainStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
+            make.edges.equalToSuperview()
         }
 
         bottomLine.snp.makeConstraints { make in
@@ -42,7 +42,6 @@ final class PortfolioSummaryView: BaseView {
 
         mainStack.axis = .horizontal
         mainStack.distribution = .fillEqually
-        mainStack.spacing = 8
     }
 
     override func configureView() {

@@ -26,12 +26,12 @@ final class TickerListView: BaseView {
     }
 
     override func configureLayout() {
-        tickerTableView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
-        }
         headerView.snp.makeConstraints { make in
             make.width.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(96)
+        }
+        tickerTableView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
 

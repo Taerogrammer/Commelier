@@ -21,7 +21,6 @@ final class SearchViewController: BaseViewController {
         action: nil)
     let searchBar = UISearchBar()
     private let segmentedControl = UnderlineSegmentedControl(items: ["코인", "NFT", "거래소"])
-    private let childView = BaseView()
     private let segCoinViewController = SegCoinViewController()
     private let segNFTViewController = SegNFTViewController()
     private let segTickerViewController = SegTickerViewController()

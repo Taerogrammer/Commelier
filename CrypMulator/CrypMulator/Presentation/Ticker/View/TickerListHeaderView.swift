@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable, ViewConfiguration {
+final class TickerListHeaderView: BaseView, ReuseIdentifiable {
     private let portfolioSummaryView = PortfolioSummaryView()
     private let coinLabel = UILabel()
     let priceButton = CoinFilterButton()
@@ -17,57 +17,46 @@ final class TickerListHeaderView: UITableViewHeaderFooterView, ReuseIdentifiable
 
     private let bottomLine = BaseView()
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureView()
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureHierarchy() {
+    override func configureHierarchy() {
         addSubViews([portfolioSummaryView, coinLabel, priceButton, changedPriceButton, accButton, bottomLine])
     }
 
-    func configureLayout() {
+    override func configureLayout() {
         portfolioSummaryView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(contentView.safeAreaLayoutGuide)
+            make.horizontalEdges.top.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(60)
         }
         coinLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(16)
+            make.leading.equalTo(safeAreaLayoutGuide).inset(16)
             make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.width.equalTo(snp.width).multipliedBy(0.2)
         }
         priceButton.snp.makeConstraints { make in
             make.trailing.equalTo(changedPriceButton.snp.leading).offset(-8)
             make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.width.equalTo(snp.width).multipliedBy(0.2)
             make.centerY.equalTo(coinLabel)
         }
         changedPriceButton.snp.makeConstraints { make in
             make.trailing.equalTo(accButton.snp.leading).offset(-8)
             make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.2)
+            make.width.equalTo(snp.width).multipliedBy(0.2)
             make.centerY.equalTo(coinLabel)
         }
         accButton.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(16)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(16)
             make.top.equalTo(portfolioSummaryView.snp.bottom).offset(12)
-            make.width.equalTo(contentView.snp.width).multipliedBy(0.25)
+            make.width.equalTo(snp.width).multipliedBy(0.25)
             make.centerY.equalTo(coinLabel)
         }
         bottomLine.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.height.equalTo(0.5)
         }
     }
 
-    func configureView() {
+    override func configureView() {
         coinLabel.text = StringLiteral.Ticker.coin
         coinLabel.textAlignment = .left
         coinLabel.font = SystemFont.Body.primary
