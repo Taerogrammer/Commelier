@@ -50,11 +50,6 @@ final class ProfitView: BaseView {
     }
 
     override func configureView() {
-        backgroundColor = .white
-
-        titleLabel.text = "투자손익"
-        titleLabel.font = SystemFont.Title.large
-
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fillEqually
         contentStackView.spacing = 16
@@ -67,18 +62,21 @@ final class ProfitView: BaseView {
         rightStackView.spacing = 24
         rightStackView.alignment = .trailing
 
-        profitTitleLabel.text = "누적 손익"
+        titleLabel.text = StringLiteral.Portfolio.totalProfit
+        titleLabel.font = SystemFont.Title.large
+
+        profitTitleLabel.text = StringLiteral.Portfolio.cumulativeProfit
         profitTitleLabel.font = SystemFont.Body.boldPrimary
 
-        profitRateTitleLabel.text = "누적 손익률"
+        profitRateTitleLabel.text = StringLiteral.Portfolio.cumulativeRate
         profitRateTitleLabel.font = SystemFont.Body.boldPrimary
+
+        profitAmountLabel.font = SystemFont.Body.boldContent
+        profitRateLabel.font = SystemFont.Body.boldContent
 
         profitAmountLabel.text = "+636,236,355 KRW"
         profitAmountLabel.textColor = .systemRed
-        profitAmountLabel.font = SystemFont.Body.boldContent
-
         profitRateLabel.text = "46.62 %"
         profitRateLabel.textColor = .systemRed
-        profitRateLabel.font = SystemFont.Body.boldContent
     }
 }
