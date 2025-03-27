@@ -14,7 +14,7 @@ final class TotalAssetViewController: BaseViewController {
     private let profitView = ProfitView()
 
     override func configureHierarchy() {
-        view.addSubViews([totalAssetView, portfolioChartView, profitView])
+        view.addSubviews([totalAssetView, portfolioChartView, profitView])
     }
 
     override func configureLayout() {
