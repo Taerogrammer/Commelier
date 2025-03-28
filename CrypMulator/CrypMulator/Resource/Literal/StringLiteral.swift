@@ -11,6 +11,7 @@ enum StringLiteral {
 
     enum Currency {
         static let krw = "KRW"
+        static let won = "원"
     }
 
     enum NavigationTitle {
@@ -26,10 +27,19 @@ enum StringLiteral {
     }
 
     enum Portfolio {
+        static let assetOverview = "보유내역"
+        static let portfolioRatio = "보유자산 포트폴리오"
+        static let totalProfit = "투자손익"
+        static let transaction = "거래내역"
         static let totalBuyPrice = "총 매수"
         static let totalEvaluation = "총 평가"
         static let profitLoss = "평가손익"
         static let yieldRate = "수익률"
+        static let totalAsset = "총 보유자산"
+        static let coinAsset = "가상 자산"
+        static let chartText = "보유비중\n(%)"
+        static let cumulativeProfit = "누적 손익"
+        static let cumulativeRate = "누적 손익률"
     }
 
     enum Ticker {
@@ -47,5 +57,9 @@ enum StringLiteral {
     enum Information {
         static let popular = "인기 검색어"
         static let favorite = "관심 목록"
+    }
+
+    enum Button {
+        static let charge = "충전하기"
     }
 }

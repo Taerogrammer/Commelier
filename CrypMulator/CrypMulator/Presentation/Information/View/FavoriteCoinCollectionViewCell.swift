@@ -25,7 +25,7 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
     private var redStyle = ToastStyle()
 
     override func configureHierarchy() {
-        contentView.addSubViews([image, name, transactionQuantity, favoriteButton])
+        contentView.addSubviews([image, name, transactionQuantity, favoriteButton])
     }
 
     override func configureLayout() {

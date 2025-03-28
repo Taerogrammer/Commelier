@@ -28,7 +28,7 @@ final class InformationCollectionHeaderView: UICollectionReusableView, ReuseIden
 // MARK: - configure view
 extension InformationCollectionHeaderView: ViewConfiguration {
     func configureHierarchy() {
-        addSubViews([titleLabel, updateLabel])
+        addSubviews([titleLabel, updateLabel])
     }
 
     func configureLayout() {

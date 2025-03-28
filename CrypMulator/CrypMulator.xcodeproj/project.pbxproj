@@ -17,6 +17,7 @@
 		16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB22D799BB000AC3458 /* Kingfisher */; };
 		16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB52D799BEA00AC3458 /* RxCocoa */; };
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
+		165DB0812D95779100AE2A37 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 165DB0802D95779100AE2A37 /* DGCharts */; };
 		16C8DD932D7FB53A00907D86 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 16158CA12D799A6000AC3458 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 				16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */,
 				16158CAD2D799B0A00AC3458 /* RxDataSources in Frameworks */,
 				16158CA52D799A8200AC3458 /* RxGesture in Frameworks */,
+				165DB0812D95779100AE2A37 /* DGCharts in Frameworks */,
 				16158C9F2D799A2600AC3458 /* Toast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,6 +129,7 @@
 				16158CB22D799BB000AC3458 /* Kingfisher */,
 				16158CB52D799BEA00AC3458 /* RxCocoa */,
 				16158CB72D799BEA00AC3458 /* RxSwift */,
+				165DB0802D95779100AE2A37 /* DGCharts */,
 			);
 			productName = CryptoCollection;
 			productReference = 16158C852D79992E00AC3458 /* CrypMulator.app */;
@@ -165,6 +168,7 @@
 				16158CAE2D799B9600AC3458 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				16158CB12D799BB000AC3458 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 16158C862D79992E00AC3458 /* Products */;
@@ -470,6 +474,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -522,6 +534,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		165DB0802D95779100AE2A37 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
