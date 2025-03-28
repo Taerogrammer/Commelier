@@ -8,6 +8,6 @@
 import UIKit
 import SnapKit
 
-final class TransactionViewController: BaseViewController {
+final class TradeHistoryViewController: BaseViewController {
 
 }
