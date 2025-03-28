@@ -9,27 +9,31 @@ import UIKit
 import SnapKit
 
 final class TotalAssetView: BaseView {
-    private let titleLabel = UILabel()
 
+    /// Title Section
+    private let titleLabel = UILabel()
     private let totalAssetTitleLabel = UILabel()
     private let totalAssetAmountLabel = UILabel()
     private let chargeButton = UIButton()
 
+    /// Asset Stack
     private let assetStackView = UIStackView()
 
+    /// Real Asset Section (Left)
     private let realAssetStackView = UIStackView()
     private let realCurrencyLabel = UILabel()
     private let realCurrencyAmountLabel = UILabel()
 
+    /// Coin Asset Section (Right)
     private let coinAssetStackView = UIStackView()
-
-    private let coinProfitStackView = UIStackView()
     private let coinCurrencyLabel = UILabel()
     private let coinCurrencyAmountLabel = UILabel()
 
-    private let coinProfitRatioStackView = UIStackView()
+    private let coinProfitStackView = UIStackView()
     private let coinProfitLabel = UILabel()
     private let coinProfitAmountLabel = UILabel()
+
+    private let coinProfitRatioStackView = UIStackView()
     private let coinProfitRatioLabel = UILabel()
     private let coinProfitRatioAmountLabel = UILabel()
 
@@ -60,47 +64,56 @@ final class TotalAssetView: BaseView {
         ])
 
         coinProfitStackView.addArrangedSubviews([
-            coinProfitLabel, coinProfitAmountLabel
+            coinProfitLabel,
+            coinProfitAmountLabel
         ])
 
         coinProfitRatioStackView.addArrangedSubviews([
-            coinProfitRatioLabel, coinProfitRatioAmountLabel
+            coinProfitRatioLabel,
+            coinProfitRatioAmountLabel
         ])
-
     }
 
     override func configureLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(12)
+            make.top.leading.equalToSuperview().inset(12)
         }
+
         totalAssetTitleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(16)
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
-        }
-        totalAssetAmountLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
+        }
+
+        totalAssetAmountLabel.snp.makeConstraints { make in
             make.top.equalTo(totalAssetTitleLabel.snp.bottom).offset(4)
+            make.leading.equalToSuperview().inset(16)
         }
+
         chargeButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
             make.centerY.equalTo(totalAssetAmountLabel)
-            make.height.equalTo(44)
+            make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(96)
+            make.height.equalTo(44)
         }
+
         assetStackView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(16)
             make.top.equalTo(chargeButton.snp.bottom).offset(16)
+            make.horizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
     }
 
     override func configureView() {
+        /// Title
         titleLabel.text = StringLiteral.Portfolio.assetOverview
         titleLabel.font = SystemFont.Title.large
+
         totalAssetTitleLabel.text = StringLiteral.Portfolio.totalAsset
         totalAssetTitleLabel.font = SystemFont.Title.small
+
         totalAssetAmountLabel.text = "38,185 " + StringLiteral.Currency.won
         totalAssetAmountLabel.font = SystemFont.Title.large
+
         chargeButton.setTitle(StringLiteral.Button.charge, for: .normal)
         chargeButton.titleLabel?.font = SystemFont.Button.secondary
         chargeButton.setTitleColor(SystemColor.black, for: .normal)
@@ -108,44 +121,57 @@ final class TotalAssetView: BaseView {
         chargeButton.layer.cornerRadius = 8
         chargeButton.layer.borderWidth = 1
 
-        // assetStackView
+        /// StackView configs
         assetStackView.axis = .horizontal
         assetStackView.distribution = .fillEqually
         assetStackView.alignment = .top
 
-        // realAssetStackView (좌측 스택)
         realAssetStackView.axis = .vertical
         realAssetStackView.spacing = 12
         realAssetStackView.alignment = .fill
 
-        realCurrencyLabel.font = SystemFont.Body.boldPrimary
-        realCurrencyAmountLabel.font = SystemFont.Title.small
-        realCurrencyLabel.text = StringLiteral.Currency.krw
-        realCurrencyAmountLabel.text = "1,123,123 " + StringLiteral.Currency.krw
-
-        // coinAssetStackView (우측 스택)
         coinAssetStackView.axis = .vertical
         coinAssetStackView.spacing = 12
         coinAssetStackView.alignment = .fill
 
-        coinCurrencyLabel.font = SystemFont.Body.boldPrimary
-        coinCurrencyAmountLabel.font = SystemFont.Title.small
-        coinCurrencyLabel.text = StringLiteral.Portfolio.coinAsset
-        coinCurrencyAmountLabel.text = "1,123,123,123 " + StringLiteral.Currency.krw
+        coinProfitStackView.axis = .horizontal
+        coinProfitStackView.spacing = 8
+        coinProfitStackView.alignment = .center
 
-        coinProfitLabel.font = SystemFont.Body.boldContent
-        coinProfitLabel.textColor = SystemColor.gray
-        coinProfitAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitAmountLabel.textAlignment = .right
-        coinProfitRatioLabel.font = SystemFont.Body.boldContent
-        coinProfitRatioLabel.textColor = SystemColor.gray
-        coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitRatioAmountLabel.textAlignment = .right
+        coinProfitRatioStackView.axis = .horizontal
+        coinProfitRatioStackView.spacing = 8
+        coinProfitRatioStackView.alignment = .center
+
+        /// Real asset
+        realCurrencyLabel.text = StringLiteral.Currency.krw
+        realCurrencyLabel.font = SystemFont.Body.boldPrimary
+
+        realCurrencyAmountLabel.text = "1,123,123 " + StringLiteral.Currency.krw
+        realCurrencyAmountLabel.font = SystemFont.Title.small
+
+        /// Coin asset
+        coinCurrencyLabel.text = StringLiteral.Portfolio.coinAsset
+        coinCurrencyLabel.font = SystemFont.Body.boldPrimary
+
+        coinCurrencyAmountLabel.text = "1,123,123,123 " + StringLiteral.Currency.krw
+        coinCurrencyAmountLabel.font = SystemFont.Title.small
 
         coinProfitLabel.text = StringLiteral.Portfolio.profitLoss
-        coinProfitAmountLabel.text = "+4,234,234 " + StringLiteral.Currency.krw
-        coinProfitRatioLabel.text = StringLiteral.Portfolio.yieldRate
-        coinProfitRatioAmountLabel.text = "+ 55%"
-    }
+        coinProfitLabel.font = SystemFont.Body.boldContent
+        coinProfitLabel.textColor = SystemColor.gray
 
+        coinProfitAmountLabel.text = "+4,234,234 " + StringLiteral.Currency.krw
+        coinProfitAmountLabel.font = SystemFont.Body.boldPrimary
+        coinProfitAmountLabel.textColor = .red
+        coinProfitAmountLabel.textAlignment = .right
+
+        coinProfitRatioLabel.text = StringLiteral.Portfolio.yieldRate
+        coinProfitRatioLabel.font = SystemFont.Body.boldContent
+        coinProfitRatioLabel.textColor = SystemColor.gray
+
+        coinProfitRatioAmountLabel.text = "+ 55%"
+        coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
+        coinProfitRatioAmountLabel.textColor = .red
+        coinProfitRatioAmountLabel.textAlignment = .right
+    }
 }

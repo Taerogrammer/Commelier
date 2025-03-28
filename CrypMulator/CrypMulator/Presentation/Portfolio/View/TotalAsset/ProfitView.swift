@@ -22,16 +22,20 @@ final class ProfitView: BaseView {
     private let profitAmountLabel = UILabel()
     private let profitRateLabel = UILabel()
 
-    private let unitLabel = UILabel()
-    private let percentLabel = UILabel()
-
     override func configureHierarchy() {
-        addSubview(titleLabel)
-        addSubview(contentStackView)
+        addSubviews([titleLabel, contentStackView])
 
         contentStackView.addArrangedSubviews([leftStackView, rightStackView])
-        leftStackView.addArrangedSubviews([profitTitleLabel, profitRateTitleLabel])
-        rightStackView.addArrangedSubviews([profitAmountLabel, profitRateLabel])
+
+        leftStackView.addArrangedSubviews([
+            profitTitleLabel,
+            profitRateTitleLabel
+        ])
+
+        rightStackView.addArrangedSubviews([
+            profitAmountLabel,
+            profitRateLabel
+        ])
     }
 
     override func configureLayout() {
@@ -50,6 +54,12 @@ final class ProfitView: BaseView {
     }
 
     override func configureView() {
+        backgroundColor = .white
+
+        titleLabel.text = StringLiteral.Portfolio.totalProfit
+        titleLabel.font = SystemFont.Title.large
+
+        // StackView configs
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fillEqually
         contentStackView.spacing = 16
@@ -62,21 +72,19 @@ final class ProfitView: BaseView {
         rightStackView.spacing = 24
         rightStackView.alignment = .trailing
 
-        titleLabel.text = StringLiteral.Portfolio.totalProfit
-        titleLabel.font = SystemFont.Title.large
-
+        // Labels
         profitTitleLabel.text = StringLiteral.Portfolio.cumulativeProfit
         profitTitleLabel.font = SystemFont.Body.boldPrimary
 
         profitRateTitleLabel.text = StringLiteral.Portfolio.cumulativeRate
         profitRateTitleLabel.font = SystemFont.Body.boldPrimary
 
-        profitAmountLabel.font = SystemFont.Body.boldContent
-        profitRateLabel.font = SystemFont.Body.boldContent
-
         profitAmountLabel.text = "+636,236,355 KRW"
+        profitAmountLabel.font = SystemFont.Body.boldContent
         profitAmountLabel.textColor = .systemRed
+
         profitRateLabel.text = "46.62 %"
+        profitRateLabel.font = SystemFont.Body.boldContent
         profitRateLabel.textColor = .systemRed
     }
 }
