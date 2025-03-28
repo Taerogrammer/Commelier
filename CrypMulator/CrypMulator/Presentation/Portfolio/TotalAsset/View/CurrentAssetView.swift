@@ -6,19 +6,15 @@
 //
 
 import UIKit
-import RxCocoa
-import RxSwift
 import SnapKit
 
 final class CurrentAssetView: BaseView {
-    private let viewModel = TotalAssetViewModel()
-    private let disposeBag = DisposeBag()
 
     /// Title Section
     private let titleLabel = UILabel()
     private let totalAssetTitleLabel = UILabel()
     private let totalAssetAmountLabel = UILabel()
-    private let chargeButton = UIButton()
+    let chargeButton = UIButton()
 
     /// Asset Stack
     private let assetStackView = UIStackView()
@@ -177,10 +173,5 @@ final class CurrentAssetView: BaseView {
         coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
         coinProfitRatioAmountLabel.textColor = .red
         coinProfitRatioAmountLabel.textAlignment = .right
-    }
-
-    override func bind() {
-        let input = TotalAssetViewModel.Input(chargeButtonTapped: chargeButton.rx.tap)
-        let output = viewModel.transform(input: input)
     }
 }
