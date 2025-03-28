@@ -17,7 +17,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     let rateLabel = UILabel()
 
     override func configureHierarchy() {
-        contentView.addSubViews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
+        contentView.addSubviews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
     }
 
     override func configureLayout() {
@@ -34,6 +34,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
         symbolLabel.snp.makeConstraints { make in
             make.leading.equalTo(thumbnailImage.snp.trailing).offset(4)
+            make.trailing.greaterThanOrEqualTo(rateLabel.snp.leading).offset(4)
             make.centerY.equalTo(safeAreaLayoutGuide).offset(-6)
         }
 
@@ -44,7 +45,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
         rateLabel.snp.makeConstraints { make in
             make.leading.greaterThanOrEqualTo(nameLabel.snp.trailing).offset(8)
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(8)
+            make.trailing.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
 
