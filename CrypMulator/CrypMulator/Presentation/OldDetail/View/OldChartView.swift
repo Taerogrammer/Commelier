@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct ChartView: View {
+struct OldChartView: View {
     let priceData: [Double]
     let linearGradient = LinearGradient(gradient: Gradient(colors: [
         Color.accentColor.opacity(0.4),

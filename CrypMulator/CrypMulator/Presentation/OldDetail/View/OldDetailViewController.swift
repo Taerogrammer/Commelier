@@ -34,10 +34,10 @@ extension DetailSection: SectionModelType {
     }
 }
 
-final class DetailViewController: BaseViewController {
-    private let viewModel: DetailViewModel
+final class OldDetailViewController: BaseViewController {
+    private let viewModel: OldDetailViewModel
     private var disposeBag = DisposeBag()
-    private let titleView = DetailTitleView()
+    private let titleView = OldDetailTitleView()
     private let barButton = UIBarButtonItem(
         image: SystemIcon.arrowLeft,
         style: .plain,
@@ -46,7 +46,7 @@ final class DetailViewController: BaseViewController {
     private let favoriteButton = UIBarButtonItem()
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
-    private let chartView = DetailChartView()
+    private let chartView = OldDetailChartView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
@@ -56,7 +56,7 @@ final class DetailViewController: BaseViewController {
     private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
     private let realm = try! Realm()
 
-    init(viewModel: DetailViewModel) {
+    init(viewModel: OldDetailViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -89,11 +89,11 @@ final class DetailViewController: BaseViewController {
     }
 
     override func configureView() {
-        collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.identifier)
+        collectionView.register(OldDetailCollectionViewCell.self, forCellWithReuseIdentifier: OldDetailCollectionViewCell.identifier)
         collectionView.register(
-            DetailCollectionHeaderView.self,
+            OldDetailCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: DetailCollectionHeaderView.identifier)
+            withReuseIdentifier: OldDetailCollectionHeaderView.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.isScrollEnabled = false
         scrollView.showsVerticalScrollIndicator = false
@@ -111,7 +111,7 @@ final class DetailViewController: BaseViewController {
 
     override func bind() {
         disposeBag = DisposeBag()
-        let input = DetailViewModel.Input(
+        let input = OldDetailViewModel.Input(
             barButtonTapped: barButton.rx.tap,
             favoriteButtonTapped: favoriteButton.rx.tap)
         let output = viewModel.transform(input: input)
@@ -191,7 +191,7 @@ final class DetailViewController: BaseViewController {
 }
 
 // MARK: - configure view
-extension DetailViewController {
+extension OldDetailViewController {
     private func updateFavoriteButton(id: String) {
         let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.image = isLiked ? SystemIcon.heartFilled : SystemIcon.heart
@@ -199,7 +199,7 @@ extension DetailViewController {
 }
 
 // MARK: - collection view
-extension DetailViewController {
+extension OldDetailViewController {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
@@ -241,11 +241,11 @@ extension DetailViewController {
 }
 
 // MARK: - Data Source
-extension DetailViewController {
+extension OldDetailViewController {
     private func configureDataSource() {
         dataSource = RxCollectionViewSectionedReloadDataSource<DetailSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.identifier, for: indexPath) as! DetailCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OldDetailCollectionViewCell.identifier, for: indexPath) as! OldDetailCollectionViewCell
 
                 cell.title.text = item.title
                 cell.money.text = item.money
@@ -256,8 +256,8 @@ extension DetailViewController {
             configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
                 let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
-                    withReuseIdentifier: DetailCollectionHeaderView.identifier,
-                    for: indexPath) as! DetailCollectionHeaderView
+                    withReuseIdentifier: OldDetailCollectionHeaderView.identifier,
+                    for: indexPath) as! OldDetailCollectionHeaderView
                 header.configureTitle(with: dataSource[indexPath.section].title)
 
                 header.moreButton.rx.tap

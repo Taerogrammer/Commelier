@@ -9,11 +9,11 @@ import UIKit
 import SwiftUI
 import SnapKit
 
-final class DetailChartView: BaseView {
+final class OldDetailChartView: BaseView {
     let moneyLabel = UILabel()
     let rateLabel = UILabel()
     let updateDateLabel = UILabel()
-    var chartsHostingController: UIHostingController<ChartView>?
+    var chartsHostingController: UIHostingController<OldChartView>?
 
     override func configureHierarchy() {
         [moneyLabel, rateLabel, updateDateLabel].forEach { addSubview($0) }
@@ -63,9 +63,9 @@ final class DetailChartView: BaseView {
 }
 
 // MARK: - Chart
-extension DetailChartView {
+extension OldDetailChartView {
     func configureChartHostingView(with data: [Double]) {
-        let chartView = ChartView(priceData: data)
+        let chartView = OldChartView(priceData: data)
         let controller = UIHostingController(rootView: chartView)
         self.chartsHostingController = controller
 

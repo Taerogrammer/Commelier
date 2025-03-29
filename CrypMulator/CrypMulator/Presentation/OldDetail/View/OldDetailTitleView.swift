@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class DetailTitleView: BaseView {
+final class OldDetailTitleView: BaseView {
     private let stackView = UIStackView()
     let image = UIImageView()
     let id = UILabel()

@@ -8,7 +8,7 @@
 import RxCocoa
 import RxSwift
 
-final class DetailViewModel: ViewModel {
+final class OldDetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let id: Observable<String>
     private let favoriteCoinRepository = FavoriteCoinRepository()

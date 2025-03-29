@@ -96,8 +96,8 @@ final class InformationViewController: BaseViewController {
             .asObservable()
             .bind(with: self) { owner, item in
                 if case .coins(let coinData) = item {
-                    let vm = DetailViewModel(id: coinData.id)
-                    let vc = DetailViewController(viewModel: vm)
+                    let vm = OldDetailViewModel(id: coinData.id)
+                    let vc = OldDetailViewController(viewModel: vm)
 
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }
