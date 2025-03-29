@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UpbitMarketEntity: Decodable {
+struct UpbitMarketEntity {
     let market: String
     let trade_price: Double
     let change: String
