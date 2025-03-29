@@ -35,7 +35,7 @@ final class InformationViewModel: ViewModel {
         let sections = result
             .map { response -> [InformationSection] in
                 let coins = response.coins.map { coin in
-                    InformationItem.coins(RankInformation(
+                    InformationItem.coins(CoinRankingViewData(
                         id: coin.item.id,
                         rank: "\(coin.item.score + 1)",
                         imageURL: coin.item.thumb,

@@ -18,11 +18,11 @@ struct InformationSection {
 }
 
 enum InformationItem {
-    case coins(RankInformation)
+    case coins(CoinRankingViewData)
     case favorite(FavoriteCoin)
 }
 
-struct RankInformation: Equatable {
+struct CoinRankingViewData: Equatable {
     let id: String
     let rank: String
     let imageURL: String
