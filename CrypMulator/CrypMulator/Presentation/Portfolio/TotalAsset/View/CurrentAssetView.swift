@@ -92,8 +92,8 @@ final class CurrentAssetView: BaseView {
         chargeButton.snp.makeConstraints { make in
             make.centerY.equalTo(totalAssetAmountLabel)
             make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(96)
-            make.height.equalTo(44)
+            make.width.equalTo(100)
+            make.height.equalTo(48)
         }
 
         assetStackView.snp.makeConstraints { make in
@@ -115,11 +115,11 @@ final class CurrentAssetView: BaseView {
         totalAssetAmountLabel.font = SystemFont.Title.large
 
         chargeButton.setTitle(StringLiteral.Button.charge, for: .normal)
+        chargeButton.backgroundColor = SystemColor.whiteBlue
         chargeButton.titleLabel?.font = SystemFont.Button.secondary
-        chargeButton.setTitleColor(SystemColor.black, for: .normal)
+        chargeButton.setTitleColor(SystemColor.blue, for: .normal)
         chargeButton.clipsToBounds = true
         chargeButton.layer.cornerRadius = 8
-        chargeButton.layer.borderWidth = 1
 
         /// StackView configs
         assetStackView.axis = .horizontal
