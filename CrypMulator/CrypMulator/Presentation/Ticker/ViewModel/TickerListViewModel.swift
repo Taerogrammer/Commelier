@@ -72,7 +72,7 @@ final class TickerListViewModel: ViewModel {
 
     func getDataByTimer() {
         disposeTimer()
-        disposable = Observable<Int>.interval(.seconds(2), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
+        disposable = Observable<Int>.interval(.seconds(1), scheduler: ConcurrentDispatchQueueScheduler.init(qos: .background))
             .startWith(0)
             .subscribe(with: self) { owner, val in
                 NetworkManager.shared.getItem(
