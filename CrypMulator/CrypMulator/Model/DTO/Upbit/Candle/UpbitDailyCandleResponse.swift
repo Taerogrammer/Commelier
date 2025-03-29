@@ -38,3 +38,11 @@ struct UpbitDailyCandleResponse: Decodable {
         case changeRate = "change_rate"
     }
 }
+
+extension UpbitDailyCandleResponse {
+    func toEntity() -> ChartEntity {
+        return ChartEntity(
+            date: String.convertPriceDate(date: candleDateTimeKST),
+            price: tradePrice)
+    }
+}
