@@ -76,7 +76,10 @@ final class TickerListViewModel: ViewModel {
             .startWith(0)
             .subscribe(with: self) { owner, val in
                 NetworkManager.shared.getItem(
-                    api: UpbitRouter.getMarket(), type: [UpbitMarketEntity].self)
+                    api: UpbitRouter.getMarket(), type: [UpbitMarketResponse].self)
+                .map { responses in
+                    responses.map { $0.toEntity() }
+                }
                 .subscribe(with: owner) { owner, value in
                     owner.data.accept(value)
                 } onFailure: { owner, error in

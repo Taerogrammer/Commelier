@@ -31,4 +31,14 @@ enum FormatUtility {
         let formatted = formatter.string(from: NSNumber(value: value)) ?? "\(value)"
         return "\(formatted) \(currencySymbol)"
     }
+
+    static func numberConverter(number: Double) -> String {
+
+        return (round(number * 100) / 100).formatted()
+    }
+
+    static func rateConverter(number: Double) -> String {
+        return round(number * 100) / 100 == 0.00 ? "0.00" : String(format: "%.2f", (round(number * 100) / 100))
+    }
+
 }
