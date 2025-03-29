@@ -10,7 +10,11 @@ import Alamofire
 
 enum UpbitRouter: APIRouter {
 
+    /// Ticker
     case getMarket(quote_currencies: String = "KRW")
+
+    /// Detail
+    case getCandleDay(market: String, count: Int = 200)
 
     var environment: APIEnvironment {
         return .upbit
@@ -19,7 +23,9 @@ enum UpbitRouter: APIRouter {
     var path: String {
         switch self {
         case .getMarket:
-            return "/all"
+            return "/ticker/all"
+        case .getCandleDay:
+            return "/candles/days"
         }
     }
 
@@ -31,6 +37,8 @@ enum UpbitRouter: APIRouter {
         switch self {
         case .getMarket(let quote_currencies):
             return ["quote_currencies": quote_currencies]
+        case .getCandleDay(market: let market, count: let count):
+            return ["market": market, "count": count]
         }
     }
 
@@ -38,12 +46,16 @@ enum UpbitRouter: APIRouter {
         switch self {
         case .getMarket:
             return .get
+        case .getCandleDay:
+            return .get
         }
     }
 
     var encoding: URLEncoding {
         switch self {
         case .getMarket:
+            return .queryString
+        case .getCandleDay:
             return .queryString
         }
     }

@@ -18,11 +18,11 @@ struct InformationSection {
 }
 
 enum InformationItem {
-    case coins(RankInformation)
+    case coins(CoinRankingViewData)
     case favorite(FavoriteCoin)
 }
 
-struct RankInformation: Equatable {
+struct CoinRankingViewData: Equatable {
     let id: String
     let rank: String
     let imageURL: String
@@ -96,8 +96,8 @@ final class InformationViewController: BaseViewController {
             .asObservable()
             .bind(with: self) { owner, item in
                 if case .coins(let coinData) = item {
-                    let vm = DetailViewModel(id: coinData.id)
-                    let vc = DetailViewController(viewModel: vm)
+                    let vm = OldDetailViewModel(id: coinData.id)
+                    let vc = OldDetailViewController(viewModel: vm)
 
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }
@@ -187,7 +187,7 @@ extension InformationViewController {
                     ) as! FavoriteCoinCollectionViewCell
 
                     let vm = SearchCoinCollectionCellViewModel(coinData:
-                                                                CoinData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
+                                                                CoinSearchData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
                     )
                     cell.configureCell(with: vm.coinData)
                     cell.bind(with: vm)

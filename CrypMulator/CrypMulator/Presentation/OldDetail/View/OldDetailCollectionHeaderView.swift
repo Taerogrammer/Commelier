@@ -10,7 +10,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-final class DetailCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
+final class OldDetailCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
 
     private let titleLabel = UILabel()
     let moreButton = UIButton()
@@ -29,7 +29,7 @@ final class DetailCollectionHeaderView: UICollectionReusableView, ReuseIdentifia
 }
 
 // MARK: - configure view
-extension DetailCollectionHeaderView: ViewConfiguration {
+extension OldDetailCollectionHeaderView: ViewConfiguration {
     func configureHierarchy() {
         [titleLabel, moreButton].forEach { addSubview($0) }
     }

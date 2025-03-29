@@ -146,8 +146,8 @@ final class SearchViewController: BaseViewController {
                 data[indexPath.item]
             }
             .bind(with: self) { owner, data in
-                let vm = DetailViewModel(id: data.id)
-                let vc = DetailViewController(viewModel: vm)
+                let vm = OldDetailViewModel(id: data.id)
+                let vc = OldDetailViewController(viewModel: vm)
 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }

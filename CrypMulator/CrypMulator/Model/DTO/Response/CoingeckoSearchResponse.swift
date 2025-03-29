@@ -7,11 +7,12 @@
 
 import Foundation
 
+// TODO: - 제거 예정
 struct CoingeckoSearchResponse: Decodable {
-    let coins: [CoinData]
+    let coins: [CoinSearchData]
 }
 
-struct CoinData: Decodable {
+struct CoinSearchData: Decodable {
     let id: String
     let name: String
     let symbol: String

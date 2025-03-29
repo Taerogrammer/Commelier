@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class DetailCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
+final class OldDetailCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     private var disposeBag = DisposeBag()
     let title = UILabel()
     let money = UILabel()

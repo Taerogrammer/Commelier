@@ -28,7 +28,7 @@ final class SearchViewModel: ViewModel {
 
     struct Output {
         let action: PublishRelay<SettingAction>
-        let data: Observable<[CoinData]>
+        let data: Observable<[CoinSearchData]>
         let error: Observable<APIError>
     }
 
@@ -38,7 +38,7 @@ final class SearchViewModel: ViewModel {
 
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
-        let result = BehaviorRelay<[CoinData]>(value: [])
+        let result = BehaviorRelay<[CoinSearchData]>(value: [])
 
         input.searchBarTapped
             .withLatestFrom(input.searchText)

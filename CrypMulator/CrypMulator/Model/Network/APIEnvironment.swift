@@ -14,7 +14,7 @@ enum APIEnvironment {
     var baseURL: String {
         switch self {
         case .upbit:
-            return "https://api.upbit.com/v1/ticker"
+            return "https://api.upbit.com/v1"
         case .coingecko:
             return "https://api.coingecko.com/api/v3"
         }

@@ -11,7 +11,7 @@ import RxSwift
 
 final class SearchCoinCollectionCellViewModel: ViewModel {
     private let disposeBag = DisposeBag()
-    var coinData: CoinData
+    var coinData: CoinSearchData
     private let realm = try! Realm()
     private let favoriteRepository = FavoriteCoinRepository()
     private var favoriteCoin = FavoriteCoin()
@@ -29,7 +29,7 @@ final class SearchCoinCollectionCellViewModel: ViewModel {
         let favoriteButtonResult: PublishRelay<SettingAction>
     }
 
-    init(coinData: CoinData) {
+    init(coinData: CoinSearchData) {
         self.coinData = coinData
         favoriteCoin = FavoriteCoin(
             id: coinData.id,

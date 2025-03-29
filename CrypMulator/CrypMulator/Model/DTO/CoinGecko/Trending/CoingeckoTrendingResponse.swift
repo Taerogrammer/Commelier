@@ -46,6 +46,6 @@ struct NftData: Decodable {
 
     var floor_price_in_usd_24h_percentage_change_description: String {
         let doubleValue = Double(floor_price_in_usd_24h_percentage_change)
-        return numberConverter(number: doubleValue ?? 0.0)
+        return FormatUtility.numberConverter(number: doubleValue ?? 0.0)
     }
 }
