@@ -7,6 +7,7 @@
 
 import Foundation
 
+// TODO: - 제거 예정
 struct CoingeckoSearchResponse: Decodable {
     let coins: [CoinData]
 }
