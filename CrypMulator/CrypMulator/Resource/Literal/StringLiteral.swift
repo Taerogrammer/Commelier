@@ -40,6 +40,7 @@ enum StringLiteral {
         static let chartText = "보유비중\n(%)"
         static let cumulativeProfit = "누적 손익"
         static let cumulativeRate = "누적 손익률"
+        static let chargeQuestion = "얼마를 충전하시겠어요?"
     }
 
     enum Ticker {

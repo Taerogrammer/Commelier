@@ -14,4 +14,5 @@ enum SystemColor {
     static let blue        = UIColor(hex: "#3182F6")
     static let whiteBlue   = UIColor(hex: "E5F1FF")
     static let red         = UIColor(hex: "#F04452")
+    static let white       = UIColor(hex: "FFFFFF")
 }
