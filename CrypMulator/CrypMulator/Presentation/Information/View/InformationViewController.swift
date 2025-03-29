@@ -187,7 +187,7 @@ extension InformationViewController {
                     ) as! FavoriteCoinCollectionViewCell
 
                     let vm = SearchCoinCollectionCellViewModel(coinData:
-                                                                CoinData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
+                                                                CoinSearchData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
                     )
                     cell.configureCell(with: vm.coinData)
                     cell.bind(with: vm)

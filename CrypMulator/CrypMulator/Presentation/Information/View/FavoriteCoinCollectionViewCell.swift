@@ -97,7 +97,7 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
 
 // MARK: - configure cell
 extension FavoriteCoinCollectionViewCell {
-    func configureCell(with item: CoinData) {
+    func configureCell(with item: CoinSearchData) {
         image.kf.setImage(with: URL(string: item.thumb))
         name.text = item.symbol
         transactionQuantity.text = "0.000015 BTC"

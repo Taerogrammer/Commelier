@@ -43,5 +43,5 @@ final class DetailViewController: BaseViewController {
 
     }
 
-    
+
 }
