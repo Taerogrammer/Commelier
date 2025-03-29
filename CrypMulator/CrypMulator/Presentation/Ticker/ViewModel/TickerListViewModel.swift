@@ -12,7 +12,7 @@ import RxGesture
 final class TickerListViewModel: ViewModel {
     private var disposable: Disposable?
     private let disposeBag = DisposeBag()
-    private let data = PublishRelay<[UpbitMarketResponse]>()
+    private let data = PublishRelay<[UpbitMarketEntity]>()
     private let buttonStatus = BehaviorRelay<ButtonStatus>(value: ButtonStatus(
         price: .unClicked,
         changedPrice: .unClicked,
@@ -31,7 +31,7 @@ final class TickerListViewModel: ViewModel {
     }
 
     struct Output {
-        let data: Observable<[UpbitMarketResponse]>
+        let data: Observable<[UpbitMarketEntity]>
         let buttonStatus: Observable<ButtonStatus>
         let error: Observable<APIError>
     }
@@ -76,7 +76,7 @@ final class TickerListViewModel: ViewModel {
             .startWith(0)
             .subscribe(with: self) { owner, val in
                 NetworkManager.shared.getItem(
-                    api: UpbitRouter.getMarket(), type: [UpbitMarketResponse].self)
+                    api: UpbitRouter.getMarket(), type: [UpbitMarketEntity].self)
                 .subscribe(with: owner) { owner, value in
                     owner.data.accept(value)
                 } onFailure: { owner, error in
@@ -125,7 +125,7 @@ final class TickerListViewModel: ViewModel {
         }
     }
 
-    private func sortData(data: [UpbitMarketResponse], status: ButtonStatus) -> [UpbitMarketResponse] {
+    private func sortData(data: [UpbitMarketEntity], status: ButtonStatus) -> [UpbitMarketEntity] {
         if status.price == .unClicked && status.changedPrice == .unClicked && status.acc == .unClicked {
             return data.sorted { $0.acc_trade_price_24h > $1.acc_trade_price_24h }
         } else {
