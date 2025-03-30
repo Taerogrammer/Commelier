@@ -10,14 +10,14 @@ import SwiftUI
 import SnapKit
 
 final class CandleChartView: BaseView {
-    var chartsHostingController: UIHostingController<OldChartView>?
+    var chartsHostingController: UIHostingController<ChartView>?
 
 }
 
 // MARK: - Chart
 extension CandleChartView {
     func configureChartHostingView(with data: [ChartListEntity]) {
-        let chartView = OldChartView(data: data) // ✅ ChartEntity 사용
+        let chartView = ChartView(data: data) // ✅ ChartEntity 사용
         let controller = UIHostingController(rootView: chartView)
         self.chartsHostingController = controller
 
