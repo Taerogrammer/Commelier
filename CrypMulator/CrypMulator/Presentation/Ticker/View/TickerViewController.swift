@@ -11,10 +11,15 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewController: BaseViewController {
-    private let tickerViewModel = TickerViewModel()
+    private let tickerViewModel: TickerViewModel
     private let disposeBag = DisposeBag()
     private lazy var tickerListView = TickerListView(
         tickerListViewModel: tickerViewModel.tickerListViewModel)
+
+    init(tickerViewModel: TickerViewModel) {
+        self.tickerViewModel = tickerViewModel
+        super.init()
+    }
 
     override func configureHierarchy() {
         view.addSubview(tickerListView)

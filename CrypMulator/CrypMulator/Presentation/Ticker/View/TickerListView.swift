@@ -57,6 +57,7 @@ final class TickerListView: BaseView {
             .bind(to: tickerTableView.rx.items(
                 cellIdentifier: TickerTableViewCell.identifier,
                 cellType: TickerTableViewCell.self)) { index, element, cell in
+                    cell.selectionStyle = .none
                     cell.name.text = element.market
                     cell.price.text = element.trade_price_description
                     cell.changeRate.text = element.signed_change_rate_description

@@ -16,7 +16,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func configureTabBar() {
-        let tickerVC = UINavigationController(rootViewController: TickerViewController())
+        let tickerVC = UINavigationController(rootViewController: TickerFactory.make())
         let trendingVC = UINavigationController(rootViewController: InformationViewController())
         let portfolioVC = UINavigationController(rootViewController: PortfolioViewController())
 

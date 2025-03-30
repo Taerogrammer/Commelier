@@ -9,8 +9,12 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewModel: ViewModel {
-    let tickerListViewModel = TickerListViewModel()
+    let tickerListViewModel: TickerListViewModel
     private let disposeBag = DisposeBag()
+
+    init(tickerListViewModel: TickerListViewModel) {
+        self.tickerListViewModel = tickerListViewModel
+    }
 
     struct Input {
 
