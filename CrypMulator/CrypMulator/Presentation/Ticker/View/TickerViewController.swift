@@ -78,7 +78,9 @@ final class TickerViewController: BaseViewController {
 
         output.selectedItem
             .subscribe(with: self) { owner, entity in
-                print("entity", entity)
+                let market = entity.market
+                let vc = DetailFactory.make(with: market)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

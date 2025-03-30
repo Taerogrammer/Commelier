@@ -11,12 +11,17 @@ import RxSwift
 import SnapKit
 
 final class DetailViewController: BaseViewController {
-    private let viewModel = DetailViewModel()
+    private let viewModel: DetailViewModel
     private var disposeBag = DisposeBag()
 
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
     private let chartView = OldDetailChartView()
+
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
 
     override func configureHierarchy() {
         view.addSubview(scrollView)

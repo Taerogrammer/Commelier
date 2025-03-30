@@ -10,6 +10,12 @@ import RxSwift
 
 final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
+    private let request: TickerDetailRequest
+
+    init(request: TickerDetailRequest) {
+        self.request = request
+        print("request ==> ", request)
+    }
 
     struct Input {
 
