@@ -35,6 +35,7 @@ final class DetailViewModel: ViewModel {
                     type: [UpbitDailyCandleResponse].self)
             }
             .subscribe(with: self) { owner, response in
+                print("==================", response)
                 let chart: [ChartEntity] = response.map {
                     $0.toEntity()
                 }

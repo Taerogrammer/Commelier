@@ -8,32 +8,124 @@
 import SwiftUI
 import Charts
 
+struct ChartListEntity: Identifiable {
+    let id = UUID()
+    let date: String
+    let price: Double
+}
+
 struct OldChartView: View {
-    let priceData: [Double]
-    let linearGradient = LinearGradient(gradient: Gradient(colors: [
-        Color.accentColor.opacity(0.4),
-        Color.accentColor.opacity(0.1)]),
-                                        startPoint: .top,
-                                        endPoint: .bottom)
-    var filteredData: [Double] {
-        stride(from: 0, to: priceData.count, by: 5).map { index in priceData[index] }
+    let data: [ChartListEntity]
+
+    @State private var selectedIndex: Int?
+
+    private let linearGradient = LinearGradient(
+        gradient: Gradient(colors: [
+            Color.accentColor.opacity(0.4),
+            Color.accentColor.opacity(0.1)
+        ]),
+        startPoint: .top,
+        endPoint: .bottom
+    )
+
+    private var xAxisLabelIndices: [Int] {
+        let strideValue = max(data.count / 4, 1)
+        var indices = Array(stride(from: 0, to: data.count, by: strideValue))
+        if let last = indices.last, last != data.count - 1 {
+            indices.append(data.count - 1)
+        }
+        return indices
     }
 
     var body: some View {
-        Chart {
-            ForEach(filteredData.indices, id: \.self) { index in
-                LineMark(
-                    x: .value("", index),
-                    y: .value("Price", filteredData[index]))
-                .foregroundStyle(.blue)
-                .interpolationMethod(.catmullRom)
-                AreaMark(
-                    x: .value("", index),
-                    y: .value("Price", filteredData[index]))
-                .interpolationMethod(.cardinal)
-                .foregroundStyle(linearGradient)
+        GeometryReader { outerProxy in
+            Chart {
+                ForEach(data.indices, id: \.self) { index in
+                    let entity = data[index]
+                    LineMark(
+                        x: .value("Index", index),
+                        y: .value("가격", entity.price)
+                    )
+                    .interpolationMethod(.catmullRom)
+                    .foregroundStyle(.blue)
+
+                    AreaMark(
+                        x: .value("Index", index),
+                        y: .value("가격", entity.price)
+                    )
+                    .interpolationMethod(.cardinal)
+                    .foregroundStyle(linearGradient)
+                }
+
+                if let selectedIndex, selectedIndex < data.count {
+                    let selected = data[selectedIndex]
+
+                    RuleMark(x: .value("Index", selectedIndex))
+                        .foregroundStyle(.gray)
+                        .lineStyle(StrokeStyle(lineWidth: 1))
+
+                    PointMark(
+                        x: .value("Index", selectedIndex),
+                        y: .value("가격", selected.price)
+                    )
+                    .symbolSize(50)
+                    .foregroundStyle(.red)
+                }
             }
+            .chartOverlay { proxy in
+                GeometryReader { geometry in
+                    Rectangle()
+                        .fill(.clear)
+                        .contentShape(Rectangle())
+                        .gesture(
+                            DragGesture(minimumDistance: 0)
+                                .onChanged { value in
+                                    let origin = geometry[proxy.plotAreaFrame].origin
+                                    let locationX = value.location.x - origin.x
+                                    if let index: Int = proxy.value(atX: locationX) {
+                                        selectedIndex = min(max(index, 0), data.count - 1)
+                                    }
+                                }
+                                .onEnded({ _ in
+                                    selectedIndex = nil // 드래그 끝나면 초기화
+                                })
+                        )
+                        .overlay(alignment: .topLeading) {
+                            if let selectedIndex, selectedIndex < data.count {
+                                let selected = data[selectedIndex]
+                                let xPos = proxy.position(forX: selectedIndex) ?? 0
+                                let yPos = proxy.position(forY: selected.price) ?? 0
+                                let isRightSide = selectedIndex > data.count / 2
+
+                                VStack(alignment: isRightSide ? .trailing : .leading, spacing: 4) {
+                                    Text("📅 \(selected.date)")
+                                    Text("💰 \(Int(selected.price)) 원")
+                                }
+                                .font(.caption)
+                                .padding(6)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(8)
+                                .offset(
+                                    x: xPos + (isRightSide ? -120 : 8),
+                                    y: yPos - 60
+                                )
+                            }
+                        }
+                }
+            }
+            .chartXAxis {
+                AxisMarks(values: xAxisLabelIndices) { value in
+                    if let i = value.as(Int.self), i < data.count {
+                        AxisGridLine()
+                        AxisTick()
+                        AxisValueLabel {
+                            Text(data[i].date)
+                                .font(.caption2)
+                        }
+                    }
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }

@@ -51,6 +51,14 @@ final class DetailViewController: BaseViewController {
     override func bind() {
         let input = DetailViewModel.Input()
         let output = viewModel.transform(input: input)
+
+        output.chartEntity
+            .bind(with: self) { owner, entities in
+                let listEntities = entities.reversed().map { ChartListEntity(date: $0.date, price: $0.price)}
+//                print("============", listEntities)
+                owner.chartView.configureChartHostingView(with: listEntities)
+            }
+            .disposed(by: disposeBag)
     }
 
 

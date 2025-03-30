@@ -9,10 +9,21 @@ import Foundation
 
 extension String {
     static func convertPriceDate(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy년 M월 d일"
-        let convertedToDate: Date = dateFormatter.date(from: date) ?? Date()
-        return dateFormatter.string(from: convertedToDate)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+
+        guard let date = formatter.date(from: date) else {
+            print("❌ 날짜 파싱 실패: \(date)")
+            return "날짜 에러"
+        }
+
+        let displayFormatter = DateFormatter()
+        displayFormatter.locale = Locale(identifier: "ko_KR")
+        displayFormatter.dateFormat = "yy-MM-dd"
+
+        return displayFormatter.string(from: date)
     }
 
     static func convertChartDate(date: String) -> String {
