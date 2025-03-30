@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RxCocoa
+import RxGesture
 import RxSwift
 
 final class TickerViewController: BaseViewController {
@@ -48,8 +49,19 @@ final class TickerViewController: BaseViewController {
         tickerListView.tickerListViewModel.disposeTimer()
     }
 
+    // TODO: - 분리 고민하기
     override func bind() {
-        let input = TickerViewModel.Input()
+        let listInput = TickerListViewModel.Input(
+            priceTapped: tickerListView.headerView.priceButton.rx.tapGesture(),
+            changedPriceTapped: tickerListView.headerView.changedPriceButton.rx.tapGesture(),
+            accTapped: tickerListView.headerView.accButton.rx.tapGesture(),
+            selectedItem: tickerListView.tickerTableView.rx.modelSelected(UpbitMarketEntity.self).asObservable()
+        )
+        let listOutput = tickerViewModel.tickerListViewModel.transform(input: listInput)
+
+        tickerListView.bindViewModelOutput(listOutput)
+
+        let input = TickerViewModel.Input(listInput: listInput)
         let output = tickerViewModel.transform(input: input)
 
         output.error
@@ -61,6 +73,12 @@ final class TickerViewController: BaseViewController {
                 vc.modalPresentationStyle = .overFullScreen
                 owner.present(vc, animated: true)
                 print("error", error)
+            }
+            .disposed(by: disposeBag)
+
+        output.selectedItem
+            .subscribe(with: self) { owner, entity in
+                print("entity", entity)
             }
             .disposed(by: disposeBag)
     }

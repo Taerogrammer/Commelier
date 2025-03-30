@@ -17,14 +17,18 @@ final class TickerViewModel: ViewModel {
     }
 
     struct Input {
-
+        let listInput: TickerListViewModel.Input
     }
 
     struct Output {
         let error: Observable<APIError>
+        let selectedItem: Observable<UpbitMarketEntity>
     }
 
     func transform(input: Input) -> Output {
-        return Output(error: tickerListViewModel.errorStream)
+        let listOutput = tickerListViewModel.transform(input: input.listInput)
+
+        return Output(error: tickerListViewModel.errorStream,
+                      selectedItem: listOutput.selectedItem)
     }
 }

@@ -7,8 +7,10 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
+    private var disposeBag = DisposeBag()
     let name = UILabel()
     let price = UILabel()
     let changeRate = UILabel()
@@ -75,6 +77,10 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
             changeRate.textColor = SystemColor.blue
             changePrice.textColor = SystemColor.blue
         }
+    }
+
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
     }
 
 }
