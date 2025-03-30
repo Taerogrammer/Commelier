@@ -16,7 +16,7 @@ final class DetailViewController: BaseViewController {
 
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
-    private let chartView = OldDetailChartView()
+    private let candleChartView = CandleChartView()
 
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
@@ -26,7 +26,7 @@ final class DetailViewController: BaseViewController {
     override func configureHierarchy() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubviews([chartView])
+        containerView.addSubview(candleChartView)
     }
 
     override func configureLayout() {
@@ -37,7 +37,7 @@ final class DetailViewController: BaseViewController {
             make.width.equalTo(scrollView.snp.width)
             make.verticalEdges.equalTo(scrollView)
         }
-        chartView.snp.makeConstraints { make in
+        candleChartView.snp.makeConstraints { make in
             make.top.width.equalTo(containerView)
             make.height.equalTo(400)
             make.bottom.equalTo(containerView).inset(20)
@@ -55,8 +55,7 @@ final class DetailViewController: BaseViewController {
         output.chartEntity
             .bind(with: self) { owner, entities in
                 let listEntities = entities.reversed().map { ChartListEntity(date: $0.date, price: $0.price)}
-//                print("============", listEntities)
-                owner.chartView.configureChartHostingView(with: listEntities)
+                owner.candleChartView.configureChartHostingView(with: listEntities)
             }
             .disposed(by: disposeBag)
     }

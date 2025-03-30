@@ -8,12 +8,6 @@
 import SwiftUI
 import Charts
 
-struct ChartListEntity: Identifiable {
-    let id = UUID()
-    let date: String
-    let price: Double
-}
-
 struct OldChartView: View {
     let data: [ChartListEntity]
 
