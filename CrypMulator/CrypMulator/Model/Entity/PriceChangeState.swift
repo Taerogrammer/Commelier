@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - 위치 고민해보기
 enum PriceChangeState: String, Decodable {
     case rise = "RISE"
     case fall = "FALL"

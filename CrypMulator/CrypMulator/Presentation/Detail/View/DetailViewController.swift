@@ -16,17 +16,20 @@ final class DetailViewController: BaseViewController {
 
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
+
+    private let coinLivePriceView: CoinLivePriceView
     private let candleChartView = CandleChartView()
 
-    init(viewModel: DetailViewModel) {
+    init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView) {
         self.viewModel = viewModel
+        self.coinLivePriceView = coinSummaryView
         super.init()
     }
 
     override func configureHierarchy() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubview(candleChartView)
+        containerView.addSubviews([coinLivePriceView, candleChartView])
     }
 
     override func configureLayout() {
@@ -37,8 +40,13 @@ final class DetailViewController: BaseViewController {
             make.width.equalTo(scrollView.snp.width)
             make.verticalEdges.equalTo(scrollView)
         }
-        candleChartView.snp.makeConstraints { make in
+        coinLivePriceView.snp.makeConstraints { make in
             make.top.width.equalTo(containerView)
+            make.height.equalTo(80)
+        }
+        candleChartView.snp.makeConstraints { make in
+            make.width.equalTo(containerView)
+            make.top.equalTo(coinLivePriceView.snp.bottom).inset(12)
             make.height.equalTo(400)
             make.bottom.equalTo(containerView).inset(20)
         }

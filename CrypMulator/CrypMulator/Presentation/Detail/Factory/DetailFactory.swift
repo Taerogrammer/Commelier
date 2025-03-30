@@ -11,6 +11,12 @@ struct DetailFactory {
     static func make(with market: String) -> DetailViewController {
         let request = TickerDetailRequest(market: market)
         let detailVM = DetailViewModel(request: request)
-        return DetailViewController(viewModel: detailVM)
+        let summaryVM = CoinSummaryViewModel(request: request)
+        let summaryView = CoinLivePriceView(viewModel: summaryVM)
+
+        return DetailViewController(
+            viewModel: detailVM,
+            coinSummaryView: summaryView
+        )
     }
 }

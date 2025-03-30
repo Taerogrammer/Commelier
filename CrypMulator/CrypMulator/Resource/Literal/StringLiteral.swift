@@ -12,6 +12,8 @@ enum StringLiteral {
     enum Currency {
         static let krw = "KRW"
         static let won = "원"
+        static let wonMark = "₩"
+        static let percentage = "%"
     }
 
     enum NavigationTitle {
