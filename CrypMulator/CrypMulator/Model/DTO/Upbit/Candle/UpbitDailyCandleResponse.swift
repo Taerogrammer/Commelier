@@ -19,7 +19,7 @@ struct UpbitDailyCandleResponse: Decodable {
     let candleAccTradePrice: Double
     let candleAccTradeVolume: Double
     let prevClosingPrice: Double
-    let changePrice: Double
+    let changePrice: Double?
     let changeRate: Double
 
     enum CodingKeys: String, CodingKey {

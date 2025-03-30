@@ -48,5 +48,10 @@ final class DetailViewController: BaseViewController {
 
     }
 
+    override func bind() {
+        let input = DetailViewModel.Input()
+        let output = viewModel.transform(input: input)
+    }
+
 
 }
