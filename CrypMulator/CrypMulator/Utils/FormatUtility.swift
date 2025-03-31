@@ -52,4 +52,9 @@ enum FormatUtility {
         return formatter
     }()
 
+    static func formattedPrice(_ price: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: price)) ?? "\(price)"
+    }
 }

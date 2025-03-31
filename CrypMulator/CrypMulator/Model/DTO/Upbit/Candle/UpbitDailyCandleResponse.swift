@@ -42,7 +42,7 @@ struct UpbitDailyCandleResponse: Decodable {
 extension UpbitDailyCandleResponse {
     func toEntity() -> ChartEntity {
         return ChartEntity(
-            date: String.convertPriceDate(date: candleDateTimeKST),
+            date: String.convertCandleDate(date: candleDateTimeKST),
             price: tradePrice)
     }
 }

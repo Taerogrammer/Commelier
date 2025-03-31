@@ -97,13 +97,18 @@ struct ChartView: View {
                                 let yPos = proxy.position(forY: selected.price) ?? 0
                                 let isRightSide = selectedIndex > data.count / 2
 
-                                VStack(alignment: isRightSide ? .trailing : .leading, spacing: 4) {
-                                    Text("📅 \(selected.date)")
-                                    Text("💰 \(Int(selected.price)) 원")
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(selected.date)")
+                                        .bold()
+                                    Text("\(FormatUtility.formattedPrice(selected.price)) \(StringLiteral.Currency.won)")
                                 }
                                 .font(.caption)
                                 .padding(6)
-                                .background(.ultraThinMaterial)
+                                .background(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
                                 .cornerRadius(8)
                                 .offset(
                                     x: xPos + (isRightSide ? -120 : 8),
