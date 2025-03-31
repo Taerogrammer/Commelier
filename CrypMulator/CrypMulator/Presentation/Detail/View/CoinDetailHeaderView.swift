@@ -10,7 +10,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-final class OldDetailCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
+final class CoinDetailHeaderView: UICollectionReusableView, ReuseIdentifiable {
 
     private let titleLabel = UILabel()
 
@@ -28,7 +28,7 @@ final class OldDetailCollectionHeaderView: UICollectionReusableView, ReuseIdenti
 }
 
 // MARK: - configure view
-extension OldDetailCollectionHeaderView: ViewConfiguration {
+extension CoinDetailHeaderView: ViewConfiguration {
     func configureHierarchy() {
         addSubview(titleLabel)
     }

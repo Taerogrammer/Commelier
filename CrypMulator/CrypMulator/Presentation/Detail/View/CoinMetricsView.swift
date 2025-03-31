@@ -46,9 +46,9 @@ final class CoinMetricsView: BaseView {
     override func configureView() {
         collectionView.register(SymbolInfoCell.self, forCellWithReuseIdentifier: SymbolInfoCell.identifier)
         collectionView.register(
-            OldDetailCollectionHeaderView.self,
+            CoinDetailHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: OldDetailCollectionHeaderView.identifier)
+            withReuseIdentifier: CoinDetailHeaderView.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.backgroundColor = SystemColor.white
         collectionView.isScrollEnabled = false
@@ -93,9 +93,9 @@ extension CoinMetricsView {
 
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: OldDetailCollectionHeaderView.identifier,
+                withReuseIdentifier: CoinDetailHeaderView.identifier,
                 for: indexPath
-            ) as! OldDetailCollectionHeaderView
+            ) as! CoinDetailHeaderView
 
             header.configureTitle(with: section)
             return header
