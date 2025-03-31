@@ -52,7 +52,7 @@ final class CustomSegmentedControl: BaseView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 
-        selectorView.backgroundColor = .systemBlue
+        selectorView.backgroundColor = SystemColor.black
         selectorView.layer.cornerRadius = 2
         clipsToBounds = true
     }

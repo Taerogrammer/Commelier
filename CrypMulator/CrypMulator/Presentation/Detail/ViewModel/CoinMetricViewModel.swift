@@ -13,7 +13,7 @@ final class CoinMetricViewModel: ViewModel {
     private let webSocket: WebSocketProvider
     private let request: TickerDetailRequest
 
-    @Published private(set) var symbolInfoEntity: SymbolInfoEntity?
+    @Published private(set) var sections: [DetailSection] = []
 
     init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
         self.request = request
@@ -24,21 +24,22 @@ final class CoinMetricViewModel: ViewModel {
     struct Input { }
 
     struct Output {
-        let ticker: AnyPublisher<SymbolInfoEntity, Never>
+        let sections: AnyPublisher<[DetailSection], Never>
     }
 
     func transform(input: Input) -> Output {
-        let tickerStream = $symbolInfoEntity
-            .compactMap { $0 }
-            .eraseToAnyPublisher()
-
-        return Output(ticker: tickerStream)
+        return Output(
+            sections: $sections.eraseToAnyPublisher()
+        )
     }
 
     private func bindWebSocket() {
         webSocket.symbolInfoPublisher
+            .map { [$0.toDetailSection()] }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.symbolInfoEntity = $0 }
+            .sink { [weak self] sections in
+                self?.sections = sections
+            }
             .store(in: &cancellables)
     }
 }

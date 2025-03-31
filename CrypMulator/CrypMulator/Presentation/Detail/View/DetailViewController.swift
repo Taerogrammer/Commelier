@@ -73,8 +73,8 @@ final class DetailViewController: BaseViewController {
 
         views = [
             candleChartView,
-            coinMetricsView,
-            BaseView()
+            BaseView(),
+            coinMetricsView
         ]
 
         views.forEach { view in
@@ -124,7 +124,11 @@ final class DetailViewController: BaseViewController {
 // MARK: - segmented control
 extension DetailViewController {
     private func configureSegmentedControl() {
-        segmentedControl.items = ["그래프", "호가", "정보"]
+        segmentedControl.items = [
+            StringLiteral.Information.graph,
+            StringLiteral.Information.orderBook,
+            StringLiteral.Information.summary
+        ]
         segmentedControl.selectionChanged = { [weak self] index in
             guard let self else { return }
             for (i, view) in views.enumerated() {

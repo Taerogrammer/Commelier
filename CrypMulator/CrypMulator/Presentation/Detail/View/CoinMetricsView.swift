@@ -7,29 +7,17 @@
 
 import Combine
 import UIKit
-import RxCocoa
-import RxDataSources
-import RxSwift
 import SnapKit
 
-struct DetailSection {
-    let title: String
-    var items: [Item]
-}
-
-struct DetailInformation: Equatable {
+struct DetailInformation: Hashable {
     let title: String
     let money: String
     let date: String
 }
 
-extension DetailSection: SectionModelType {
-    typealias Item = DetailInformation
-
-    init(original: DetailSection, items: [DetailInformation]) {
-        self = original
-        self.items = items
-    }
+struct DetailSection {
+    let title: String
+    var items: [DetailInformation]
 }
 
 final class CoinMetricsView: BaseView {
@@ -38,7 +26,7 @@ final class CoinMetricsView: BaseView {
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
-    private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
+    private var dataSource: UICollectionViewDiffableDataSource<String, DetailInformation>!
 
     init(viewModel: CoinMetricViewModel) {
         self.viewModel = viewModel
@@ -62,21 +50,74 @@ final class CoinMetricsView: BaseView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: OldDetailCollectionHeaderView.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.backgroundColor = SystemColor.white
         collectionView.isScrollEnabled = false
+        collectionView.delegate = self
+        configureDiffableDataSource()
+
     }
 
     override func bind() {
         let input = CoinMetricViewModel.Input()
         let output = viewModel?.transform(input: input)
 
-        output?.ticker
+        output?.sections
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] ticker in
-                print("======>>>> ", ticker)
+            .sink { [weak self] sections in
+                self?.applySnapshot(with: sections)
             }
             .store(in: &cancellables)
     }
+}
 
+extension CoinMetricsView {
+    private func configureDiffableDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<String, DetailInformation>(
+            collectionView: collectionView,
+            cellProvider: { (collectionView, indexPath, item) in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: SymbolInfoCell.identifier,
+                    for: indexPath
+                ) as! SymbolInfoCell
+                // TODO: - "원"을 붙일지 말지 고민
+                cell.titleLabel.text = item.title
+                cell.amountLabel.text = item.money
+                cell.dateLabel.text = item.date
+
+                return cell
+            })
+
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let self = self else { return nil }
+            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: OldDetailCollectionHeaderView.identifier,
+                for: indexPath
+            ) as! OldDetailCollectionHeaderView
+
+            header.configureTitle(with: section)
+            return header
+        }
+    }
+
+    private func applySnapshot(with sections: [DetailSection]) {
+        var snapshot = NSDiffableDataSourceSnapshot<String, DetailInformation>()
+        for section in sections {
+            snapshot.appendSections([section.title])
+            snapshot.appendItems(section.items)
+        }
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+
+extension CoinMetricsView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? SymbolInfoCell else { return }
+        cell.configureCorners(for: indexPath, in: collectionView)
+    }
 }
 
 // MARK: - collection view
@@ -93,7 +134,7 @@ extension CoinMetricsView {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+                    widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
                 let section = NSCollectionLayoutSection(group: group)
@@ -118,43 +159,5 @@ extension CoinMetricsView {
         }
 
         return layout
-    }
-}
-
-// MARK: - Data Source
-extension CoinMetricsView {
-    private func configureDataSource() {
-        dataSource = RxCollectionViewSectionedReloadDataSource<DetailSection>(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SymbolInfoCell.identifier, for: indexPath) as! SymbolInfoCell
-
-                cell.titleLabel.text = item.title
-                cell.amountLabel.text = item.money
-                cell.dateLabel.text = item.money
-
-                return cell
-            },
-            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-                let header = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: OldDetailCollectionHeaderView.identifier,
-                    for: indexPath) as! OldDetailCollectionHeaderView
-
-                header.configureTitle(with: dataSource[indexPath.section].title)
-
-                /*
-                header.moreButton.rx.tap
-                    .bind { [weak self] _ in
-                        self?.view.makeToast(
-                            "준비 중입니다",
-                            duration: 2.0,
-                            position: .bottom)
-                    }
-                    .disposed(by: self?.disposeBag ?? DisposeBag())
-                 */
-
-                return header
-            }
-        )
     }
 }

@@ -21,17 +21,18 @@ final class SymbolInfoCell: BaseCollectionViewCell, ReuseIdentifiable {
 
     override func configureLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(12)
-            make.top.equalTo(contentView.safeAreaLayoutGuide).inset(4)
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(8)
         }
 
         amountLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(12)
-            make.top.equalTo(titleLabel.snp.bottom).offset(-4)
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
+
         dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(12)
-            make.top.equalTo(amountLabel.snp.bottom).offset(-4)
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalTo(amountLabel.snp.bottom).offset(8)
         }
     }
 
@@ -44,13 +45,38 @@ final class SymbolInfoCell: BaseCollectionViewCell, ReuseIdentifiable {
         amountLabel.textColor = SystemColor.black
         dateLabel.textColor = SystemColor.gray
 
-        backgroundColor = SystemColor.whiteGray
-
-        contentView.layer.cornerRadius = 4
+        contentView.backgroundColor = SystemColor.whiteGray
+        contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
-        contentView.layer.backgroundColor = UIColor.clear.cgColor
-        layer.cornerRadius = 4
-        layer.masksToBounds = false
-        layer.shadowColor = SystemColor.black.cgColor
+    }
+
+    func configureCorners(for indexPath: IndexPath, in collectionView: UICollectionView) {
+        let totalItems = collectionView.numberOfItems(inSection: indexPath.section)
+
+        let isLeft = indexPath.item % 2 == 0
+        let isRight = !isLeft
+        let isTopRow = indexPath.item < 2
+        let rowCount = Int(ceil(Double(totalItems) / 2.0))
+        let currentRow = indexPath.item / 2
+        let isBottomRow = currentRow == rowCount - 1
+
+        var corners: CACornerMask = []
+
+        if isLeft && isTopRow {
+            corners.insert(.layerMinXMinYCorner)
+        }
+        if isRight && isTopRow {
+            corners.insert(.layerMaxXMinYCorner)
+        }
+        if isLeft && isBottomRow {
+            corners.insert(.layerMinXMaxYCorner)
+        }
+        if isRight && isBottomRow {
+            corners.insert(.layerMaxXMaxYCorner)
+        }
+
+        contentView.layer.cornerRadius = 16
+        contentView.layer.maskedCorners = corners
+        contentView.layer.masksToBounds = true
     }
 }
