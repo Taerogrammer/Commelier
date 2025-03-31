@@ -14,6 +14,13 @@ final class DetailViewController: BaseViewController {
     private let viewModel: DetailViewModel
     private var disposeBag = DisposeBag()
 
+    private let barButton = UIBarButtonItem(
+        image: SystemIcon.arrowLeft,
+        style: .plain,
+        target: nil,
+        action: nil)
+    private let favoriteButton = UIBarButtonItem()
+
     private let scrollView = UIScrollView()
     private let containerView = BaseView()
 
@@ -83,9 +90,24 @@ final class DetailViewController: BaseViewController {
         configureSegmentedControl()
     }
 
+    override func configureNavigation() {
+        navigationItem.leftBarButtonItem = barButton
+        navigationItem.rightBarButtonItem = favoriteButton
+    }
+
     override func bind() {
-        let input = DetailViewModel.Input()
+        let input = DetailViewModel.Input(
+            barButtonTapped: barButton.rx.tap)
         let output = viewModel.transform(input: input)
+
+        output.action
+            .bind(with: self) { owner, action in
+                switch action {
+                case .pop:
+                    owner.navigationController?.popViewController(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
 
         output.chartEntity
             .bind(with: self) { owner, entities in
@@ -100,7 +122,7 @@ final class DetailViewController: BaseViewController {
 // MARK: - segmented control
 extension DetailViewController {
     private func configureSegmentedControl() {
-        segmentedControl.items = ["그래프", "1주", "1개월"]
+        segmentedControl.items = ["그래프", "호가", "정보"]
         segmentedControl.selectionChanged = { [weak self] index in
             guard let self else { return }
             for (i, view) in views.enumerated() {

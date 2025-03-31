@@ -12,20 +12,32 @@ final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let request: TickerDetailRequest
 
+    enum Action {
+        case pop
+    }
+
     init(request: TickerDetailRequest) {
         self.request = request
-        print("request ==> ", request)
     }
 
     struct Input {
+        let barButtonTapped: ControlEvent<Void>
     }
 
     struct Output {
         let chartEntity: PublishRelay<[ChartEntity]>
+        let action: PublishRelay<Action>
     }
 
     func transform(input: Input) -> Output {
         let chartRelay = PublishRelay<[ChartEntity]>()
+        let action = PublishRelay<Action>()
+
+        input.barButtonTapped
+            .bind(with: self) { owner, _ in
+                action.accept(Action.pop)
+            }
+            .disposed(by: disposeBag)
 
         Observable.just(request.market)
             .flatMapLatest { query -> Single<[UpbitDailyCandleResponse]> in
@@ -35,7 +47,6 @@ final class DetailViewModel: ViewModel {
                     type: [UpbitDailyCandleResponse].self)
             }
             .subscribe(with: self) { owner, response in
-                print("==================", response)
                 let chart: [ChartEntity] = response.map {
                     $0.toEntity()
                 }
@@ -46,6 +57,7 @@ final class DetailViewModel: ViewModel {
             }
             .disposed(by: disposeBag)
 
-        return Output(chartEntity: chartRelay)
+        return Output(chartEntity: chartRelay,
+                      action: action)
     }
 }
