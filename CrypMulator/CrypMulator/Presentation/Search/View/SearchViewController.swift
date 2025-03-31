@@ -146,10 +146,10 @@ final class SearchViewController: BaseViewController {
                 data[indexPath.item]
             }
             .bind(with: self) { owner, data in
-                let vm = OldDetailViewModel(id: data.id)
-                let vc = OldDetailViewController(viewModel: vm)
-
-                owner.navigationController?.pushViewController(vc, animated: true)
+//                let vm = OldDetailViewModel(id: data.id)
+//                let vc = OldDetailViewController(viewModel: vm)
+//
+//                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }

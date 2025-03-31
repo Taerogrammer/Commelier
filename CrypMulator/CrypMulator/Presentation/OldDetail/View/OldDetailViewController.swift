@@ -14,8 +14,8 @@ import RxSwift
 import SnapKit
 import Toast
 
-final class OldDetailViewController: BaseViewController {
-    private let viewModel: OldDetailViewModel
+//final class OldDetailViewController: BaseViewController {
+//    private let viewModel: OldDetailViewModel
 //    private var disposeBag = DisposeBag()
 //    private let titleView = OldDetailTitleView()
 //    private let barButton = UIBarButtonItem(
@@ -36,10 +36,10 @@ final class OldDetailViewController: BaseViewController {
 //    private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
 //    private let realm = try! Realm()
 //
-    init(viewModel: OldDetailViewModel) {
-        self.viewModel = viewModel
-        super.init()
-    }
+//    init(viewModel: OldDetailViewModel) {
+//        self.viewModel = viewModel
+//        super.init()
+//    }
 //
 //    override func configureHierarchy() {
 //        view.addSubview(scrollView)
@@ -255,4 +255,4 @@ final class OldDetailViewController: BaseViewController {
 //            }
 //        )
 //    }
-}
+//}
