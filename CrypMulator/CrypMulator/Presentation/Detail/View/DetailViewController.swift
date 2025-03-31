@@ -13,6 +13,7 @@ import SnapKit
 final class DetailViewController: BaseViewController {
     private let viewModel: DetailViewModel
     private var disposeBag = DisposeBag()
+    private let titleEntity: NavigationTitleEntity
 
     private let barButton = UIBarButtonItem(
         image: SystemIcon.arrowLeft,
@@ -38,7 +39,8 @@ final class DetailViewController: BaseViewController {
     private let buyButton = ActionButton(title: StringLiteral.Button.buy,
                                          backgroundColor: SystemColor.red)
 
-    init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView, coinMetricsView: CoinMetricsView) {
+    init(titleEntity: NavigationTitleEntity, viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView, coinMetricsView: CoinMetricsView) {
+        self.titleEntity = titleEntity
         self.viewModel = viewModel
         self.coinLivePriceView = coinSummaryView
         self.coinMetricsView = coinMetricsView
@@ -110,6 +112,8 @@ final class DetailViewController: BaseViewController {
     }
 
     override func configureNavigation() {
+        let titleView = NavigationTitleView(entity: titleEntity)
+        navigationItem.titleView = titleView
         navigationItem.leftBarButtonItem = barButton
         navigationItem.rightBarButtonItem = favoriteButton
     }

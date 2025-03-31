@@ -18,7 +18,9 @@ struct DetailFactory {
         let coinMetricVM = CoinMetricViewModel(request: request, webSocket: webSocket)
         let coinMetricsView = CoinMetricsView(viewModel: coinMetricVM)
 
+        // TODO: - File 생성 후 엔티티 바로 주입하기
         return DetailViewController(
+            titleEntity: NavigationTitleEntity(imageURLString: nil, title: market),
             viewModel: detailVM,
             coinSummaryView: summaryView,
             coinMetricsView: coinMetricsView
