@@ -33,6 +33,9 @@ final class DetailViewController: BaseViewController {
     private let candleChartView = CandleChartView()
     private let coinMetricsView: CoinMetricsView
 
+    private let sellButton = UIButton()
+    private let buyButton = UIButton()
+
     init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView, coinMetricsView: CoinMetricsView) {
         self.viewModel = viewModel
         self.coinLivePriceView = coinSummaryView
@@ -41,7 +44,7 @@ final class DetailViewController: BaseViewController {
     }
 
     override func configureHierarchy() {
-        view.addSubview(scrollView)
+        view.addSubviews([scrollView, sellButton, buyButton])
         scrollView.addSubview(containerView)
         containerView.addSubviews([coinLivePriceView, segmentedControl, segmentedContainerView])
     }
@@ -71,6 +74,18 @@ final class DetailViewController: BaseViewController {
             make.bottom.equalTo(containerView).inset(20)
         }
 
+        sellButton.snp.makeConstraints { make in
+            make.leading.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
+            make.height.equalTo(48)
+            make.width.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.5).offset(-18)
+        }
+
+        buyButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(12)
+            make.height.equalTo(48)
+            make.width.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.5).offset(-18)
+        }
+
         views = [
             candleChartView,
             BaseView(),
@@ -90,6 +105,18 @@ final class DetailViewController: BaseViewController {
 
     override func configureView() {
         configureSegmentedControl()
+
+        sellButton.setTitle(StringLiteral.Button.sell, for: .normal)
+        sellButton.titleLabel?.font = SystemFont.Button.primary
+        sellButton.backgroundColor = SystemColor.blue
+        sellButton.clipsToBounds = true
+        sellButton.layer.cornerRadius = 8
+
+        buyButton.setTitle(StringLiteral.Button.buy, for: .normal)
+        buyButton.titleLabel?.font = SystemFont.Button.primary
+        buyButton.backgroundColor = SystemColor.red
+        buyButton.clipsToBounds = true
+        buyButton.layer.cornerRadius = 8
     }
 
     override func configureNavigation() {

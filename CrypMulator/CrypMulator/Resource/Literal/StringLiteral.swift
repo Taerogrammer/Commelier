@@ -67,5 +67,7 @@ enum StringLiteral {
 
     enum Button {
         static let charge = "충전하기"
+        static let sell = "가상 매도하기"
+        static let buy = "가상 매수하기"
     }
 }
