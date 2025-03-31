@@ -16,13 +16,18 @@ final class WebSocketManager: WebSocketProvider {
 
     private let orderbookSubject = PassthroughSubject<OrderBookEntity, Never>()
     private let livePriceSubject = PassthroughSubject<LivePriceEntity, Never>()
+    private let symbolInfoSubject = PassthroughSubject<SymbolInfoEntity, Never>()
 
     var orderbookPublisher: AnyPublisher<OrderBookEntity, Never> {
         orderbookSubject.eraseToAnyPublisher()
     }
 
-    var tickerPublisher: AnyPublisher<LivePriceEntity, Never> {
+    var livePricePublisher: AnyPublisher<LivePriceEntity, Never> {
         livePriceSubject.eraseToAnyPublisher()
+    }
+
+    var symbolInfoPublisher: AnyPublisher<SymbolInfoEntity, Never> {
+        symbolInfoSubject.eraseToAnyPublisher()
     }
 
     // 연결
@@ -104,6 +109,7 @@ final class WebSocketManager: WebSocketProvider {
             do {
                 let ticker = try JSONDecoder().decode(TickerDTO.self, from: data)
                 livePriceSubject.send(ticker.toLivePrice())
+                symbolInfoSubject.send(ticker.toSymbolInfo())
             } catch {
                 print("❌ Ticker decoding error:", error)
             }

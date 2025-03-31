@@ -31,11 +31,12 @@ final class DetailViewController: BaseViewController {
 
     private var views: [BaseView] = []
     private let candleChartView = CandleChartView()
-    private let coinMetricsView = CoinMetricsView()
+    private let coinMetricsView: CoinMetricsView
 
-    init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView) {
+    init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView, coinMetricsView: CoinMetricsView) {
         self.viewModel = viewModel
         self.coinLivePriceView = coinSummaryView
+        self.coinMetricsView = coinMetricsView
         super.init()
     }
 

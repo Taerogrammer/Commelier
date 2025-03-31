@@ -52,7 +52,6 @@ final class CoinLivePriceView: BaseView {
         output?.ticker
             .receive(on: DispatchQueue.main)
             .sink { [weak self] ticker in
-                print("Ticker", ticker)
                 self?.configure(with: ticker)
             }
             .store(in: &cancellables)

@@ -13,7 +13,7 @@ final class CoinLivePriceViewModel: ViewModel {
     private let webSocket: WebSocketProvider
     private let request: TickerDetailRequest
 
-    @Published private(set) var ticker: LivePriceEntity?
+    @Published private(set) var livePriceEntity: LivePriceEntity?
 
     init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
         self.request = request
@@ -28,7 +28,7 @@ final class CoinLivePriceViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let tickerStream = $ticker
+        let tickerStream = $livePriceEntity
             .compactMap { $0 }
             .eraseToAnyPublisher()
 
@@ -36,9 +36,9 @@ final class CoinLivePriceViewModel: ViewModel {
     }
 
     private func bindWebSocket() {
-        webSocket.tickerPublisher
+        webSocket.livePricePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.ticker = $0 }
+            .sink { [weak self] in self?.livePriceEntity = $0 }
             .store(in: &cancellables)
     }
 }

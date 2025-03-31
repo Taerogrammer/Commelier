@@ -89,4 +89,19 @@ extension TickerDTO {
             priceChangeState: PriceChangeState(rawValue: change) ?? .even
         )
     }
+    
+    func toSymbolInfo() -> SymbolInfoEntity {
+        return SymbolInfoEntity(
+            highPrice: highPrice,
+            lowPrice: lowPrice,
+            accTradePrice: accTradePrice,
+            accTradeVolume: accTradeVolume,
+            prevClosingPrice: prevClosingPrice,
+            signedChangeRate: signedChangeRate,
+            highest52WeekPrice: highest52WeekPrice,
+            highest52WeekDate: highest52WeekDate,
+            lowest52WeekPrice: lowest52WeekPrice,
+            lowest52WeekDate: lowest52WeekDate
+        )
+    }
 }

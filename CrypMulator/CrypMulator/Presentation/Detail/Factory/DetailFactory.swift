@@ -15,10 +15,13 @@ struct DetailFactory {
         let detailVM = DetailViewModel(request: request, webSocket: webSocket)
         let summaryVM = CoinLivePriceViewModel(request: request, webSocket: webSocket)
         let summaryView = CoinLivePriceView(viewModel: summaryVM)
+        let coinMetricVM = CoinMetricViewModel(request: request, webSocket: webSocket)
+        let coinMetricsView = CoinMetricsView(viewModel: coinMetricVM)
 
         return DetailViewController(
             viewModel: detailVM,
-            coinSummaryView: summaryView
+            coinSummaryView: summaryView,
+            coinMetricsView: coinMetricsView
         )
     }
 }

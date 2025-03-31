@@ -5,6 +5,7 @@
 //  Created by 김태형 on 3/31/25.
 //
 
+import Combine
 import UIKit
 import RxCocoa
 import RxDataSources
@@ -32,10 +33,17 @@ extension DetailSection: SectionModelType {
 }
 
 final class CoinMetricsView: BaseView {
+    private var viewModel: CoinMetricViewModel?
+    private var cancellables = Set<AnyCancellable>()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
     private var dataSource: RxCollectionViewSectionedReloadDataSource<DetailSection>!
+
+    init(viewModel: CoinMetricViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+    }
 
     override func configureHierarchy() {
         addSubview(collectionView)
@@ -55,6 +63,18 @@ final class CoinMetricsView: BaseView {
             withReuseIdentifier: OldDetailCollectionHeaderView.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.isScrollEnabled = false
+    }
+
+    override func bind() {
+        let input = CoinMetricViewModel.Input()
+        let output = viewModel?.transform(input: input)
+
+        output?.ticker
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] ticker in
+                print("======>>>> ", ticker)
+            }
+            .store(in: &cancellables)
     }
 
 }
