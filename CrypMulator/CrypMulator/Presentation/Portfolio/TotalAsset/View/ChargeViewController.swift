@@ -15,17 +15,17 @@ final class ChargeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
 
     private let titleLabel = UILabel()
-    private lazy var amountButtons: [UIButton] = {
-        [1_000_000, 5_000_000, 10_000_000].map { amount in
-            let button = UIButton()
-            button.tag = amount // 태그로 금액 저장
-            return button
-        }
+    private lazy var amountButtons: [ActionButton] = {
+        ["1,000,000", "5,000,000", "10,000,000"].map {
+            ActionButton(title: $0 + StringLiteral.Currency.won,
+                         backgroundColor: SystemColor.gray,
+                         font: SystemFont.Button.secondary) }
     }()
 
     private let amountLabel = UILabel()
     private let unitLabel = UILabel()
-    private let chargeButton = UIButton()
+    private let chargeButton = ActionButton(title: StringLiteral.Button.charge,
+                                            backgroundColor: SystemColor.blue)
 
     private lazy var buttonStack = UIStackView(arrangedSubviews: amountButtons)
     private lazy var amountContainer = UIStackView(arrangedSubviews: [amountLabel, unitLabel])
@@ -80,27 +80,12 @@ final class ChargeViewController: BaseViewController {
         titleLabel.font = SystemFont.Title.large
         titleLabel.textAlignment = .center
 
-        for button in amountButtons {
-            let amount = button.tag
-            button.setTitle("\(FormatUtility.formatAmount(amount)) \(StringLiteral.Currency.won)", for: .normal)
-            button.setTitleColor(SystemColor.black, for: .normal)
-            button.backgroundColor = SystemColor.whiteGray
-            button.titleLabel?.font = SystemFont.Body.content
-            button.layer.cornerRadius = 8
-        }
-
         amountLabel.text = "0"
         amountLabel.font = SystemFont.Title.xLarge
         amountLabel.textAlignment = .center
 
         unitLabel.text = StringLiteral.Currency.won
         unitLabel.font = .systemFont(ofSize: 18, weight: .medium)
-
-        chargeButton.setTitle(StringLiteral.Button.charge, for: .normal)
-        chargeButton.setTitleColor(SystemColor.white, for: .normal)
-        chargeButton.backgroundColor = SystemColor.blue
-        chargeButton.layer.cornerRadius = 16
-        chargeButton.titleLabel?.font = SystemFont.Title.small
     }
 
     override func bind() {

@@ -33,8 +33,10 @@ final class DetailViewController: BaseViewController {
     private let candleChartView = CandleChartView()
     private let coinMetricsView: CoinMetricsView
 
-    private let sellButton = UIButton()
-    private let buyButton = UIButton()
+    private let sellButton = ActionButton(title: StringLiteral.Button.sell,
+                                          backgroundColor: SystemColor.blue)
+    private let buyButton = ActionButton(title: StringLiteral.Button.buy,
+                                         backgroundColor: SystemColor.red)
 
     init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView, coinMetricsView: CoinMetricsView) {
         self.viewModel = viewModel
@@ -105,18 +107,6 @@ final class DetailViewController: BaseViewController {
 
     override func configureView() {
         configureSegmentedControl()
-
-        sellButton.setTitle(StringLiteral.Button.sell, for: .normal)
-        sellButton.titleLabel?.font = SystemFont.Button.primary
-        sellButton.backgroundColor = SystemColor.blue
-        sellButton.clipsToBounds = true
-        sellButton.layer.cornerRadius = 8
-
-        buyButton.setTitle(StringLiteral.Button.buy, for: .normal)
-        buyButton.titleLabel?.font = SystemFont.Button.primary
-        buyButton.backgroundColor = SystemColor.red
-        buyButton.clipsToBounds = true
-        buyButton.layer.cornerRadius = 8
     }
 
     override func configureNavigation() {
