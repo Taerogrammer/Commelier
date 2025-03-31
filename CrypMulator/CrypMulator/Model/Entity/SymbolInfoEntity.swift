@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CoinInfoEntity {
+struct SymbolInfoEntity {
     let highPrice: Double                     // 고가
     let lowPrice: Double                      // 저가
     let accTradePrice: Double                 // 당일 누적 거래금액
