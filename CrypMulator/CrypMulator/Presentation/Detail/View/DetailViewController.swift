@@ -20,6 +20,11 @@ final class DetailViewController: BaseViewController {
     private let coinLivePriceView: CoinLivePriceView
     private let candleChartView = CandleChartView()
 
+    private let segmentedControl = CustomSegmentedControl()
+    private let segmentedContainerView = BaseView()
+
+    private var views: [BaseView] = []
+
     init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView) {
         self.viewModel = viewModel
         self.coinLivePriceView = coinSummaryView
@@ -29,7 +34,7 @@ final class DetailViewController: BaseViewController {
     override func configureHierarchy() {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubviews([coinLivePriceView, candleChartView])
+        containerView.addSubviews([coinLivePriceView, segmentedControl, segmentedContainerView])
     }
 
     override func configureLayout() {
@@ -39,21 +44,43 @@ final class DetailViewController: BaseViewController {
         containerView.snp.makeConstraints { make in
             make.width.equalTo(scrollView.snp.width)
             make.verticalEdges.equalTo(scrollView)
+            make.height.greaterThanOrEqualTo(UIScreen.main.bounds.height + 1)
         }
         coinLivePriceView.snp.makeConstraints { make in
             make.top.width.equalTo(containerView)
             make.height.equalTo(80)
         }
-        candleChartView.snp.makeConstraints { make in
-            make.width.equalTo(containerView)
-            make.top.equalTo(coinLivePriceView.snp.bottom).inset(12)
-            make.height.equalTo(400)
+
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(coinLivePriceView.snp.bottom).offset(20)
+            make.leading.trailing.equalTo(containerView).inset(16)
+            make.height.equalTo(32)
+        }
+        segmentedContainerView.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom).offset(12)
+            make.leading.trailing.equalTo(containerView)
             make.bottom.equalTo(containerView).inset(20)
         }
+
+        views = [
+            candleChartView,
+            BaseView(),
+            BaseView()
+        ]
+
+        views.forEach { view in
+            segmentedContainerView.addSubview(view)
+            view.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            view.isHidden = true
+        }
+
+        views.first?.isHidden = false
     }
 
     override func configureView() {
-
+        configureSegmentedControl()
     }
 
     override func bind() {
@@ -68,5 +95,17 @@ final class DetailViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
 
+}
 
+// MARK: - segmented control
+extension DetailViewController {
+    private func configureSegmentedControl() {
+        segmentedControl.items = ["그래프", "1주", "1개월"]
+        segmentedControl.selectionChanged = { [weak self] index in
+            guard let self else { return }
+            for (i, view) in views.enumerated() {
+                view.isHidden = (i != index)
+            }
+        }
+    }
 }

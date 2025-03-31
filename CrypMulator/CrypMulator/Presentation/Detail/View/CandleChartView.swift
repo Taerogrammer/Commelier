@@ -25,7 +25,9 @@ extension CandleChartView {
         addSubview(chartUIView)
 
         chartUIView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(12)
+            make.top.equalToSuperview().offset(20)
+            make.height.equalTo(360)
         }
     }
 }
