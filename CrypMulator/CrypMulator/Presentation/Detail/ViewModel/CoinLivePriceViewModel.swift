@@ -8,22 +8,20 @@
 import Combine
 import Foundation
 
-final class CoinSummaryViewModel: ViewModel {
+final class CoinLivePriceViewModel: ViewModel {
     private var cancellables = Set<AnyCancellable>()
-    private let webSocketManager = WebSocketManager.shared
+    private let webSocket: WebSocketProvider
     private let request: TickerDetailRequest
 
-    // 외부에서 구독 가능한 ticker
     @Published private(set) var ticker: TickerEntity?
 
-    init(request: TickerDetailRequest) {
+    init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
         self.request = request
-        connectWebSocket()
+        self.webSocket = webSocket
+        bindWebSocket() // ✅ 연결은 없음
     }
 
-    struct Input {
-
-    }
+    struct Input { }
 
     struct Output {
         let ticker: AnyPublisher<TickerEntity, Never>
@@ -37,20 +35,10 @@ final class CoinSummaryViewModel: ViewModel {
         return Output(ticker: tickerStream)
     }
 
-    private func connectWebSocket() {
-        webSocketManager.connect()
-        webSocketManager.send(market: request.market)
-
-        // TODO: - send()가 붙는지는 확인하기
-        webSocketManager.tickerPublisher
+    private func bindWebSocket() {
+        webSocket.tickerPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] ticker in
-                self?.ticker = ticker
-            }
+            .sink { [weak self] in self?.ticker = $0 }
             .store(in: &cancellables)
-    }
-
-    deinit {
-        webSocketManager.disconnect()
     }
 }

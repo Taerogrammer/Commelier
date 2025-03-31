@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-final class WebSocketManager {
+final class WebSocketManager: WebSocketProvider {
     static let shared = WebSocketManager()
     private init() { }
 
@@ -112,28 +112,6 @@ final class WebSocketManager {
             print("❓ Unsupported type:", typeInfo.type)
         }
     }
-
-
-//    func receiveMessage() {
-//        webSocket?.receive(completionHandler: { [weak self] result in
-//            print("result", result)
-//
-//            switch result {
-//            case .success(let success):
-//                switch success {
-//                case .data(let value):
-//                    print("data =>", value)
-//                case .string(let value):
-//                    print("String =>", value)
-//                @unknown default:
-//                    print("Unknown Default")
-//                }
-//            case .failure(let failure):
-//                print("failure =>", failure)
-//            }
-//            self?.receiveMessage()   // 재귀함수를 통해 계속적으로 메세지를 전달받음
-//        })
-//    }
 
     func disconnect() {
         webSocket?.cancel(with: .goingAway, reason: nil)
