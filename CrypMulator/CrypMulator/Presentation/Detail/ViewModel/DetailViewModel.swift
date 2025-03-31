@@ -11,13 +11,15 @@ import RxSwift
 final class DetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let request: TickerDetailRequest
+    private let webSocket: WebSocketProvider
 
     enum Action {
         case pop
     }
 
-    init(request: TickerDetailRequest) {
+    init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
         self.request = request
+        self.webSocket = webSocket
     }
 
     struct Input {
@@ -32,6 +34,9 @@ final class DetailViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let chartRelay = PublishRelay<[ChartEntity]>()
         let action = PublishRelay<Action>()
+
+        webSocket.connect()
+        webSocket.send(market: request.market)
 
         input.barButtonTapped
             .bind(with: self) { owner, _ in
@@ -59,5 +64,9 @@ final class DetailViewModel: ViewModel {
 
         return Output(chartEntity: chartRelay,
                       action: action)
+    }
+
+    deinit {
+        webSocket.disconnect()
     }
 }

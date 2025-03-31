@@ -10,8 +10,10 @@ import Foundation
 struct DetailFactory {
     static func make(with market: String) -> DetailViewController {
         let request = TickerDetailRequest(market: market)
-        let detailVM = DetailViewModel(request: request)
-        let summaryVM = CoinSummaryViewModel(request: request)
+        let webSocket: WebSocketProvider = WebSocketManager.shared
+
+        let detailVM = DetailViewModel(request: request, webSocket: webSocket)
+        let summaryVM = CoinLivePriceViewModel(request: request, webSocket: webSocket)
         let summaryView = CoinLivePriceView(viewModel: summaryVM)
 
         return DetailViewController(

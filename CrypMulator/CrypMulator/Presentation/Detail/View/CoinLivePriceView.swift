@@ -10,13 +10,13 @@ import UIKit
 import SnapKit
 
 final class CoinLivePriceView: BaseView {
-    private var viewModel: CoinSummaryViewModel?
+    private var viewModel: CoinLivePriceViewModel?
     private var cancellables = Set<AnyCancellable>()
     private let priceLabel = UILabel()
     private let changePriceLabel = UILabel()
     private let changeRate = UILabel()
 
-    init(viewModel: CoinSummaryViewModel) {
+    init(viewModel: CoinLivePriceViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
     }
@@ -46,7 +46,7 @@ final class CoinLivePriceView: BaseView {
     }
 
     override func bind() {
-        let input = CoinSummaryViewModel.Input()
+        let input = CoinLivePriceViewModel.Input()
         let output = viewModel?.transform(input: input)
 
         output?.ticker

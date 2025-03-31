@@ -25,12 +25,13 @@ final class DetailViewController: BaseViewController {
     private let containerView = BaseView()
 
     private let coinLivePriceView: CoinLivePriceView
-    private let candleChartView = CandleChartView()
 
     private let segmentedControl = CustomSegmentedControl()
     private let segmentedContainerView = BaseView()
 
     private var views: [BaseView] = []
+    private let candleChartView = CandleChartView()
+    private let coinMetricsView = CoinMetricsView()
 
     init(viewModel: DetailViewModel, coinSummaryView: CoinLivePriceView) {
         self.viewModel = viewModel
@@ -71,7 +72,7 @@ final class DetailViewController: BaseViewController {
 
         views = [
             candleChartView,
-            BaseView(),
+            coinMetricsView,
             BaseView()
         ]
 

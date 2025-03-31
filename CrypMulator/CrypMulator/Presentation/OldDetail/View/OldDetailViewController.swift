@@ -14,26 +14,6 @@ import RxSwift
 import SnapKit
 import Toast
 
-struct DetailSection {
-    let title: String
-    var items: [Item]
-}
-
-struct DetailInformation: Equatable {
-    let title: String
-    let money: String
-    let date: String
-}
-
-extension DetailSection: SectionModelType {
-    typealias Item = DetailInformation
-
-    init(original: DetailSection, items: [DetailInformation]) {
-        self = original
-        self.items = items
-    }
-}
-
 final class OldDetailViewController: BaseViewController {
     private let viewModel: OldDetailViewModel
     private var disposeBag = DisposeBag()
@@ -140,9 +120,11 @@ final class OldDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        ///
         output.detailData
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+        ///
 
         output.favoriteButtonResult
             .bind(with: self) { owner, action in
