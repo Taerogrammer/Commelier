@@ -138,6 +138,21 @@ final class DetailViewController: BaseViewController {
                 owner.candleChartView.configureChartHostingView(with: listEntities)
             }
             .disposed(by: disposeBag)
+
+        buyButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let tradeVC = TradeFactory.make(with: owner.titleEntity.title, type: .buy)
+                owner.navigationController?.pushViewController(tradeVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        sellButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let tradeVC = TradeFactory.make(with: owner.titleEntity.title, type: .sell)
+                owner.navigationController?.pushViewController(tradeVC, animated: true)
+            }
+            .disposed(by: disposeBag)
+
     }
 
 }

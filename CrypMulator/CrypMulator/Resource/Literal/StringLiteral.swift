@@ -70,4 +70,15 @@ enum StringLiteral {
         static let sell = "가상 매도하기"
         static let buy = "가상 매수하기"
     }
+
+    enum Trade {
+        static let currentPrice = "현재가"
+        static let sellPrice = "매도 금액"
+        static let buyPrice = "매수 금액"
+        static let holdingAsset = "보유자산"
+        static let holdingQuantity = "보유량"
+        static let sellPlaceholder = "매도할 금액을 입력해주세요"
+        static let buyPlaceholder = "매수할 금액을 입력해주세요"
+
+    }
 }

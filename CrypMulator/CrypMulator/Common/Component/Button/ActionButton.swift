@@ -7,6 +7,7 @@
 
 import UIKit
 
+// TODO: - height 고정
 final class ActionButton: UIButton {
 
     init(title: String, titleColor: UIColor = SystemColor.white, backgroundColor: UIColor, font: UIFont = SystemFont.Button.primary) {
