@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TickerEntity {
+struct LivePriceEntity {
     let market: String  // 이름
     let price: Double   // 현재 가격
     let change: String  // 변동 여부

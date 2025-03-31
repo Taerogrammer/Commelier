@@ -13,7 +13,7 @@ final class CoinMetricViewModel: ViewModel {
     private let webSocket: WebSocketProvider
     private let request: TickerDetailRequest
 
-    @Published private(set) var ticker: TickerEntity?
+    @Published private(set) var ticker: LivePriceEntity?
 
     init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
         self.request = request
@@ -24,7 +24,7 @@ final class CoinMetricViewModel: ViewModel {
     struct Input { }
 
     struct Output {
-        let ticker: AnyPublisher<TickerEntity, Never>
+        let ticker: AnyPublisher<LivePriceEntity, Never>
     }
 
     func transform(input: Input) -> Output {

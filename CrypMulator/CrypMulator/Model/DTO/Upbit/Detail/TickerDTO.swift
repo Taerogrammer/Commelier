@@ -79,8 +79,8 @@ struct TickerDTO: Decodable {
 }
 
 extension TickerDTO {
-    func toEntity() -> TickerEntity {
-        return TickerEntity(
+    func toLivePrice() -> LivePriceEntity {
+        return LivePriceEntity(
             market: code,
             price: tradePrice,
             change: change,

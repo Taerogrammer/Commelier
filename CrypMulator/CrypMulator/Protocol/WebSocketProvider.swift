@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 protocol WebSocketProvider {
-    var tickerPublisher: AnyPublisher<TickerEntity, Never> { get }
+    var tickerPublisher: AnyPublisher<LivePriceEntity, Never> { get }
     func connect()
     func disconnect()
     func send(market: String)
