@@ -92,7 +92,6 @@ final class DetailViewController: BaseViewController {
 
         views = [
             candleChartView,
-            BaseView(),
             coinMetricsView
         ]
 
@@ -162,7 +161,6 @@ extension DetailViewController {
     private func configureSegmentedControl() {
         segmentedControl.items = [
             StringLiteral.Information.graph,
-            StringLiteral.Information.orderBook,
             StringLiteral.Information.summary
         ]
         segmentedControl.selectionChanged = { [weak self] index in
