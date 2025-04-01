@@ -129,7 +129,7 @@ final class TradeViewController: BaseViewController {
 
     override func configureView() {
         currentPriceLabel.font = SystemFont.Title.large
-        currentPriceLabel.text = "총 1000"
+        currentPriceLabel.text = "0" + StringLiteral.Currency.wonMark
 
         buySellPriceLabel.font = SystemFont.Title.large
         buySellPriceLabel.text = "100,000,000 KRW"
@@ -146,15 +146,23 @@ final class TradeViewController: BaseViewController {
         let barButtonTapped = barButton.tapPublisher
         let input = TradeViewModel.Input(
             barButtonTapped: barButtonTapped)
-        // 여기부터
         let output = viewModel.transform(input: input)
 
         output.action
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] action in
                 switch action {
                 case .pop:
                     self?.navigationController?.popViewController(animated: true)
                 }
+            }
+            .store(in: &cancellables)
+
+        output.ticker
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] ticker in
+                print("ticker =====>", ticker)
+                self?.configure(with: ticker)
             }
             .store(in: &cancellables)
 
@@ -175,3 +183,9 @@ final class TradeViewController: BaseViewController {
     }
 }
 
+// MARK: - configure
+extension TradeViewController {
+    private func configure(with entity: LivePriceEntity) {
+        currentPriceLabel.text = entity.price.description + StringLiteral.Currency.wonMark
+    }
+}

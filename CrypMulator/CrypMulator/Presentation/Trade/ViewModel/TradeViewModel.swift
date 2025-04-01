@@ -12,6 +12,7 @@ final class TradeViewModel: ViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let webSocket: WebSocketProvider
 
+    @Published private(set) var livePriceEntity: LivePriceEntity?
 
     enum Action {
         case pop
@@ -19,6 +20,7 @@ final class TradeViewModel: ViewModel {
 
     init(webSocket: WebSocketProvider) {
         self.webSocket = webSocket
+        bindWebSocket()
     }
 
     struct Input {
@@ -27,6 +29,7 @@ final class TradeViewModel: ViewModel {
 
     struct Output {
         let action: AnyPublisher<Action, Never>
+        let ticker: AnyPublisher<LivePriceEntity, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -34,6 +37,18 @@ final class TradeViewModel: ViewModel {
             .map { Action.pop }
             .eraseToAnyPublisher()
 
-        return Output(action: actionPublisher)
+        let tickerStream = $livePriceEntity
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+
+        return Output(action: actionPublisher,
+                      ticker: tickerStream)
+    }
+
+    private func bindWebSocket() {
+        webSocket.livePricePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.livePriceEntity = $0 }
+            .store(in: &cancellables)
     }
 }
