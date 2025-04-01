@@ -8,8 +8,9 @@
 import Foundation
 
 struct PortfolioSummaryEntity {
-    let totalBuy: Double
-    let totalEvaluation: Double
-    let profitLoss: Double
-    let yieldRate: Double
+    let totalBuy: Decimal                   // 총 매수
+    let totalEvaluation: Decimal            // 총 평가
+    let profitLoss: Decimal                 // 평가 손익
+    let yieldRate: Decimal                  // 수익률
+    let yieldRateState: PriceChangeState    // 수익률 상태
 }
