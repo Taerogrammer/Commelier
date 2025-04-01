@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct DelistingDate: Decodable {
+    let year: Int
+    let month: Int
+    let day: Int
+
+    var formatted: String {
+        String(format: "%04d-%02d-%02d", year, month, day)
+    }
+}
+
 struct TickerDTO: Decodable {
     let type: String
     let code: String
@@ -35,7 +45,7 @@ struct TickerDTO: Decodable {
     let lowest52WeekDate: String
     let marketState: String
     let isTradingSuspended: Bool
-    let delistingDate: String?
+    let delistingDate: DelistingDate?
     let marketWarning: String
     let timestamp: Int64
     let accTradePrice24h: Double
