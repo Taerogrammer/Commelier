@@ -5,12 +5,15 @@
 //  Created by 김태형 on 4/1/25.
 //
 
+import Combine
 import UIKit
 import SnapKit
 
 final class TradeViewController: BaseViewController {
 
     private let type: OrderType
+    private let viewModel: TradeViewModel
+    private var cancellables = Set<AnyCancellable>()
 
     private let titleEntity: NavigationTitleEntity
     private let barButton = UIBarButtonItem(
@@ -65,7 +68,8 @@ final class TradeViewController: BaseViewController {
     private lazy var actionButton = ActionButton(title: type.title,
                                             backgroundColor: type.buttonColor)
 
-    init(titleEntity: NavigationTitleEntity, type: OrderType) {
+    init(viewModel: TradeViewModel, titleEntity: NavigationTitleEntity, type: OrderType) {
+        self.viewModel = viewModel
         self.titleEntity = titleEntity
         self.type = type
         super.init()
@@ -136,6 +140,24 @@ final class TradeViewController: BaseViewController {
         navigationItem.titleView = titleView
         navigationItem.leftBarButtonItem = barButton
         navigationItem.rightBarButtonItem = favoriteButton
+    }
+
+    override func bind() {
+        let barButtonTapped = barButton.tapPublisher
+        let input = TradeViewModel.Input(
+            barButtonTapped: barButtonTapped)
+        // 여기부터
+        let output = viewModel.transform(input: input)
+
+        output.action
+            .sink { [weak self] action in
+                switch action {
+                case .pop:
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
+            .store(in: &cancellables)
+
     }
 
     // TODO: - 버튼 색상 물어보기
