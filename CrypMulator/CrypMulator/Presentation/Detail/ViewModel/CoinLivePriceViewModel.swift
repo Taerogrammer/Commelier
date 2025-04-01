@@ -11,12 +11,10 @@ import Foundation
 final class CoinLivePriceViewModel: ViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let webSocket: WebSocketProvider
-    private let request: TickerDetailRequest
 
     @Published private(set) var livePriceEntity: LivePriceEntity?
 
-    init(request: TickerDetailRequest, webSocket: WebSocketProvider) {
-        self.request = request
+    init(webSocket: WebSocketProvider) {
         self.webSocket = webSocket
         bindWebSocket() // ✅ 연결은 없음
     }

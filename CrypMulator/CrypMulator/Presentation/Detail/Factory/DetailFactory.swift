@@ -13,7 +13,7 @@ struct DetailFactory {
         let webSocket: WebSocketProvider = WebSocketManager.shared
 
         let detailVM = DetailViewModel(request: request, webSocket: webSocket)
-        let summaryVM = CoinLivePriceViewModel(request: request, webSocket: webSocket)
+        let summaryVM = CoinLivePriceViewModel(webSocket: webSocket)
         let summaryView = CoinLivePriceView(viewModel: summaryVM)
         let coinMetricVM = CoinMetricViewModel(request: request, webSocket: webSocket)
         let coinMetricsView = CoinMetricsView(viewModel: coinMetricVM)
