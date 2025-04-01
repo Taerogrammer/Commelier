@@ -14,9 +14,9 @@ final class InformationViewModel: ViewModel {
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
-    private let repository: FavoriteCoinRepositoryProtocol
+    private let repository: OldFavoriteCoinRepositoryProtocol
 
-    init(repository: FavoriteCoinRepositoryProtocol) {
+    init(repository: OldFavoriteCoinRepositoryProtocol) {
         self.repository = repository
     }
 

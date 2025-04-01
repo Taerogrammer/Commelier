@@ -8,29 +8,29 @@
 import Foundation
 import RealmSwift
 
-protocol FavoriteCoinRepositoryProtocol {
+protocol OldFavoriteCoinRepositoryProtocol {
     func getFileURL()
-    func getAll() -> Results<FavoriteCoin>
-    func createItem(favoriteCoin: FavoriteCoin)
-    func deleteItem(favoriteCoin: FavoriteCoin)
+    func getAll() -> Results<OldFavoriteCoin>
+    func createItem(favoriteCoin: OldFavoriteCoin)
+    func deleteItem(favoriteCoin: OldFavoriteCoin)
     func isItemInRealm(id: String) -> Bool
 }
 
-final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
+final class OldFavoriteCoinRepository: OldFavoriteCoinRepositoryProtocol {
     
     private let realm = try! Realm()
 
     func getFileURL() { print(realm.configuration.fileURL as Any) }
 
-    func getAll() -> Results<FavoriteCoin> {
-        return realm.objects(FavoriteCoin.self)
+    func getAll() -> Results<OldFavoriteCoin> {
+        return realm.objects(OldFavoriteCoin.self)
     }
 
     func isItemInRealm(id: String) -> Bool {
-        return realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
+        return realm.objects(OldFavoriteCoin.self).filter("id == %@", id).first != nil
     }
 
-    func createItem(favoriteCoin: FavoriteCoin) {
+    func createItem(favoriteCoin: OldFavoriteCoin) {
         do {
             try realm.write {
                 let favCoin = favoriteCoin
@@ -41,8 +41,8 @@ final class FavoriteCoinRepository: FavoriteCoinRepositoryProtocol {
         }
     }
 
-    func deleteItem(favoriteCoin: FavoriteCoin) {
-        if let deletedItem = realm.objects(FavoriteCoin.self)
+    func deleteItem(favoriteCoin: OldFavoriteCoin) {
+        if let deletedItem = realm.objects(OldFavoriteCoin.self)
             .filter("id == %@", favoriteCoin.id)
             .first {
             do {

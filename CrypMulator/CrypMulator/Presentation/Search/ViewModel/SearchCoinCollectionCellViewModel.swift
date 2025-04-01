@@ -13,8 +13,8 @@ final class SearchCoinCollectionCellViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     var coinData: CoinSearchData
     private let realm = try! Realm()
-    private let favoriteRepository = FavoriteCoinRepository()
-    private var favoriteCoin = FavoriteCoin()
+    private let favoriteRepository = OldFavoriteCoinRepository()
+    private var favoriteCoin = OldFavoriteCoin()
 
     enum SettingAction {
         case itemAdded
@@ -31,7 +31,7 @@ final class SearchCoinCollectionCellViewModel: ViewModel {
 
     init(coinData: CoinSearchData) {
         self.coinData = coinData
-        favoriteCoin = FavoriteCoin(
+        favoriteCoin = OldFavoriteCoin(
             id: coinData.id,
             symbol: coinData.symbol,
             image: coinData.thumb)

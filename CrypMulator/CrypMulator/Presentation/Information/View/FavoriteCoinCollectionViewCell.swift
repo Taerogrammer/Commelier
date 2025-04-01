@@ -105,7 +105,7 @@ extension FavoriteCoinCollectionViewCell {
     }
 
     func updateFavoriteButton(id: String) {
-        let isLiked = realm.objects(FavoriteCoin.self).filter("id == %@", id).first != nil
+        let isLiked = realm.objects(OldFavoriteCoin.self).filter("id == %@", id).first != nil
         favoriteButton.setImage(isLiked ? SystemIcon.heartFilled : SystemIcon.heart, for: .normal)
     }
 }
