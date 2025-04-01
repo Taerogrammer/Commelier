@@ -5,11 +5,17 @@
 //  Created by 김태형 on 3/28/25.
 //
 
+import Foundation
 import RxCocoa
 import RxSwift
 
 final class ChargeViewModel: ViewModel {
     private let disposeBag = DisposeBag()
+    private let chargeRepository: ChargeRepositoryProtocol
+
+    init(repository: ChargeRepositoryProtocol = ChargeRepository()) {
+        self.chargeRepository = repository
+    }
 
     enum Action {
         case dismiss
@@ -39,6 +45,8 @@ final class ChargeViewModel: ViewModel {
 
         input.chargeTapped
             .emit(with: self) { owner, _ in
+                let decimalAmount = Decimal(owner.selectedAmount.value)
+                owner.chargeRepository.saveCharge(amount: decimalAmount)
                 owner.actionRelay.accept(.dismiss)
             }
             .disposed(by: disposeBag)
