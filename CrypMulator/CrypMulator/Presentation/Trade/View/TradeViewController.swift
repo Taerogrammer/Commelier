@@ -12,6 +12,14 @@ final class TradeViewController: BaseViewController {
 
     private let type: OrderType
 
+    private let titleEntity: NavigationTitleEntity
+    private let barButton = UIBarButtonItem(
+        image: SystemIcon.arrowLeft,
+        style: .plain,
+        target: nil,
+        action: nil)
+    private let favoriteButton = UIBarButtonItem()
+
     private let currentPriceView = TradeContainerView(title: StringLiteral.Trade.currentPrice)
     private let currentPriceLabel = UILabel()
 
@@ -57,7 +65,8 @@ final class TradeViewController: BaseViewController {
     private lazy var actionButton = ActionButton(title: type.title,
                                             backgroundColor: type.buttonColor)
 
-    init(type: OrderType) {
+    init(titleEntity: NavigationTitleEntity, type: OrderType) {
+        self.titleEntity = titleEntity
         self.type = type
         super.init()
     }
@@ -120,6 +129,13 @@ final class TradeViewController: BaseViewController {
 
         buySellPriceLabel.font = SystemFont.Title.large
         buySellPriceLabel.text = "100,000,000 KRW"
+    }
+
+    override func configureNavigation() {
+        let titleView = NavigationTitleView(entity: titleEntity)
+        navigationItem.titleView = titleView
+        navigationItem.leftBarButtonItem = barButton
+        navigationItem.rightBarButtonItem = favoriteButton
     }
 
     // TODO: - 버튼 색상 물어보기

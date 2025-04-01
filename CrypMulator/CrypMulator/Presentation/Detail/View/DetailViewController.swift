@@ -13,8 +13,8 @@ import SnapKit
 final class DetailViewController: BaseViewController {
     private let viewModel: DetailViewModel
     private var disposeBag = DisposeBag()
-    private let titleEntity: NavigationTitleEntity
 
+    private let titleEntity: NavigationTitleEntity
     private let barButton = UIBarButtonItem(
         image: SystemIcon.arrowLeft,
         style: .plain,
