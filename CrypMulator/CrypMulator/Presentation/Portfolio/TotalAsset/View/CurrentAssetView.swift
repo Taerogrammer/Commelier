@@ -14,7 +14,12 @@ final class CurrentAssetView: BaseView {
     private let titleLabel = UILabel()
     private let totalAssetTitleLabel = UILabel()
     private let totalAssetAmountLabel = UILabel()
-    let chargeButton = UIButton()
+    let chargeButton = ActionButton(
+        title: StringLiteral.Button.charge,
+        titleColor: SystemColor.blue,
+        backgroundColor: SystemColor.whiteBlue,
+        font: SystemFont.Button.secondary
+    )
 
     /// Asset Stack
     private let assetStackView = UIStackView()
@@ -113,13 +118,6 @@ final class CurrentAssetView: BaseView {
 
         totalAssetAmountLabel.text = "38,185 " + StringLiteral.Currency.won
         totalAssetAmountLabel.font = SystemFont.Title.large
-
-        chargeButton.setTitle(StringLiteral.Button.charge, for: .normal)
-        chargeButton.backgroundColor = SystemColor.whiteBlue
-        chargeButton.titleLabel?.font = SystemFont.Button.secondary
-        chargeButton.setTitleColor(SystemColor.blue, for: .normal)
-        chargeButton.clipsToBounds = true
-        chargeButton.layer.cornerRadius = 8
 
         /// StackView configs
         assetStackView.axis = .horizontal

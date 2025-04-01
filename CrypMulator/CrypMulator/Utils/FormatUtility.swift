@@ -52,4 +52,21 @@ enum FormatUtility {
         return formatter
     }()
 
+    static func formattedPrice(_ price: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: price)) ?? "\(price)"
+    }
+
+    static func formattedPercent(_ value: Double) -> String {
+        return String(format: "%.2f%", value * 100)
+    }
+
+    static func formattedVolume(_ value: Double) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 2
+        numberFormatter.groupingSeparator = ","
+        return numberFormatter.string(from: NSNumber(value: value)) ?? "-"
+    }
 }

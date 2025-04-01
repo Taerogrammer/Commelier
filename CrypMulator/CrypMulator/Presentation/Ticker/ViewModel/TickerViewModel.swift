@@ -9,18 +9,26 @@ import RxCocoa
 import RxSwift
 
 final class TickerViewModel: ViewModel {
-    let tickerListViewModel = TickerListViewModel()
+    let tickerListViewModel: TickerListViewModel
     private let disposeBag = DisposeBag()
 
-    struct Input {
+    init(tickerListViewModel: TickerListViewModel) {
+        self.tickerListViewModel = tickerListViewModel
+    }
 
+    struct Input {
+        let listInput: TickerListViewModel.Input
     }
 
     struct Output {
         let error: Observable<APIError>
+        let selectedItem: Observable<UpbitMarketEntity>
     }
 
     func transform(input: Input) -> Output {
-        return Output(error: tickerListViewModel.errorStream)
+        let listOutput = tickerListViewModel.transform(input: input.listInput)
+
+        return Output(error: tickerListViewModel.errorStream,
+                      selectedItem: listOutput.selectedItem)
     }
 }

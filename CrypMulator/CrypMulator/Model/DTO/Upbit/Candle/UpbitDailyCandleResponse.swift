@@ -19,7 +19,7 @@ struct UpbitDailyCandleResponse: Decodable {
     let candleAccTradePrice: Double
     let candleAccTradeVolume: Double
     let prevClosingPrice: Double
-    let changePrice: Double
+    let changePrice: Double?
     let changeRate: Double
 
     enum CodingKeys: String, CodingKey {
@@ -42,7 +42,7 @@ struct UpbitDailyCandleResponse: Decodable {
 extension UpbitDailyCandleResponse {
     func toEntity() -> ChartEntity {
         return ChartEntity(
-            date: String.convertPriceDate(date: candleDateTimeKST),
+            date: String.convertCandleDate(date: candleDateTimeKST),
             price: tradePrice)
     }
 }

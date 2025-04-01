@@ -28,12 +28,14 @@ final class TickerListViewModel: ViewModel {
         let priceTapped: TapControlEvent
         let changedPriceTapped: TapControlEvent
         let accTapped: TapControlEvent
+        let selectedItem: Observable<UpbitMarketEntity>
     }
 
     struct Output {
         let data: Observable<[UpbitMarketEntity]>
         let buttonStatus: Observable<ButtonStatus>
         let error: Observable<APIError>
+        let selectedItem: Observable<UpbitMarketEntity>
     }
 
     func transform(input: Input) -> Output {
@@ -67,7 +69,8 @@ final class TickerListViewModel: ViewModel {
 
         return Output(data: sortedData,
                       buttonStatus: buttonStatus.asObservable(),
-                      error: errorRelay.asObservable())
+                      error: errorRelay.asObservable(),
+                      selectedItem: input.selectedItem)
     }
 
     func getDataByTimer() {

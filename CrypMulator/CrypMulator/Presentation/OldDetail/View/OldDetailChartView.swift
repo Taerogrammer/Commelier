@@ -64,8 +64,8 @@ final class OldDetailChartView: BaseView {
 
 // MARK: - Chart
 extension OldDetailChartView {
-    func configureChartHostingView(with data: [Double]) {
-        let chartView = OldChartView(priceData: data)
+    func configureChartHostingView(with data: [ChartListEntity]) {
+        let chartView = OldChartView(data: data) // ✅ ChartEntity 사용
         let controller = UIHostingController(rootView: chartView)
         self.chartsHostingController = controller
 

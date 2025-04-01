@@ -44,19 +44,16 @@ final class TickerListView: BaseView {
         tickerTableView.tableHeaderView = headerView
         tickerTableView.showsVerticalScrollIndicator = false
     }
+}
 
-    override func bind() {
-        let input = TickerListViewModel.Input(
-            priceTapped: headerView.priceButton.rx.tapGesture(),
-            changedPriceTapped: headerView.changedPriceButton.rx.tapGesture(),
-            accTapped: headerView.accButton.rx.tapGesture()
-        )
-        let output = tickerListViewModel.transform(input: input)
-
+// MARK: - bind
+extension TickerListView {
+    func bindViewModelOutput(_ output: TickerListViewModel.Output) {
         output.data
             .bind(to: tickerTableView.rx.items(
                 cellIdentifier: TickerTableViewCell.identifier,
                 cellType: TickerTableViewCell.self)) { index, element, cell in
+                    cell.selectionStyle = .none
                     cell.name.text = element.market
                     cell.price.text = element.trade_price_description
                     cell.changeRate.text = element.signed_change_rate_description
@@ -73,7 +70,5 @@ final class TickerListView: BaseView {
                 owner.headerView.accButton.buttonStatus(status: status.acc)
             }
             .disposed(by: disposeBag)
-
     }
-
 }
