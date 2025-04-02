@@ -99,9 +99,11 @@ final class TradeViewController: BaseViewController {
 
     override func bind() {
         let barButtonTapped = barButton.tapPublisher
+        let actionButtonTapped = actionButton.tapPublisher
         let input = TradeViewModel.Input(
             barButtonTapped: barButtonTapped,
-            numberInput: numberPadView.buttonTapped.eraseToAnyPublisher())
+            numberInput: numberPadView.buttonTapped.eraseToAnyPublisher(),
+            tradeButtonTapped: actionButtonTapped)
         let output = viewModel.transform(input: input)
 
         output.action
@@ -110,6 +112,8 @@ final class TradeViewController: BaseViewController {
                 switch action {
                 case .pop:
                     self?.navigationController?.popViewController(animated: true)
+                case .tradeCompleted(let success):
+                    self?.presentTradeResultAlert(success: success)
                 }
             }
             .store(in: &cancellables)
@@ -154,5 +158,14 @@ final class TradeViewController: BaseViewController {
         button.layer.borderColor = SystemColor.black.cgColor
         button.layer.cornerRadius = 8
         return button
+    }
+
+    private func presentTradeResultAlert(success: Bool) {
+        let title = success ? StringLiteral.Trade.success : StringLiteral.Trade.failure
+        let message = success ? StringLiteral.Trade.successMessage : StringLiteral.Trade.failureMessage
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: StringLiteral.Button.confirm, style: .default))
+        present(alert, animated: true)
     }
 }

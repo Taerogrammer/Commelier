@@ -20,6 +20,7 @@ final class TradeViewModel: ViewModel {
 
     enum Action {
         case pop
+        case tradeCompleted(success: Bool)
     }
 
     init(webSocket: WebSocketProvider,
@@ -34,6 +35,7 @@ final class TradeViewModel: ViewModel {
     struct Input {
         let barButtonTapped: AnyPublisher<Void, Never>
         let numberInput: AnyPublisher<String, Never>
+        let tradeButtonTapped: AnyPublisher<Void, Never>
     }
 
     struct Output {
@@ -45,8 +47,20 @@ final class TradeViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
-        let actionPublisher = input.barButtonTapped
+        // 기존: 뒤로 가기 액션
+        let barButtonAction = input.barButtonTapped
             .map { Action.pop }
+            .eraseToAnyPublisher()
+
+        // ✅ 추가: 거래 버튼 탭 시 알럿 액션
+        let tradeButtonAction = input.tradeButtonTapped
+            .map { [weak self] _ -> Action in
+                let isSuccess = Bool.random() // 예시. 실제 거래 로직 결과 사용
+                return .tradeCompleted(success: isSuccess)
+            }
+            .eraseToAnyPublisher()
+
+        let actionStream = Publishers.Merge(barButtonAction, tradeButtonAction)
             .eraseToAnyPublisher()
 
         input.numberInput
@@ -73,7 +87,7 @@ final class TradeViewModel: ViewModel {
             .removeDuplicates()
             .eraseToAnyPublisher()
 
-        return Output(action: actionPublisher,
+        return Output(action: actionStream,
                       ticker: tickerStream,
                       availableCurrency: availableCurrencyStream,
                       inputAmountText: inputAmountStream,
