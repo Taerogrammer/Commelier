@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct HoldingDTO {
     let name: String
@@ -19,5 +20,15 @@ extension HoldingDTO {
         return HoldingMarketEntity(
             symbol: symbol,
             totalBuyPrice: totalBuyPrice)
+    }
+
+    func toObject() -> HoldingObject {
+        let object = HoldingObject()
+        object.name = name
+        object.totalBuyPrice = Decimal128(value: totalBuyPrice)
+        object.transactionQuantity = Decimal128(value: transactionQuantity)
+        object.symbol = symbol
+
+        return object
     }
 }

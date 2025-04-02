@@ -8,9 +8,20 @@
 import Foundation
 
 struct TradeDTO {
-    let market: String
+    let name: String
     let buySell: String
     let transactionQuantity: Decimal
     let price: Decimal
     let timestamp: Int64
+}
+
+extension TradeDTO {
+    func toEntity() -> TradeEntity {
+        return TradeEntity(
+            name: name,
+            buySell: buySell,
+            transactionQuantity: transactionQuantity,
+            price: price,
+            timestamp: timestamp)
+    }
 }

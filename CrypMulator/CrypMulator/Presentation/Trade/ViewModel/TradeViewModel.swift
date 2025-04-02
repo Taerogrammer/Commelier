@@ -59,8 +59,9 @@ final class TradeViewModel: ViewModel {
 
         let tradeButtonAction = input.tradeButtonTapped
             .map { [weak self] _ -> Action in
-                let isSuccess = Bool.random() // 예시. 실제 거래 로직 결과 사용
-                return .tradeCompleted(success: isSuccess)
+                // TODO: - 여기
+                let isSuccess = self?.tradeClicked(price: self?.inputAmount ?? 0)
+                return .tradeCompleted(success: isSuccess ?? false)
             }
             .eraseToAnyPublisher()
 
@@ -135,5 +136,18 @@ final class TradeViewModel: ViewModel {
             shouldShowWarning = false
             inputAmount = nextAmount
         }
+    }
+
+    // TODO: - error문 나올 시 false로
+    private func tradeClicked(price: Decimal) -> Bool {
+        let entity = TradeEntity(
+            name: name,
+            buySell: type.rawValue,
+            transactionQuantity: price / Decimal(livePriceEntity?.price ?? 1),
+            price: price,
+            timestamp: Int64(Date().timeIntervalSince1970))
+
+        tradeUseCase.trade(with: entity)
+        return true
     }
 }

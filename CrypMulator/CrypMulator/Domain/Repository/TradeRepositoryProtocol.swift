@@ -9,4 +9,5 @@ import Foundation
 
 protocol TradeRepositoryProtocol: AnyObject {
     func getAllTrade() -> [TradeDTO]
+    func trade(_ entity: TradeEntity)
 }

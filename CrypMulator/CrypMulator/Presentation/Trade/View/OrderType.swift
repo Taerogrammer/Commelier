@@ -7,9 +7,9 @@
 
 import UIKit
 
-enum OrderType {
-    case buy
-    case sell
+enum OrderType: String {
+    case buy = "buy"
+    case sell = "sell"
 
     var title: String {
         switch self {

@@ -36,4 +36,10 @@ final class TradeUseCase: TradeUseCaseProtocol {
         guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
         return holding.totalBuyPrice
     }
+
+    func trade(with entity: TradeEntity) {
+        tradeRepository.trade(entity)
+        holdingRepository.saveTradeResult(entity)
+    }
+
 }

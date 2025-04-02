@@ -10,11 +10,20 @@ import RealmSwift
 
 final class TradeObject: Object {
     @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var market: String
+    @Persisted var name: String
     @Persisted var buySell: String
     @Persisted var transactionQuantity: Decimal128
     @Persisted var price: Decimal128
     @Persisted var timestamp: Int64
+
+    convenience init(name: String, buySell: String, transactionQuantity: Decimal128, price: Decimal128, timestamp: Int64) {
+        self.init()
+        self.name = name
+        self.buySell = buySell
+        self.transactionQuantity = transactionQuantity
+        self.price = price
+        self.timestamp = timestamp
+    }
 
     var transactionPrice: Decimal128 {
         price / transactionQuantity
@@ -24,7 +33,7 @@ final class TradeObject: Object {
 extension TradeObject {
     func toDTO() -> TradeDTO {
         return TradeDTO(
-            market: market,
+            name: name,
             buySell: buySell,
             transactionQuantity: transactionQuantity.decimalValue,
             price: price.decimalValue,
