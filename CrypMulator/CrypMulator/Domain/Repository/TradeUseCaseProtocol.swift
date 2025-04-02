@@ -7,6 +7,7 @@
 
 import Foundation
 
-protocol CurrentCurrencyUseCaseProtocol: AnyObject {
+protocol TradeUseCaseProtocol: AnyObject {
     func getCurrentCurrency() -> Decimal
+    func getHoldingAmount(of market: String) -> Decimal
 }

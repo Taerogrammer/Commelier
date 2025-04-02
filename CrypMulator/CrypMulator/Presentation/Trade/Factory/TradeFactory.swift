@@ -13,13 +13,14 @@ struct TradeFactory {
 
         let chargeRepo = ChargeRepository()
         let tradeRepo = TradeRepository()
-        let currentCurrencyUseCase = CurrentCurrencyUseCase(
+        let tradeUseCase = TradeUseCase(
             chargeRepository: chargeRepo,
             tradeRepository: tradeRepo
         )
 
-        let tradeVM = TradeViewModel(webSocket: webSocket,
-                                     currentCurrencyUseCase: currentCurrencyUseCase)
+        let tradeVM = TradeViewModel(type: type,
+                                     webSocket: webSocket,
+                                     tradeUseCase: tradeUseCase)
 
         // TODO: - File 생성 후 엔티티 바로 주입하기
         return TradeViewController(

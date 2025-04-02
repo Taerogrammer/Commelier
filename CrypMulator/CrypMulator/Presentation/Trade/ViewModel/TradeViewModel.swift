@@ -9,9 +9,10 @@ import Combine
 import Foundation
 
 final class TradeViewModel: ViewModel {
+    private let type: OrderType
     private var cancellables = Set<AnyCancellable>()
     private let webSocket: WebSocketProvider
-    private let currentCurrencyUseCase: CurrentCurrencyUseCaseProtocol
+    private let tradeUseCase: TradeUseCaseProtocol
 
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
@@ -23,13 +24,15 @@ final class TradeViewModel: ViewModel {
         case tradeCompleted(success: Bool)
     }
 
-    init(webSocket: WebSocketProvider,
-         currentCurrencyUseCase: CurrentCurrencyUseCaseProtocol) {
+    init(type: OrderType,
+         webSocket: WebSocketProvider,
+         tradeUseCase: TradeUseCaseProtocol) {
+        self.type = type
         self.webSocket = webSocket
-        self.currentCurrencyUseCase = currentCurrencyUseCase
+        self.tradeUseCase = tradeUseCase
 
         bindWebSocket()
-        loadAvailableKRW()
+        loadAvailableCurrency()
     }
 
     struct Input {
@@ -47,12 +50,10 @@ final class TradeViewModel: ViewModel {
     }
 
     func transform(input: Input) -> Output {
-        // 기존: 뒤로 가기 액션
         let barButtonAction = input.barButtonTapped
             .map { Action.pop }
             .eraseToAnyPublisher()
 
-        // ✅ 추가: 거래 버튼 탭 시 알럿 액션
         let tradeButtonAction = input.tradeButtonTapped
             .map { [weak self] _ -> Action in
                 let isSuccess = Bool.random() // 예시. 실제 거래 로직 결과 사용
@@ -101,10 +102,15 @@ final class TradeViewModel: ViewModel {
             .store(in: &cancellables)
     }
 
-    private func loadAvailableKRW() {
-        self.availableCurrency = currentCurrencyUseCase.getCurrentCurrency()
-    }
+    private func loadAvailableCurrency() {
+        switch type {
+        case .buy:
+            self.availableCurrency = tradeUseCase.getCurrentCurrency()
+        case .sell: break
+//            self.availableCurrency = currentCurrencyUseCase.getCurrentCurrency()
 
+        }
+    }
     private func handleInput(_ value: String) {
         var string = inputAmount.description
 

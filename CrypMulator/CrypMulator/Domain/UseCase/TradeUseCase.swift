@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CurrentCurrencyUseCase: CurrentCurrencyUseCaseProtocol {
+final class TradeUseCase: TradeUseCaseProtocol {
     private let chargeRepository: ChargeRepositoryProtocol
     private let tradeRepository: TradeRepositoryProtocol
 
@@ -27,5 +27,9 @@ final class CurrentCurrencyUseCase: CurrentCurrencyUseCaseProtocol {
             charges: charges,
             trades: trades
         )
+    }
+
+    func getHoldingAmount(of market: String) -> Decimal {
+        return 1
     }
 }
