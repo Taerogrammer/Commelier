@@ -174,7 +174,6 @@ final class TradeViewController: BaseViewController {
 
     }
 
-    // TODO: - 버튼 색상 물어보기
     private func makeSelectionButton(title: String) -> UIButton {
         let button = UIButton()
         button.clipsToBounds = true
