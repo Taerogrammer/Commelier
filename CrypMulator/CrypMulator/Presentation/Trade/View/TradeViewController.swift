@@ -26,16 +26,7 @@ final class TradeViewController: BaseViewController {
     private lazy var currentPriceView = TradeInfoView(type: type)
 
     private let amountLabel = UILabel()
-
-    private let warningLabel: UILabel = {
-        let label = UILabel()
-        label.text = "보유 금액보다 클 수 없습니다."
-        label.textColor = SystemColor.red
-        label.font = SystemFont.Body.primary
-        label.textAlignment = .center
-        label.isHidden = true
-        return label
-    }()
+    private let warningLabel = UILabel()
 
     private let numberPadView = CustomNumberPadView()
 
@@ -91,6 +82,12 @@ final class TradeViewController: BaseViewController {
         amountLabel.text = StringLiteral.Trade.defaultString
         amountLabel.font = SystemFont.Title.xLarge
         amountLabel.textAlignment = .center
+
+        warningLabel.text = "보유 금액보다 클 수 없습니다."
+        warningLabel.textColor = SystemColor.red
+        warningLabel.font = SystemFont.Body.primary
+        warningLabel.textAlignment = .center
+        warningLabel.isHidden = true
     }
 
     override func configureNavigation() {
