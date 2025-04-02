@@ -16,6 +16,7 @@ final class TradeViewModel: ViewModel {
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
     @Published private(set) var inputAmount: Decimal = 0
+    @Published private(set) var shouldShowWarning: Bool = false
 
     enum Action {
         case pop
@@ -40,6 +41,7 @@ final class TradeViewModel: ViewModel {
         let ticker: AnyPublisher<LivePriceEntity, Never>
         let availableCurrency: AnyPublisher<String, Never>
         let inputAmountText: AnyPublisher<String, Never>
+        let shouldShowWarning: AnyPublisher<Bool, Never>
     }
 
     func transform(input: Input) -> Output {
@@ -67,10 +69,15 @@ final class TradeViewModel: ViewModel {
             .map { FormatUtility.decimalToString($0) }
             .eraseToAnyPublisher()
 
+        let warningStream = $shouldShowWarning
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+
         return Output(action: actionPublisher,
                       ticker: tickerStream,
                       availableCurrency: availableCurrencyStream,
-                      inputAmountText: inputAmountStream)
+                      inputAmountText: inputAmountStream,
+                      shouldShowWarning: warningStream)
     }
 
     private func bindWebSocket() {
@@ -85,19 +92,26 @@ final class TradeViewModel: ViewModel {
     }
 
     private func handleInput(_ value: String) {
+        var string = inputAmount.description
+
         switch value {
         case "←":
-            var string = inputAmount.description
             string = String(string.dropLast())
-            inputAmount = Decimal(string: string.isEmpty ? "0" : string) ?? 0
+            if string.isEmpty {
+                string = "0"
+            }
 
         default:
-            let nextString = (inputAmount == 0 ? value : inputAmount.description + value)
-            let nextDecimal = Decimal(string: nextString) ?? 0
+            string = (inputAmount == 0) ? value : string + value
+        }
+        let nextAmount = Decimal(string: string) ?? 0
 
-            if nextDecimal <= availableCurrency {
-                inputAmount = nextDecimal
-            }
+        if nextAmount > availableCurrency {
+            shouldShowWarning = true
+            inputAmount = availableCurrency
+        } else {
+            shouldShowWarning = false
+            inputAmount = nextAmount
         }
     }
 }

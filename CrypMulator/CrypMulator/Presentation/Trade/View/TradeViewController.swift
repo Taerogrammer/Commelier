@@ -27,6 +27,16 @@ final class TradeViewController: BaseViewController {
 
     private let amountLabel = UILabel()
 
+    private let warningLabel: UILabel = {
+        let label = UILabel()
+        label.text = "보유 금액보다 클 수 없습니다."
+        label.textColor = SystemColor.red
+        label.font = SystemFont.Body.primary
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+
     private let numberPadView = CustomNumberPadView()
 
     private lazy var actionButton = ActionButton(title: type.title,
@@ -43,6 +53,7 @@ final class TradeViewController: BaseViewController {
         view.addSubviews([
             currentPriceView,
             amountLabel,
+            warningLabel,
             numberPadView,
             actionButton
         ])
@@ -59,8 +70,13 @@ final class TradeViewController: BaseViewController {
             make.centerX.equalToSuperview()
         }
 
+        warningLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountLabel.snp.bottom)
+            make.centerX.equalToSuperview()
+        }
+
         numberPadView.snp.makeConstraints { make in
-            make.top.equalTo(amountLabel.snp.bottom).offset(16)
+            make.top.equalTo(warningLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(12)
             make.bottom.equalTo(actionButton.snp.top).inset(-24)
         }
@@ -119,6 +135,13 @@ final class TradeViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] text in
                 self?.amountLabel.text = text
+            }
+            .store(in: &cancellables)
+
+        output.shouldShowWarning
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] show in
+                self?.warningLabel.isHidden = !show
             }
             .store(in: &cancellables)
     }
