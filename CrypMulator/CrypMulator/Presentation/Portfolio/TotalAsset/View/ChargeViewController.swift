@@ -11,8 +11,13 @@ import RxSwift
 import SnapKit
 
 final class ChargeViewController: BaseViewController {
-    private let viewModel = ChargeViewModel()
+    private let viewModel: ChargeViewModel
     private let disposeBag = DisposeBag()
+
+    init(viewModel: ChargeViewModel) {
+        self.viewModel = viewModel
+        super.init()
+    }
 
     private let titleLabel = UILabel()
     private lazy var amountButtons: [ActionButton] = {

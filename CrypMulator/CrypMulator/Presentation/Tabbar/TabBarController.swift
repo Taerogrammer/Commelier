@@ -18,7 +18,8 @@ final class TabBarController: UITabBarController {
     private func configureTabBar() {
         let tickerVC = UINavigationController(rootViewController: TickerFactory.make())
         let trendingVC = UINavigationController(rootViewController: InformationViewController())
-        let portfolioVC = UINavigationController(rootViewController: PortfolioViewController())
+        let portfolioVC = UINavigationController(
+            rootViewController: PortfolioFactory.make())
 
         tickerVC.tabBarItem.title = StringLiteral.TabBar.ticker
         tickerVC.tabBarItem.image = SystemIcon.chartLine

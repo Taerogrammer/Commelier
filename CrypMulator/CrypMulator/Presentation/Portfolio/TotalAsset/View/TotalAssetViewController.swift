@@ -15,7 +15,14 @@ final class TotalAssetViewController: BaseViewController {
     private let currentAssetView = CurrentAssetView()
     private let portfolioChartView = PortfolioChartView()
     private let profitView = ProfitView()
-    private let totalAssetViewModel = TotalAssetViewModel()
+    private let totalAssetViewModel: TotalAssetViewModel
+    private let chargeRepository: ChargeRepositoryProtocol
+
+    init(viewModel: TotalAssetViewModel, chargeRepository: ChargeRepositoryProtocol) {
+        self.totalAssetViewModel = viewModel
+        self.chargeRepository = chargeRepository
+        super.init()
+    }
 
     override func configureHierarchy() {
         view.addSubviews([currentAssetView, portfolioChartView, profitView])
@@ -46,7 +53,7 @@ final class TotalAssetViewController: BaseViewController {
             .emit(with: self) { owner, action in
                 switch action {
                 case .presentCharge:
-                    let vc = ChargeViewController()
+                    let vc = ChargeFactory.make(repository: owner.chargeRepository)
                     if let sheet = vc.sheetPresentationController {
                         sheet.detents = [.medium()]
                         sheet.prefersGrabberVisible = true
