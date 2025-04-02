@@ -25,7 +25,6 @@ final class TradeViewController: BaseViewController {
 
     private lazy var currentPriceView = TradeInfoView(type: type)
 
-    private let numberPadView = CustomNumberPadView()
     private let amountLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -34,6 +33,7 @@ final class TradeViewController: BaseViewController {
         return label
     }()
 
+    private let numberPadView = CustomNumberPadView()
     private var inputAmount: String = "0" {
         didSet {
             if let amount = Decimal(string: inputAmount) {
@@ -130,13 +130,20 @@ final class TradeViewController: BaseViewController {
 
                 switch value {
                 case "←":
-                    self.inputAmount = String(self.inputAmount.dropLast())
-                    if self.inputAmount.isEmpty { self.inputAmount = "0" }
+                    inputAmount = String(inputAmount.dropLast())
+                    if inputAmount.isEmpty { inputAmount = "0" }
+
                 default:
-                    if self.inputAmount == "0" {
-                        self.inputAmount = value
-                    } else {
-                        self.inputAmount += value
+                    // 임시 입력값 구성
+                    let nextInput = (inputAmount == "0") ? value : inputAmount + value
+                    let nextDecimal = Decimal(string: nextInput) ?? 0
+
+                    // 현재가 값 파싱
+                    let currentPriceText = currentPriceView.balanceInfoView.amountLabel.text?.replacingOccurrences(of: StringLiteral.Currency.wonMark, with: "").replacingOccurrences(of: ",", with: "") ?? "0"
+                    let currentPrice = Decimal(string: currentPriceText) ?? 0
+
+                    if nextDecimal <= currentPrice {
+                        inputAmount = nextInput
                     }
                 }
             }

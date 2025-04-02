@@ -14,7 +14,7 @@ final class TradeInfoView: BaseView {
     let currentPriceLabel = UILabel()
     private let divider = UIView()
 
-    private let balanceInfoView: TradeAmountInfoView
+    let balanceInfoView: TradeAmountInfoView
     private let totalInfoView: TradeAmountInfoView
 
     private let infoStackView = UIStackView()
