@@ -18,3 +18,13 @@ final class HoldingObject: Object {
         transactionQuantity * totalBuyPrice
     }
 }
+
+extension HoldingObject {
+    func toDTO() -> HoldingDTO {
+        return HoldingDTO(
+            name: name,
+            totalBuyPrice: totalBuyPrice.decimalValue,
+            transactionQuantity: transactionQuantity.decimalValue,
+            symbol: symbol)
+    }
+}

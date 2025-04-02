@@ -13,6 +13,7 @@ final class TradeViewModel: ViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let webSocket: WebSocketProvider
     private let tradeUseCase: TradeUseCaseProtocol
+    private let name: String
 
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
@@ -25,9 +26,11 @@ final class TradeViewModel: ViewModel {
     }
 
     init(type: OrderType,
+         name: String,
          webSocket: WebSocketProvider,
          tradeUseCase: TradeUseCaseProtocol) {
         self.type = type
+        self.name = name
         self.webSocket = webSocket
         self.tradeUseCase = tradeUseCase
 
@@ -106,9 +109,8 @@ final class TradeViewModel: ViewModel {
         switch type {
         case .buy:
             self.availableCurrency = tradeUseCase.getCurrentCurrency()
-        case .sell: break
-//            self.availableCurrency = currentCurrencyUseCase.getCurrentCurrency()
-
+        case .sell:
+            self.availableCurrency = tradeUseCase.getHoldingAmount(of: name)
         }
     }
     private func handleInput(_ value: String) {

@@ -13,12 +13,15 @@ struct TradeFactory {
 
         let chargeRepo = ChargeRepository()
         let tradeRepo = TradeRepository()
+        let holdingRepo = HoldingRepository()
         let tradeUseCase = TradeUseCase(
             chargeRepository: chargeRepo,
-            tradeRepository: tradeRepo
+            tradeRepository: tradeRepo,
+            holdingRepository: holdingRepo
         )
 
         let tradeVM = TradeViewModel(type: type,
+                                     name: market,
                                      webSocket: webSocket,
                                      tradeUseCase: tradeUseCase)
 

@@ -10,13 +10,16 @@ import Foundation
 final class TradeUseCase: TradeUseCaseProtocol {
     private let chargeRepository: ChargeRepositoryProtocol
     private let tradeRepository: TradeRepositoryProtocol
+    private let holdingRepository: HoldingRepositoryProtocol
 
     init(
         chargeRepository: ChargeRepositoryProtocol,
-        tradeRepository: TradeRepositoryProtocol
+        tradeRepository: TradeRepositoryProtocol,
+        holdingRepository: HoldingRepositoryProtocol
     ) {
         self.chargeRepository = chargeRepository
         self.tradeRepository = tradeRepository
+        self.holdingRepository = holdingRepository
     }
 
     func getCurrentCurrency() -> Decimal {
@@ -29,7 +32,8 @@ final class TradeUseCase: TradeUseCaseProtocol {
         )
     }
 
-    func getHoldingAmount(of market: String) -> Decimal {
-        return 1
+    func getHoldingAmount(of name: String) -> Decimal {
+        guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
+        return holding.totalBuyPrice
     }
 }
