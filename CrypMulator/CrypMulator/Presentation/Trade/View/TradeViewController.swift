@@ -23,23 +23,24 @@ final class TradeViewController: BaseViewController {
         action: nil)
     private let favoriteButton = UIBarButtonItem()
 
-    private let currentPriceView = TradeContainerView(title: StringLiteral.Trade.currentPrice)
-    private let currentPriceLabel = UILabel()
+    private lazy var currentPriceView = TradeInfoView(type: type)
 
-    private lazy var buySellView = TradeContainerView(title: type.priceTitle)
-    private let buySellPriceLabel = UILabel()
+    private let numberPadView = CustomNumberPadView()
+    private let amountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "0"
+        label.font = SystemFont.Title.xLarge
+        label.textAlignment = .center
+        return label
+    }()
 
-    private lazy var balanceView = TradeAmountInfoView(
-        title: type.balanceTitle,
-        amountText: "1,000,000,000",
-        unit: type.unit
-    )
-
-    private lazy var totalView = TradeAmountInfoView(
-        title: StringLiteral.Trade.total,
-        amountText: "0",
-        unit: type.coinUnit
-    )
+    private var inputAmount: String = "0" {
+        didSet {
+            if let amount = Decimal(string: inputAmount) {
+                amountLabel.text = FormatUtility.decimalToString(amount)
+            }
+        }
+    }
 
     private lazy var actionButton = ActionButton(title: type.title,
                                             backgroundColor: type.buttonColor)
@@ -52,37 +53,29 @@ final class TradeViewController: BaseViewController {
     }
 
     override func configureHierarchy() {
-        view.addSubviews([currentPriceView, buySellView,  balanceView, totalView, actionButton])
-        currentPriceView.addSubview(currentPriceLabel)
-        buySellView.addSubview(buySellPriceLabel)
+        view.addSubviews([
+            currentPriceView,
+            amountLabel,
+            numberPadView,
+            actionButton
+        ])
     }
 
     override func configureLayout() {
         currentPriceView.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide).inset(12)
-            make.height.equalTo(currentPriceView.snp.width).multipliedBy(0.4)
-        }
-        currentPriceLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.height.equalTo(currentPriceView.snp.width).multipliedBy(0.6)
         }
 
-        buySellView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(12)
+        amountLabel.snp.makeConstraints { make in
             make.top.equalTo(currentPriceView.snp.bottom).offset(12)
-            make.height.equalTo(buySellView.snp.width).multipliedBy(0.4)
-        }
-        buySellPriceLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
 
-        balanceView.snp.makeConstraints { make in
+        numberPadView.snp.makeConstraints { make in
+            make.top.equalTo(amountLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(12)
-            make.top.equalTo(buySellView.snp.bottom).offset(60)
-        }
-
-        totalView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(12)
-            make.top.equalTo(balanceView.snp.bottom).offset(28)
+            make.bottom.equalTo(actionButton.snp.top).inset(-24)
         }
 
         actionButton.snp.makeConstraints { make in
@@ -92,11 +85,6 @@ final class TradeViewController: BaseViewController {
     }
 
     override func configureView() {
-        currentPriceLabel.font = SystemFont.Title.large
-        currentPriceLabel.text = "0" + StringLiteral.Currency.wonMark
-
-        buySellPriceLabel.font = SystemFont.Title.large
-        buySellPriceLabel.text = "100,000,000 KRW"
     }
 
     override func configureNavigation() {
@@ -125,17 +113,34 @@ final class TradeViewController: BaseViewController {
         output.ticker
             .receive(on: DispatchQueue.main)
             .sink { [weak self] ticker in
-                self?.configure(with: ticker)
+                self?.currentPriceView.updateCurrentPrice(with: ticker)
             }
             .store(in: &cancellables)
 
         output.availableCurrency
             .receive(on: DispatchQueue.main)
             .sink { [weak self] currency in
-                self?.balanceView.updateAmountText(currency)
+                self?.currentPriceView.updateBalance(amount: currency)
             }
             .store(in: &cancellables)
 
+        numberPadView.buttonTapped
+            .sink { [weak self] value in
+                guard let self = self else { return }
+
+                switch value {
+                case "←":
+                    self.inputAmount = String(self.inputAmount.dropLast())
+                    if self.inputAmount.isEmpty { self.inputAmount = "0" }
+                default:
+                    if self.inputAmount == "0" {
+                        self.inputAmount = value
+                    } else {
+                        self.inputAmount += value
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 
     private func makeSelectionButton(title: String) -> UIButton {
@@ -149,12 +154,5 @@ final class TradeViewController: BaseViewController {
         button.layer.borderColor = SystemColor.black.cgColor
         button.layer.cornerRadius = 8
         return button
-    }
-}
-
-// MARK: - configure
-extension TradeViewController {
-    private func configure(with entity: LivePriceEntity) {
-        currentPriceLabel.text = entity.price.description + StringLiteral.Currency.wonMark
     }
 }
