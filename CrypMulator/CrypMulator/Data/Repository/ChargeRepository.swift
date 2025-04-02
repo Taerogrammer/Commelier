@@ -8,11 +8,6 @@
 import Foundation
 import RealmSwift
 
-protocol ChargeRepositoryProtocol: AnyObject {
-    func getFileURL()
-    func saveCharge(amount: Decimal)
-}
-
 final class ChargeRepository: ChargeRepositoryProtocol {
     private let realm = try! Realm()
 

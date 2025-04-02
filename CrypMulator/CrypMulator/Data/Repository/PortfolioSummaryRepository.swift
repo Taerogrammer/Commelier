@@ -1,17 +1,12 @@
 //
-//  PortfolioRepository.swift
+//  PortfolioSummaryRepository.swift
 //  CrypMulator
 //
-//  Created by 김태형 on 4/1/25.
+//  Created by 김태형 on 4/2/25.
 //
 
 import Foundation
 import RealmSwift
-
-protocol PortfolioSummaryRepositoryProtocol: AnyObject {
-    func getFileURL()
-    func getSummary(currentPrices: [String: Decimal]) -> PortfolioSummaryEntity
-}
 
 final class PortfolioSummaryRepository: PortfolioSummaryRepositoryProtocol {
     private let realm = try! Realm()
