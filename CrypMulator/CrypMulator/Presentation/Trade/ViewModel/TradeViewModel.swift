@@ -15,6 +15,7 @@ final class TradeViewModel: ViewModel {
 
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
+    @Published private(set) var inputAmount: Decimal = 0
 
     enum Action {
         case pop
@@ -31,18 +32,27 @@ final class TradeViewModel: ViewModel {
 
     struct Input {
         let barButtonTapped: AnyPublisher<Void, Never>
+        let numberInput: AnyPublisher<String, Never>
     }
 
     struct Output {
         let action: AnyPublisher<Action, Never>
         let ticker: AnyPublisher<LivePriceEntity, Never>
         let availableCurrency: AnyPublisher<String, Never>
+        let inputAmountText: AnyPublisher<String, Never>
     }
 
     func transform(input: Input) -> Output {
         let actionPublisher = input.barButtonTapped
             .map { Action.pop }
             .eraseToAnyPublisher()
+
+        input.numberInput
+            .sink { [weak self] value in
+                self?.handleInput(value)
+            }
+            .store(in: &cancellables)
+
 
         let tickerStream = $livePriceEntity
             .compactMap { $0 }
@@ -51,10 +61,16 @@ final class TradeViewModel: ViewModel {
         let availableCurrencyStream = $availableCurrency
             .map { FormatUtility.decimalToString($0) }
             .eraseToAnyPublisher()
+        
+
+        let inputAmountStream = $inputAmount
+            .map { FormatUtility.decimalToString($0) }
+            .eraseToAnyPublisher()
 
         return Output(action: actionPublisher,
                       ticker: tickerStream,
-                      availableCurrency: availableCurrencyStream)
+                      availableCurrency: availableCurrencyStream,
+                      inputAmountText: inputAmountStream)
     }
 
     private func bindWebSocket() {
@@ -66,5 +82,22 @@ final class TradeViewModel: ViewModel {
 
     private func loadAvailableKRW() {
         self.availableCurrency = currentCurrencyUseCase.getCurrentCurrency()
+    }
+
+    private func handleInput(_ value: String) {
+        switch value {
+        case "←":
+            var string = inputAmount.description
+            string = String(string.dropLast())
+            inputAmount = Decimal(string: string.isEmpty ? "0" : string) ?? 0
+
+        default:
+            let nextString = (inputAmount == 0 ? value : inputAmount.description + value)
+            let nextDecimal = Decimal(string: nextString) ?? 0
+
+            if nextDecimal <= availableCurrency {
+                inputAmount = nextDecimal
+            }
+        }
     }
 }

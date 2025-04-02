@@ -25,22 +25,9 @@ final class TradeViewController: BaseViewController {
 
     private lazy var currentPriceView = TradeInfoView(type: type)
 
-    private let amountLabel: UILabel = {
-        let label = UILabel()
-        label.text = "0"
-        label.font = SystemFont.Title.xLarge
-        label.textAlignment = .center
-        return label
-    }()
+    private let amountLabel = UILabel()
 
     private let numberPadView = CustomNumberPadView()
-    private var inputAmount: String = "0" {
-        didSet {
-            if let amount = Decimal(string: inputAmount) {
-                amountLabel.text = FormatUtility.decimalToString(amount)
-            }
-        }
-    }
 
     private lazy var actionButton = ActionButton(title: type.title,
                                             backgroundColor: type.buttonColor)
@@ -85,6 +72,9 @@ final class TradeViewController: BaseViewController {
     }
 
     override func configureView() {
+        amountLabel.text = StringLiteral.Trade.defaultString
+        amountLabel.font = SystemFont.Title.xLarge
+        amountLabel.textAlignment = .center
     }
 
     override func configureNavigation() {
@@ -97,7 +87,8 @@ final class TradeViewController: BaseViewController {
     override func bind() {
         let barButtonTapped = barButton.tapPublisher
         let input = TradeViewModel.Input(
-            barButtonTapped: barButtonTapped)
+            barButtonTapped: barButtonTapped,
+            numberInput: numberPadView.buttonTapped.eraseToAnyPublisher())
         let output = viewModel.transform(input: input)
 
         output.action
@@ -124,28 +115,10 @@ final class TradeViewController: BaseViewController {
             }
             .store(in: &cancellables)
 
-        numberPadView.buttonTapped
-            .sink { [weak self] value in
-                guard let self = self else { return }
-
-                switch value {
-                case "←":
-                    inputAmount = String(inputAmount.dropLast())
-                    if inputAmount.isEmpty { inputAmount = "0" }
-
-                default:
-                    // 임시 입력값 구성
-                    let nextInput = (inputAmount == "0") ? value : inputAmount + value
-                    let nextDecimal = Decimal(string: nextInput) ?? 0
-
-                    // 현재가 값 파싱
-                    let currentPriceText = currentPriceView.balanceInfoView.amountLabel.text?.replacingOccurrences(of: StringLiteral.Currency.wonMark, with: "").replacingOccurrences(of: ",", with: "") ?? "0"
-                    let currentPrice = Decimal(string: currentPriceText) ?? 0
-
-                    if nextDecimal <= currentPrice {
-                        inputAmount = nextInput
-                    }
-                }
+        output.inputAmountText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.amountLabel.text = text
             }
             .store(in: &cancellables)
     }
