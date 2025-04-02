@@ -29,30 +29,6 @@ final class TradeViewController: BaseViewController {
     private lazy var buySellView = TradeContainerView(title: type.priceTitle)
     private let buySellPriceLabel = UILabel()
 
-    private lazy var amountButtons: [UIButton] = [
-        "100,000 만원", "50,000 만원", "1,000 만원", "100만원"
-    ].map { makeSelectionButton(title: $0) }
-
-    private lazy var percentButtons: [UIButton] = [
-        "100%", "50%", "25%", "10%"
-    ].map { makeSelectionButton(title: $0) }
-
-    private lazy var amountStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: amountButtons)
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.spacing = 8
-        return stack
-    }()
-
-    private lazy var percentStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: percentButtons)
-        stack.axis = .horizontal
-        stack.distribution = .fillEqually
-        stack.spacing = 8
-        return stack
-    }()
-
     private lazy var balanceView = TradeAmountInfoView(
         title: type.balanceTitle,
         amountText: "1,000,000,000",
@@ -76,7 +52,7 @@ final class TradeViewController: BaseViewController {
     }
 
     override func configureHierarchy() {
-        view.addSubviews([currentPriceView, buySellView, amountStackView, percentStackView, balanceView, totalView, actionButton])
+        view.addSubviews([currentPriceView, buySellView,  balanceView, totalView, actionButton])
         currentPriceView.addSubview(currentPriceLabel)
         buySellView.addSubview(buySellPriceLabel)
     }
@@ -99,21 +75,9 @@ final class TradeViewController: BaseViewController {
             make.center.equalToSuperview()
         }
 
-        amountStackView.snp.makeConstraints { make in
-            make.top.equalTo(buySellView.snp.bottom).offset(24)
-            make.horizontalEdges.equalToSuperview().inset(12)
-            make.height.equalTo(40)
-        }
-
-        percentStackView.snp.makeConstraints { make in
-            make.top.equalTo(amountStackView.snp.bottom).offset(12)
-            make.horizontalEdges.equalToSuperview().inset(12)
-            make.height.equalTo(40)
-        }
-
         balanceView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(12)
-            make.top.equalTo(percentStackView.snp.bottom).offset(44)
+            make.top.equalTo(buySellView.snp.bottom).offset(60)
         }
 
         totalView.snp.makeConstraints { make in
