@@ -39,6 +39,21 @@ enum OrderType {
         }
     }
 
+    var balanceTitle: String {
+        switch self {
+        case .buy: return StringLiteral.Trade.buyBalance
+        case .sell: return StringLiteral.Trade.sellBalance
+        }
+    }
+
+    var unit: String {
+        return StringLiteral.Currency.krw
+    }
+
+    var coinUnit: String {
+        return StringLiteral.Currency.tmpCoin
+    }
+
     var inputPlaceholder: String {
         switch self {
         case .buy: return StringLiteral.Trade.buyPlaceholder

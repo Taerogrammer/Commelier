@@ -14,6 +14,7 @@ enum StringLiteral {
         static let won = "원"
         static let wonMark = "₩"
         static let percentage = "%"
+        static let tmpCoin = "BTC(변경)"
     }
 
     enum NavigationTitle {
@@ -79,6 +80,8 @@ enum StringLiteral {
         static let holdingQuantity = "보유량"
         static let sellPlaceholder = "매도할 금액을 입력해주세요"
         static let buyPlaceholder = "매수할 금액을 입력해주세요"
-
+        static let sellBalance = "평가 금액"
+        static let buyBalance = "보유 가상현금"
+        static let total = "총"
     }
 }

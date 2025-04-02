@@ -53,16 +53,16 @@ final class TradeViewController: BaseViewController {
         return stack
     }()
 
-    private let balanceView = TradeAmountInfoView(
-        title: "보유자산",
+    private lazy var balanceView = TradeAmountInfoView(
+        title: type.balanceTitle,
         amountText: "1,000,000,000",
-        unit: "KRW"
+        unit: type.unit
     )
 
-    private let totalView = TradeAmountInfoView(
-        title: "총",
+    private lazy var totalView = TradeAmountInfoView(
+        title: StringLiteral.Trade.total,
         amountText: "0",
-        unit: "BTC"
+        unit: type.coinUnit
     )
 
     private lazy var actionButton = ActionButton(title: type.title,
