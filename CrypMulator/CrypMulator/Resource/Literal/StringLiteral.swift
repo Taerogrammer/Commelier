@@ -90,5 +90,6 @@ enum StringLiteral {
         static let failure = "거래 실패"
         static let successMessage = "정상적으로 거래가 완료되었습니다."
         static let failureMessage = "문제가 발생했습니다. 다시 시도해주세요."
+        static let warning = "보유 금액보다 클 수 없습니다."
     }
 }

@@ -83,7 +83,7 @@ final class TradeViewController: BaseViewController {
         amountLabel.font = SystemFont.Title.xLarge
         amountLabel.textAlignment = .center
 
-        warningLabel.text = "보유 금액보다 클 수 없습니다."
+        warningLabel.text = StringLiteral.Trade.warning
         warningLabel.textColor = SystemColor.red
         warningLabel.font = SystemFont.Body.primary
         warningLabel.textAlignment = .center
