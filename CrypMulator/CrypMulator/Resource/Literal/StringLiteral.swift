@@ -83,5 +83,7 @@ enum StringLiteral {
         static let sellBalance = "평가 금액"
         static let buyBalance = "보유 가상현금"
         static let total = "총"
+        static let loadingDots = "..."
+        static let defaultString = "0"
     }
 }

@@ -17,24 +17,18 @@ final class TradeInfoView: BaseView {
     private let balanceInfoView: TradeAmountInfoView
     private let totalInfoView: TradeAmountInfoView
 
-    private lazy var infoStackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [balanceInfoView, totalInfoView])
-        stack.axis = .vertical
-        stack.spacing = 8
-        stack.distribution = .fillEqually
-        return stack
-    }()
+    private let infoStackView = UIStackView()
 
     init(type: OrderType) {
         self.balanceInfoView = TradeAmountInfoView(
             title: type.balanceTitle,
-            amountText: "0",
+            amountText: StringLiteral.Trade.defaultString,
             unit: type.unit
         )
 
         self.totalInfoView = TradeAmountInfoView(
             title: StringLiteral.Trade.total,
-            amountText: "0",
+            amountText: StringLiteral.Trade.defaultString,
             unit: type.coinUnit
         )
 
@@ -84,12 +78,18 @@ final class TradeInfoView: BaseView {
         currentPriceTitleLabel.font = SystemFont.Title.medium
         currentPriceTitleLabel.textColor = SystemColor.black
 
-        currentPriceLabel.text = "..."
+        currentPriceLabel.text = StringLiteral.Trade.loadingDots
         currentPriceLabel.font = SystemFont.Title.xLarge
         currentPriceLabel.textColor = SystemColor.black
         currentPriceLabel.textAlignment = .center
 
         divider.backgroundColor = SystemColor.gray
+
+        infoStackView.axis = .vertical
+        infoStackView.spacing = 8
+        infoStackView.distribution = .fillEqually
+        infoStackView.addArrangedSubview(balanceInfoView)
+        infoStackView.addArrangedSubview(totalInfoView)
     }
 
     // 업데이트 메서드
