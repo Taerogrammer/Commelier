@@ -161,8 +161,14 @@ final class TradeViewController: BaseViewController {
         output.ticker
             .receive(on: DispatchQueue.main)
             .sink { [weak self] ticker in
-                print("ticker =====>", ticker)
                 self?.configure(with: ticker)
+            }
+            .store(in: &cancellables)
+
+        output.availableCurrency
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] currency in
+                self?.balanceView.updateAmountText(currency)
             }
             .store(in: &cancellables)
 

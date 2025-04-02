@@ -9,6 +9,17 @@ import Foundation
 
 enum FormatUtility {
 
+    static func decimalToString(_ decimal: Decimal, fractionDigits: Int = 0) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.groupingSeparator = ","
+
+        let nsNumber = NSDecimalNumber(decimal: decimal)
+        return formatter.string(from: nsNumber) ?? "\(decimal)"
+    }
+
     static func formatAmount(_ number: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

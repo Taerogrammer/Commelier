@@ -13,10 +13,21 @@ final class TradeObject: Object {
     @Persisted var market: String
     @Persisted var buySell: String
     @Persisted var transactionQuantity: Decimal128
-    @Persisted var transactionPrice: Decimal128
+    @Persisted var price: Decimal128
     @Persisted var timestamp: Int64
 
-    var price: Decimal128 {
-        transactionQuantity * transactionPrice
+    var transactionPrice: Decimal128 {
+        price / transactionQuantity
+    }
+}
+
+extension TradeObject {
+    func toDTO() -> TradeDTO {
+        return TradeDTO(
+            market: market,
+            buySell: buySell,
+            transactionQuantity: transactionQuantity.decimalValue,
+            price: price.decimalValue,
+            timestamp: timestamp)
     }
 }

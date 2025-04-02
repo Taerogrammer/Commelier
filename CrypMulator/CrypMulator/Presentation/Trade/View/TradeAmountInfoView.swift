@@ -11,7 +11,7 @@ import SnapKit
 final class TradeAmountInfoView: BaseView {
 
     private let leftTitleLabel = UILabel()
-    private let amountLabel = UILabel()
+    let amountLabel = UILabel()
     private let unitLabel = UILabel()
 
     init(title: String, amountText: String, unit: String) {
@@ -51,10 +51,10 @@ final class TradeAmountInfoView: BaseView {
             make.centerY.equalToSuperview()
         }
     }
+}
 
-    /// 💡 외부에서 금액과 단위 갱신할 수 있도록
-    func update(amount: String, unit: String) {
-        amountLabel.text = amount
-        unitLabel.text = unit
+extension TradeAmountInfoView {
+    func updateAmountText(_ text: String) {
+        amountLabel.text = text
     }
 }
