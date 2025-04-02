@@ -19,3 +19,12 @@ final class ChargeObject: Object {
         self.timestamp = timestamp
     }
 }
+
+extension ChargeObject {
+    func toDTO() -> ChargeDTO {
+        return ChargeDTO(
+            amount: chargeAmount.decimalValue,
+            timestamp: timestamp
+        )
+    }
+}

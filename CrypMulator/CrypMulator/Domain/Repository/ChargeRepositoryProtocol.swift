@@ -9,5 +9,6 @@ import Foundation
 
 protocol ChargeRepositoryProtocol: AnyObject {
     func getFileURL()
-    func saveCharge(amount: Decimal)
+    func saveCharge(_ dto: ChargeDTO)
+    func fetchAllCharges() -> [ChargeDTO]
 }

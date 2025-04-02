@@ -45,8 +45,11 @@ final class ChargeViewModel: ViewModel {
 
         input.chargeTapped
             .emit(with: self) { owner, _ in
-                let decimalAmount = Decimal(owner.selectedAmount.value)
-                owner.chargeRepository.saveCharge(amount: decimalAmount)
+                let amount = Decimal(owner.selectedAmount.value)
+                let now = Int64(Date().timeIntervalSince1970)
+                let entity = ChargeEntity(amount: amount, timestamp: now)
+                let dto = entity.toDTO()
+                owner.chargeRepository.saveCharge(dto)
                 owner.actionRelay.accept(.dismiss)
             }
             .disposed(by: disposeBag)
