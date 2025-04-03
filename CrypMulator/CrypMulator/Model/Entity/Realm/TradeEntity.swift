@@ -11,7 +11,7 @@ struct TradeEntity {
     let name: String
     let buySell: String
     let transactionQuantity: Decimal
-    let price: Decimal
+    let price: Int64
     let timestamp: Int64
 }
 
@@ -30,7 +30,7 @@ extension TradeEntity {
         let symbol = String(name[symbolStartIndex...])
         return HoldingDTO(
             name: name,
-            totalBuyPrice: Decimal.toInt64(price),
+            totalBuyPrice: price,
             transactionQuantity: transactionQuantity,
             symbol: symbol)
     }

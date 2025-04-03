@@ -22,7 +22,7 @@ final class TradeRepository: TradeRepositoryProtocol {
             name: dto.name,
             buySell: dto.buySell,
             transactionQuantity: Decimal128(value: dto.transactionQuantity),
-            price: Decimal128(value: dto.price),
+            price: dto.price,
             timestamp: dto.timestamp
         )
         do {

@@ -13,10 +13,10 @@ final class TradeObject: Object {
     @Persisted var name: String
     @Persisted var buySell: String
     @Persisted var transactionQuantity: Decimal128
-    @Persisted var price: Decimal128
+    @Persisted var price: Int64
     @Persisted var timestamp: Int64
 
-    convenience init(name: String, buySell: String, transactionQuantity: Decimal128, price: Decimal128, timestamp: Int64) {
+    convenience init(name: String, buySell: String, transactionQuantity: Decimal128, price: Int64, timestamp: Int64) {
         self.init()
         self.name = name
         self.buySell = buySell
@@ -25,8 +25,8 @@ final class TradeObject: Object {
         self.timestamp = timestamp
     }
 
-    var transactionPrice: Decimal128 {
-        price / transactionQuantity
+    var transactionPrice: Int64 {
+        price / Decimal128.toInt64(transactionQuantity)
     }
 }
 
@@ -36,7 +36,7 @@ extension TradeObject {
             name: name,
             buySell: buySell,
             transactionQuantity: transactionQuantity.decimalValue,
-            price: price.decimalValue,
+            price: price,
             timestamp: timestamp)
     }
 }

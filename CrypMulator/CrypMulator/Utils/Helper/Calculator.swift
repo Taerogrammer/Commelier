@@ -12,7 +12,7 @@ struct Calculator {
     static func calculateAvailableKRW(
         charges: [ChargeDTO],
         trades: [TradeDTO]
-    ) -> Decimal {
+    ) -> Int64 {
         let totalCharge = charges.reduce(0) { $0 + $1.amount }
 
         let totalBuy = trades
@@ -23,6 +23,6 @@ struct Calculator {
             .filter { $0.buySell.lowercased() == "sell" }
             .reduce(0) { $0 + $1.price }
 
-        return Decimal(totalCharge) - totalBuy + totalSell
+        return totalCharge - totalBuy + totalSell
     }
 }

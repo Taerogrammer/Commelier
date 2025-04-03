@@ -30,11 +30,11 @@ final class HoldingRepository: HoldingRepositoryProtocol {
                 if let holdingExist = holdingExist {
                     if entity.buySell.lowercased() == "buy" {
                         // 매수인 경우: 총 매수 금액(TotalBuyPrice) 및 수량(TransactionQuantity) 증가
-                        holdingExist.totalBuyPrice += Decimal.toInt64(entity.price)
-                        holdingExist.transactionQuantity += Decimal128(value: entity.transactionQuantity)
+                        holdingExist.totalBuyPrice += entity.price
+                        holdingExist.transactionQuantity +=  Decimal128(value: entity.transactionQuantity)
                     } else {
                         // 매수인 경우: 총 매수 금액(TotalBuyPrice) 및 수량(TransactionQuantity) 감소
-                        holdingExist.totalBuyPrice -= Decimal.toInt64(entity.price)
+                        holdingExist.totalBuyPrice -= entity.price
                         holdingExist.transactionQuantity -= Decimal128(value: entity.transactionQuantity)
 
                         // 수량이 0 이하가 되면 해당 보유 자산 삭제

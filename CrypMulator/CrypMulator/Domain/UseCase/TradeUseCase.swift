@@ -22,7 +22,7 @@ final class TradeUseCase: TradeUseCaseProtocol {
         self.holdingRepository = holdingRepository
     }
 
-    func getCurrentCurrency() -> Decimal {
+    func getCurrentCurrency() -> Int64 {
         let charges = chargeRepository.fetchAllCharges()
         let trades = tradeRepository.getAllTrade()
 
@@ -32,9 +32,9 @@ final class TradeUseCase: TradeUseCaseProtocol {
         )
     }
 
-    func getHoldingAmount(of name: String) -> Decimal {
+    func getHoldingAmount(of name: String) -> Int64 {
         guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
-        return Decimal(holding.totalBuyPrice)
+        return holding.totalBuyPrice
     }
 
     func getHoldingQuantity(of name: String) -> Decimal {

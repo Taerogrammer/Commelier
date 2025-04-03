@@ -16,6 +16,7 @@ final class TradeViewModel: ViewModel {
     private let tradeUseCase: TradeUseCaseProtocol
     private let name: String
 
+    // TODO: Decimal -> InT64
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
     @Published private(set) var inputAmount: Decimal = 0
@@ -63,7 +64,7 @@ final class TradeViewModel: ViewModel {
         let tradeButtonAction = input.tradeButtonTapped
             .map { [weak self] _ -> Action in
                 // TODO: - 여기
-                let isSuccess = self?.tradeClicked(price: self?.inputAmount ?? 0)
+                let isSuccess = self?.tradeClicked(price: Decimal.toInt64(self?.inputAmount ?? 0))
                 return .tradeCompleted(success: isSuccess ?? false)
             }
             .eraseToAnyPublisher()
@@ -149,9 +150,9 @@ final class TradeViewModel: ViewModel {
     private func loadAvailableCurrency() {
         switch type {
         case .buy:
-            self.availableCurrency = tradeUseCase.getCurrentCurrency()
+            self.availableCurrency = Decimal(tradeUseCase.getCurrentCurrency())
         case .sell:
-            self.availableCurrency = tradeUseCase.getHoldingAmount(of: name)
+            self.availableCurrency = Decimal(tradeUseCase.getHoldingAmount(of: name))
         }
     }
     private func handleInput(_ value: String) {
@@ -180,11 +181,11 @@ final class TradeViewModel: ViewModel {
     }
 
     // TODO: - error문 나올 시 false로
-    private func tradeClicked(price: Decimal) -> Bool {
+    private func tradeClicked(price: Int64) -> Bool {
         let entity = TradeEntity(
             name: name,
             buySell: type.rawValue,
-            transactionQuantity: price / Decimal(livePriceEntity?.price ?? 1),
+            transactionQuantity: Decimal(price) / Decimal(livePriceEntity?.price ?? 1),
             price: price,
             timestamp: Int64(Date().timeIntervalSince1970))
 

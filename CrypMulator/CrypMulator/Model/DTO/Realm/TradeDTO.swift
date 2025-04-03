@@ -11,7 +11,7 @@ struct TradeDTO {
     let name: String
     let buySell: String
     let transactionQuantity: Decimal
-    let price: Decimal
+    let price: Int64
     let timestamp: Int64
 }
 
