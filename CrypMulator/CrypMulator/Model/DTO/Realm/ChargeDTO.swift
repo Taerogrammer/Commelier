@@ -8,7 +8,7 @@
 import Foundation
 
 struct ChargeDTO {
-    let amount: Decimal
+    let amount: Int64
     let timestamp: Int64
 }
 

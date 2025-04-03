@@ -23,6 +23,6 @@ struct Calculator {
             .filter { $0.buySell.lowercased() == "sell" }
             .reduce(0) { $0 + $1.price }
 
-        return totalCharge - totalBuy + totalSell
+        return Decimal(totalCharge) - totalBuy + totalSell
     }
 }

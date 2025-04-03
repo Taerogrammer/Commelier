@@ -10,12 +10,12 @@ import RealmSwift
 
 final class ChargeObject: Object {
     @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var chargeAmount: Decimal128
+    @Persisted var chargeAmount: Int64
     @Persisted var timestamp: Int64
 
-    convenience init(chargeAmount: Decimal, timestamp: Int64) {
+    convenience init(chargeAmount: Int64, timestamp: Int64) {
         self.init()
-        self.chargeAmount = Decimal128(value: chargeAmount)
+        self.chargeAmount = chargeAmount
         self.timestamp = timestamp
     }
 }
@@ -23,7 +23,7 @@ final class ChargeObject: Object {
 extension ChargeObject {
     func toDTO() -> ChargeDTO {
         return ChargeDTO(
-            amount: chargeAmount.decimalValue,
+            amount: chargeAmount,
             timestamp: timestamp
         )
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct ChargeEntity {
-    let amount: Decimal
+    let amount: Int64
     let timestamp: Int64
 }
 

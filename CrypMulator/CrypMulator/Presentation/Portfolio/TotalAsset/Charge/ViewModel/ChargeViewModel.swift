@@ -45,7 +45,7 @@ final class ChargeViewModel: ViewModel {
 
         input.chargeTapped
             .emit(with: self) { owner, _ in
-                let amount = Decimal(owner.selectedAmount.value)
+                let amount = Int64(owner.selectedAmount.value)
                 let now = Int64(Date().timeIntervalSince1970)
                 let entity = ChargeEntity(amount: amount, timestamp: now)
                 let dto = entity.toDTO()
