@@ -80,4 +80,11 @@ enum FormatUtility {
         numberFormatter.groupingSeparator = ","
         return numberFormatter.string(from: NSNumber(value: value)) ?? "-"
     }
+
+    /// name -> symbol
+    /// KRW-BTC -> BTC
+    static func nameToSymbol(_ name: String) -> String {
+        let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
+        return String(name[symbolStartIndex...])
+    }
 }
