@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 // TODO: - 매도 시 현재가 * transactionQuantity 기준으로 판매 되도록 하기
+
 final class TradeViewModel: ViewModel {
     private let type: OrderType
     private var cancellables = Set<AnyCancellable>()

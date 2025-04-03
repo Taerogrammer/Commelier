@@ -37,8 +37,10 @@ final class HoldingRepository: HoldingRepositoryProtocol {
                         holdingExist.totalBuyPrice -= entity.price
                         holdingExist.transactionQuantity -= Decimal128(value: entity.transactionQuantity)
 
+                        // TODO: - 조금 남아있을 수 있는 경우 처리하기 (판매해도 DB에 찌꺼기? 저장되어있음)
+                        let epsilon = Decimal128(0.00000001) // 충분히 작은 값 설정
                         // 수량이 0 이하가 되면 해당 보유 자산 삭제
-                        if holdingExist.transactionQuantity <= 0 {
+                        if holdingExist.transactionQuantity <= 0 || holdingExist.transactionQuantity < epsilon || holdingExist.totalBuyPrice <= 0 {
                             realm.delete(holdingExist)
                         }
                     }

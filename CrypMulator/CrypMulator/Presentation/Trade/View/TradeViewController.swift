@@ -189,7 +189,10 @@ final class TradeViewController: BaseViewController {
         let message = success ? StringLiteral.Trade.successMessage : StringLiteral.Trade.failureMessage
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: StringLiteral.Button.confirm, style: .default))
+        alert.addAction(UIAlertAction(title: StringLiteral.Button.confirm, style: .default, handler: { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
+        }))
+
         present(alert, animated: true)
     }
 }
