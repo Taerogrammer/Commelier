@@ -105,12 +105,20 @@ final class TradeViewModel: ViewModel {
             .removeDuplicates()
             .eraseToAnyPublisher()
 
-        let isTradeButtonEnabled = Publishers.CombineLatest(isLivePriceLoaded, isCurrencyAvailable)
-            .map { isLoaded, hasCurrency in
-                return isLoaded && hasCurrency
-            }
+        let isInputAmountValid = $inputAmount
+            .map { $0 > 0 }
             .removeDuplicates()
-            .eraseToAnyPublisher()
+
+        let isTradeButtonEnabled = Publishers.CombineLatest3(
+            isLivePriceLoaded,
+            isCurrencyAvailable,
+            isInputAmountValid
+        )
+        .map { isLoaded, hasCurrency, hasInput in
+            return isLoaded && hasCurrency && hasInput
+        }
+        .removeDuplicates()
+        .eraseToAnyPublisher()
 
         return Output(action: actionStream,
                       ticker: tickerStream,

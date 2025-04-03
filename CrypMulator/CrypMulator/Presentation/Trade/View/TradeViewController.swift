@@ -166,6 +166,9 @@ final class TradeViewController: BaseViewController {
                 self?.actionButton.alpha = isEnabled ? 1.0 : 0.5
             }
             .store(in: &cancellables)
+
+        let repo = ChargeRepository()
+        repo.getFileURL()
     }
 
     private func makeSelectionButton(title: String) -> UIButton {
