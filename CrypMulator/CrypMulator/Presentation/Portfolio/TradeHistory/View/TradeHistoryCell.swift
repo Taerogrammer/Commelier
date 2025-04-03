@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-// TODO: - 체결 가격 + 체결 수량 + 거래 금액 계산이 이상함
 final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
 
     private let typeLabel = UILabel()
