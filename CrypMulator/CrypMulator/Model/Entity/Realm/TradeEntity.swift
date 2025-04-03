@@ -30,7 +30,7 @@ extension TradeEntity {
         let symbol = String(name[symbolStartIndex...])
         return HoldingDTO(
             name: name,
-            totalBuyPrice: price,
+            totalBuyPrice: Decimal.toInt64(price),
             transactionQuantity: transactionQuantity,
             symbol: symbol)
     }

@@ -16,21 +16,21 @@ final class PortfolioSummaryRepository: PortfolioSummaryRepositoryProtocol {
     func getSummary(currentPrices: [String : Decimal]) -> PortfolioSummaryEntity {
         let holdings = realm.objects(HoldingObject.self)
 
-        var totalBuy: Decimal = 0
-        var totalEvaluation: Decimal = 0
+        var totalBuy: Int64 = 0
+        var totalEvaluation: Int64 = 0
 
         for holding in holdings {
-            let buy = holding.totalBuyPrice.decimalValue
+            let buy = holding.totalBuyPrice
             totalBuy += buy
 
             if let currentPrice = currentPrices[holding.symbol] {
                 let evaluation = holding.transactionQuantity.decimalValue * currentPrice
-                totalEvaluation += evaluation
+                totalEvaluation += Decimal.toInt64(evaluation)
             }
         }
 
         let profitLoss = totalEvaluation - totalBuy
-        let yieldRate: Decimal = totalBuy > 0 ? (profitLoss / totalBuy * 100) : 0
+        let yieldRate: Int64 = totalBuy > 0 ? (profitLoss / totalBuy * 100) : 0
         let yieldRateState: PriceChangeState
         switch yieldRate {
         case ..<0:
@@ -42,10 +42,10 @@ final class PortfolioSummaryRepository: PortfolioSummaryRepositoryProtocol {
         }
 
         return PortfolioSummaryEntity(
-            totalBuy: totalBuy,
-            totalEvaluation: totalEvaluation,
-            profitLoss: profitLoss,
-            yieldRate: yieldRate,
+            totalBuy: Decimal(totalBuy),
+            totalEvaluation: Decimal(totalEvaluation),
+            profitLoss: Decimal(profitLoss),
+            yieldRate: Decimal(yieldRate),
             yieldRateState: yieldRateState)
     }
 }

@@ -34,7 +34,7 @@ final class TradeUseCase: TradeUseCaseProtocol {
 
     func getHoldingAmount(of name: String) -> Decimal {
         guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
-        return holding.totalBuyPrice
+        return Decimal(holding.totalBuyPrice)
     }
 
     func getHoldingQuantity(of name: String) -> Decimal {

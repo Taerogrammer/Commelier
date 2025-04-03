@@ -10,5 +10,5 @@ import Foundation
 /// 보유하고 있는 코인에 대한 정보
 struct HoldingMarketEntity {
     let symbol: String
-    let totalBuyPrice: Decimal
+    let totalBuyPrice: Int64
 }

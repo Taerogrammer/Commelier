@@ -12,6 +12,11 @@ extension Decimal128 {
     func toDecimal() -> Decimal {
         self.decimalValue
     }
+
+    static func toInt64(_ value: Decimal128) -> Int64 {
+        let decimal = value.decimalValue
+        return NSDecimalNumber(decimal: decimal).int64Value
+    }
 }
 
 extension Decimal {
@@ -61,5 +66,23 @@ extension Decimal {
 
     static func /= (lhs: inout Decimal, rhs: Decimal) {
         lhs = lhs / rhs
+    }
+
+    static func toNSDecimalNumber(_ decimal: Decimal) -> NSDecimalNumber {
+        return NSDecimalNumber(decimal: decimal)
+    }
+
+    static func toDecimal128(_ decimal: Decimal) -> Decimal128 {
+        return Decimal128(number: toNSDecimalNumber(decimal))
+    }
+
+    static func toInt64(_ decimal: Decimal) -> Int64 {
+        return toNSDecimalNumber(decimal).int64Value
+    }
+}
+
+extension Int64 {
+    static func toDecimal(_ intValue: Int64) -> Decimal {
+        return Decimal(intValue)
     }
 }
