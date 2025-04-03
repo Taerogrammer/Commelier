@@ -145,6 +145,19 @@ final class TradeViewController: BaseViewController {
                 self?.warningLabel.isHidden = !show
             }
             .store(in: &cancellables)
+
+        output.isTradeButtonEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEnabled in
+                if !isEnabled {
+                    LoadingIndicator.showLoading()
+                } else {
+                    LoadingIndicator.hideLoading()
+                }
+                self?.actionButton.isEnabled = isEnabled
+                self?.actionButton.alpha = isEnabled ? 1.0 : 0.5
+            }
+            .store(in: &cancellables)
     }
 
     private func makeSelectionButton(title: String) -> UIButton {
