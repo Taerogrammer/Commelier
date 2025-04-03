@@ -9,6 +9,17 @@ import Foundation
 
 enum FormatUtility {
 
+    static func decimalToString(_ decimal: Decimal, fractionDigits: Int = 0) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = fractionDigits
+        formatter.minimumFractionDigits = fractionDigits
+        formatter.groupingSeparator = ","
+
+        let nsNumber = NSDecimalNumber(decimal: decimal)
+        return formatter.string(from: nsNumber) ?? "\(decimal)"
+    }
+
     static func formatAmount(_ number: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -68,5 +79,16 @@ enum FormatUtility {
         numberFormatter.maximumFractionDigits = 2
         numberFormatter.groupingSeparator = ","
         return numberFormatter.string(from: NSNumber(value: value)) ?? "-"
+    }
+
+    /// name -> symbol
+    /// KRW-BTC -> BTC
+    static func nameToSymbol(_ name: String) -> String {
+        let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
+        return String(name[symbolStartIndex...])
+    }
+
+    static func decimalToFullString(_ decimal: Decimal) -> String {
+        return NSDecimalNumber(decimal: decimal).stringValue
     }
 }

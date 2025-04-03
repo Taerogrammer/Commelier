@@ -11,7 +11,7 @@ import SnapKit
 final class TradeAmountInfoView: BaseView {
 
     private let leftTitleLabel = UILabel()
-    private let amountLabel = UILabel()
+    let amountLabel = UILabel()
     private let unitLabel = UILabel()
 
     init(title: String, amountText: String, unit: String) {
@@ -27,6 +27,14 @@ final class TradeAmountInfoView: BaseView {
         amountLabel.font = SystemFont.Title.small
         amountLabel.textAlignment = .right
 
+        /*
+         // 크기에 맞게 모든 값 들어오게
+        amountLabel.adjustsFontSizeToFitWidth = true
+        amountLabel.minimumScaleFactor = 0.8
+        amountLabel.lineBreakMode = .byTruncatingTail
+        amountLabel.numberOfLines = 1
+         */
+
         unitLabel.text = unit
         unitLabel.font = SystemFont.Title.small
         unitLabel.textAlignment = .right
@@ -40,21 +48,28 @@ final class TradeAmountInfoView: BaseView {
         leftTitleLabel.snp.makeConstraints { make in
             make.leading.centerY.equalToSuperview()
         }
-
         unitLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
 
         amountLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(unitLabel.snp.leading).offset(-6)
+            make.leading.equalTo(leftTitleLabel.snp.trailing).offset(8)
+            make.trailing.equalTo(unitLabel.snp.leading).offset(-8)
             make.centerY.equalToSuperview()
         }
-    }
 
-    /// 💡 외부에서 금액과 단위 갱신할 수 있도록
-    func update(amount: String, unit: String) {
-        amountLabel.text = amount
-        unitLabel.text = unit
+        // Hugging / Compression 설정
+        leftTitleLabel.setContentHuggingPriority(.required, for: .horizontal)
+        unitLabel.setContentHuggingPriority(.required, for: .horizontal)
+
+        amountLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        amountLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    }
+}
+
+extension TradeAmountInfoView {
+    func updateAmountText(_ text: String) {
+        amountLabel.text = text
     }
 }

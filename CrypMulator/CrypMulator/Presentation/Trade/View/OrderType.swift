@@ -7,9 +7,9 @@
 
 import UIKit
 
-enum OrderType {
-    case buy
-    case sell
+enum OrderType: String {
+    case buy = "buy"
+    case sell = "sell"
 
     var title: String {
         switch self {
@@ -37,6 +37,21 @@ enum OrderType {
         case .buy: return StringLiteral.Trade.holdingAsset
         case .sell: return StringLiteral.Trade.holdingQuantity
         }
+    }
+
+    var balanceTitle: String {
+        switch self {
+        case .buy: return StringLiteral.Trade.buyBalance
+        case .sell: return StringLiteral.Trade.sellBalance
+        }
+    }
+
+    var unit: String {
+        return StringLiteral.Currency.krw
+    }
+
+    var coinUnit: String {
+        return StringLiteral.Currency.tmpCoin
     }
 
     var inputPlaceholder: String {

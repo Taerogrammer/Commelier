@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class FavoriteCoin: Object {
+final class OldFavoriteCoin: Object {
     @Persisted(primaryKey: true) var id: String
     @Persisted var symbol: String
     @Persisted var image: String

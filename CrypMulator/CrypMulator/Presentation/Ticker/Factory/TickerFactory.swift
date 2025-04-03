@@ -8,6 +8,7 @@
 import UIKit
 
 struct TickerFactory {
+    private init() {}
     static func make() -> TickerViewController {
         let listVM = TickerListViewModel()
         let vm = TickerViewModel(tickerListViewModel: listVM)

@@ -19,7 +19,7 @@ struct InformationSection {
 
 enum InformationItem {
     case coins(CoinRankingViewData)
-    case favorite(FavoriteCoin)
+    case favorite(OldFavoriteCoin)
 }
 
 struct CoinRankingViewData: Equatable {
@@ -45,7 +45,7 @@ final class InformationViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
-    private let viewModel = InformationViewModel(repository: FavoriteCoinRepository())
+    private let viewModel = InformationViewModel(repository: OldFavoriteCoinRepository())
     private var disposeBag = DisposeBag()
     private var dataSource: RxCollectionViewSectionedReloadDataSource<InformationSection>!
 

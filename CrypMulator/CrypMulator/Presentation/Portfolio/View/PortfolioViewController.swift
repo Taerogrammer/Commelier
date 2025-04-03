@@ -10,8 +10,8 @@ import SnapKit
 
 final class PortfolioViewController: BaseViewController {
     private let segmentedControl = UnderlineSegmentedControl(items: [StringLiteral.Portfolio.assetOverview, StringLiteral.Portfolio.transaction])
-    private let totalAssetViewController = TotalAssetViewController()
-    private let transactionViewController = TradeHistoryViewController()
+    private let totalAssetViewController: TotalAssetViewController
+    private let transactionViewController: TradeHistoryViewController
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal)
@@ -28,6 +28,12 @@ final class PortfolioViewController: BaseViewController {
                 animated: true,
                 completion: nil)
         }
+    }
+
+    init(totalAssetViewController: TotalAssetViewController, transactionViewController: TradeHistoryViewController) {
+        self.totalAssetViewController = totalAssetViewController
+        self.transactionViewController = transactionViewController
+        super.init()
     }
 
     override func configureHierarchy() {

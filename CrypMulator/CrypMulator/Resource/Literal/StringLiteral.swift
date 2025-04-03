@@ -14,6 +14,7 @@ enum StringLiteral {
         static let won = "원"
         static let wonMark = "₩"
         static let percentage = "%"
+        static let tmpCoin = "BTC(변경)"
     }
 
     enum NavigationTitle {
@@ -69,6 +70,7 @@ enum StringLiteral {
         static let charge = "충전하기"
         static let sell = "가상 매도하기"
         static let buy = "가상 매수하기"
+        static let confirm = "확인"
     }
 
     enum Trade {
@@ -79,6 +81,15 @@ enum StringLiteral {
         static let holdingQuantity = "보유량"
         static let sellPlaceholder = "매도할 금액을 입력해주세요"
         static let buyPlaceholder = "매수할 금액을 입력해주세요"
-
+        static let sellBalance = "평가 금액"
+        static let buyBalance = "보유 가상현금"
+        static let total = "총"
+        static let loadingDots = "..."
+        static let defaultString = "0"
+        static let success = "거래 성공"
+        static let failure = "거래 실패"
+        static let successMessage = "정상적으로 거래가 완료되었습니다."
+        static let failureMessage = "문제가 발생했습니다. 다시 시도해주세요."
+        static let warning = "보유 금액보다 클 수 없습니다."
     }
 }

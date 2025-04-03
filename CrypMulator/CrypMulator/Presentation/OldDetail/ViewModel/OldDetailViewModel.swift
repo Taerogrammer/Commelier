@@ -11,7 +11,7 @@ import RxSwift
 final class OldDetailViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let id: Observable<String>
-    private let favoriteCoinRepository = FavoriteCoinRepository()
+    private let favoriteCoinRepository = OldFavoriteCoinRepository()
     private var error = PublishRelay<APIError>()
 
     enum SettingAction {
@@ -41,7 +41,7 @@ final class OldDetailViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let action = PublishRelay<SettingAction>()
         let result = PublishRelay<CoingeckoCoinResponse>()
-        let coinData = PublishRelay<FavoriteCoin>()
+        let coinData = PublishRelay<OldFavoriteCoin>()
         let detailResult = PublishRelay<[DetailSection]>()
         let favoriteButtonResult = PublishRelay<SettingAction>()
 
@@ -64,7 +64,7 @@ final class OldDetailViewModel: ViewModel {
                     return
                 }
                 result.accept(data)
-                coinData.accept(FavoriteCoin(
+                coinData.accept(OldFavoriteCoin(
                     id: data.id,
                     symbol: data.symbol,
                     image: data.image))

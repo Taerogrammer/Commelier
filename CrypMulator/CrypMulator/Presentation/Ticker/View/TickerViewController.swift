@@ -33,7 +33,8 @@ final class TickerViewController: BaseViewController {
     }
 
     override func configureView() {
-
+        let repo = ChargeRepository()
+        repo.getFileURL()
     }
 
     override func configureNavigation() {
