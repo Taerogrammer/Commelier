@@ -39,7 +39,7 @@ final class TradeHistoryViewController: BaseViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.rowHeight = 120
-
+        tableView.showsVerticalScrollIndicator = false
         setupData()
     }
 
@@ -58,6 +58,7 @@ extension TradeHistoryViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TradeHistoryCell.identifier, for: indexPath) as? TradeHistoryCell else {
             return UITableViewCell()
         }
+        cell.selectionStyle = .none
         cell.configure(with: data[indexPath.row])
         return cell
     }
