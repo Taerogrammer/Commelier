@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-// TODO: - 체결 가격 길이에 따라 좌우 정렬 안맞음
 // TODO: - 체결 가격 + 체결 수량 + 거래 금액 계산이 이상함
 final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
 
@@ -58,6 +57,10 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
             make.top.equalTo(topLineView.snp.bottom)
             make.horizontalEdges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
             make.bottom.equalTo(bottomLineView.snp.top)
+        }
+
+        leftStackView.snp.makeConstraints { make in
+            make.width.equalTo(120) // 원하는 고정값 (조절 가능)
         }
 
         bottomLineView.snp.makeConstraints { make in

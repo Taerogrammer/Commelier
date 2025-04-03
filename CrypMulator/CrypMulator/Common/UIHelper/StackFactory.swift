@@ -13,7 +13,7 @@ enum StackFactory {
         left: UILabel,
         right: UILabel,
         spacing: CGFloat = 4,
-        distribution: UIStackView.Distribution = .fillEqually
+        distribution: UIStackView.Distribution = .equalSpacing
     ) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: [left, right])
         stack.axis = .horizontal
