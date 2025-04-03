@@ -158,7 +158,6 @@ final class TradeViewModel: ViewModel {
     private func updateTotalQuantityIfNeeded() {
         guard let livePrice = livePriceEntity?.price else { return }
         totalQuantity = inputAmount / Decimal(livePrice)
-        print("📊 Calculated totalQuantity: \(totalQuantity)")
     }
 
     private func loadAvailableCurrency() {

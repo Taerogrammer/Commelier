@@ -24,13 +24,9 @@ final class TradeHistoryViewController: BaseViewController {
     }
 
     override func configureView() {
-        title = "거래내역"
-        view.backgroundColor = .white
-
         tableView.register(TradeHistoryCell.self, forCellReuseIdentifier: TradeHistoryCell.identifier)
         tableView.dataSource = self
         tableView.separatorStyle = .none
-
         tableView.rowHeight = 120
 
         setupData()
