@@ -15,8 +15,8 @@ final class TradeViewModel: ViewModel {
     private let webSocket: WebSocketProvider
     private let tradeUseCase: TradeUseCaseProtocol
     private let name: String
+    private var inputString: String = "0"
 
-    // TODO: Decimal -> InT64
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
     @Published private(set) var inputAmount: Decimal = 0
@@ -155,30 +155,33 @@ final class TradeViewModel: ViewModel {
             self.availableCurrency = Decimal(tradeUseCase.getHoldingAmount(of: name))
         }
     }
-    private func handleInput(_ value: String) {
-        var string = inputAmount.description
 
+    private func handleInput(_ value: String) {
         switch value {
         case "←":
-            string = String(string.dropLast())
-            if string.isEmpty {
-                string = "0"
+            inputString = String(inputString.dropLast())
+            if inputString.isEmpty {
+                inputString = "0"
             }
 
         default:
-            string = (inputAmount == 0) ? value : string + value
+            inputString = (inputString == "0") ? value : inputString + value
         }
-        let nextAmount = Decimal(string: string) ?? 0
 
-        if nextAmount > availableCurrency {
+        let nextAmount = Int64(inputString) ?? 0
+        let maxAmountDecimal = availableCurrency.rounded(scale: 0, mode: .down)
+        let maxAmount = NSDecimalNumber(decimal: maxAmountDecimal).int64Value
+
+        if nextAmount > maxAmount {
             shouldShowWarning = true
-            inputAmount = availableCurrency
+            inputAmount = Decimal(maxAmount)
+            inputString = "\(maxAmount)"
         } else {
             shouldShowWarning = false
-            inputAmount = nextAmount
+            inputAmount = Decimal(nextAmount)
         }
-        print("nextAmount -->", nextAmount, "avail", availableCurrency)
     }
+
 
     // TODO: - error문 나올 시 false로
     private func tradeClicked(price: Int64) -> Bool {

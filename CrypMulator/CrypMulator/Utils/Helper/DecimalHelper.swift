@@ -79,6 +79,13 @@ extension Decimal {
     static func toInt64(_ decimal: Decimal) -> Int64 {
         return toNSDecimalNumber(decimal).int64Value
     }
+
+    func rounded(scale: Int, mode: NSDecimalNumber.RoundingMode) -> Decimal {
+        var result = Decimal()
+        var base = self
+        NSDecimalRound(&result, &base, scale, mode)
+        return result
+    }
 }
 
 extension Int64 {
