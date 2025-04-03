@@ -29,9 +29,9 @@ extension TradeDTO {
         let type: TradeHistoryType = buySell.lowercased() == "buy" ? .buy : .sell
         let totalPrice = Decimal(price) / transactionQuantity
 
-        let formattedPrice = FormatUtility.decimalToString(Decimal(price)) + StringLiteral.Currency.krw
-        let formattedAmount = FormatUtility.decimalToString(transactionQuantity, fractionDigits: 6) + FormatUtility.nameToSymbol(name)
-        let formattedTotal = FormatUtility.decimalToString(totalPrice) + StringLiteral.Currency.krw
+        let formattedPrice = FormatUtility.decimalToString(Decimal(price)) + " " + StringLiteral.Currency.krw
+        let formattedAmount = FormatUtility.decimalToString(transactionQuantity, fractionDigits: 6) + " " + FormatUtility.nameToSymbol(name)
+        let formattedTotal = FormatUtility.decimalToString(totalPrice) + " " + StringLiteral.Currency.krw
         let formattedDate = String.convertTradeHistoryDate(timestamp: timestamp)
 
         return TradeHistoryEntity(
