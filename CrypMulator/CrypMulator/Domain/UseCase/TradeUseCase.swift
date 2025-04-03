@@ -26,7 +26,7 @@ final class TradeUseCase: TradeUseCaseProtocol {
         let charges = chargeRepository.fetchAllCharges()
         let trades = tradeRepository.getAllTrade()
 
-        return CurrentAssetCalculator.calculateAvailableKRW(
+        return Calculator.calculateAvailableKRW(
             charges: charges,
             trades: trades
         )
@@ -35,6 +35,11 @@ final class TradeUseCase: TradeUseCaseProtocol {
     func getHoldingAmount(of name: String) -> Decimal {
         guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
         return holding.totalBuyPrice
+    }
+
+    func getHoldingQuantity(of name: String) -> Decimal {
+        guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
+        return holding.transactionQuantity
     }
 
     func trade(with entity: TradeEntity) {

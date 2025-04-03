@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// 현재 보유 가상 현금
-struct CurrentAssetCalculator {
+/// 계산
+struct Calculator {
     static func calculateAvailableKRW(
         charges: [ChargeDTO],
         trades: [TradeDTO]

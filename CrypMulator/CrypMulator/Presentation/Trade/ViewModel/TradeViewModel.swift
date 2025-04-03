@@ -131,8 +131,19 @@ final class TradeViewModel: ViewModel {
     private func bindWebSocket() {
         webSocket.livePricePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.livePriceEntity = $0 }
+            .sink { [weak self] entity in
+                self?.livePriceEntity = entity
+                self?.updateAvailableCurrencyIfNeeded()
+            }
             .store(in: &cancellables)
+    }
+
+    private func updateAvailableCurrencyIfNeeded() {
+        guard type == .sell,
+              let livePrice = livePriceEntity?.price else { return }
+
+        let holdingQuantity = tradeUseCase.getHoldingQuantity(of: name)
+        availableCurrency = Decimal(livePrice) * holdingQuantity
     }
 
     private func loadAvailableCurrency() {
@@ -165,6 +176,7 @@ final class TradeViewModel: ViewModel {
             shouldShowWarning = false
             inputAmount = nextAmount
         }
+        print("nextAmount -->", nextAmount, "avail", availableCurrency)
     }
 
     // TODO: - error문 나올 시 false로
