@@ -87,4 +87,8 @@ enum FormatUtility {
         let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
         return String(name[symbolStartIndex...])
     }
+
+    static func decimalToFullString(_ decimal: Decimal) -> String {
+        return NSDecimalNumber(decimal: decimal).stringValue
+    }
 }

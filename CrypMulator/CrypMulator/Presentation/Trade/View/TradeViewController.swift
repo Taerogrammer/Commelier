@@ -134,6 +134,13 @@ final class TradeViewController: BaseViewController {
             }
             .store(in: &cancellables)
 
+        output.totalQuantity
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] quantity in
+                self?.currentPriceView.updateTotal(amount: quantity)
+            }
+            .store(in: &cancellables)
+
         output.inputAmountText
             .receive(on: DispatchQueue.main)
             .sink { [weak self] text in
@@ -167,6 +174,7 @@ final class TradeViewController: BaseViewController {
             }
             .store(in: &cancellables)
 
+        //
         let repo = ChargeRepository()
         repo.getFileURL()
     }

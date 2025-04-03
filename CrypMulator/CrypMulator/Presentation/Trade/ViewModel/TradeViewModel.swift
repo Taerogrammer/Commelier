@@ -20,6 +20,7 @@ final class TradeViewModel: ViewModel {
 
     @Published private(set) var livePriceEntity: LivePriceEntity?
     @Published private(set) var availableCurrency: Decimal = 0
+    @Published private(set) var totalQuantity: Decimal = 0
     @Published private(set) var inputAmount: Decimal = 0
     @Published private(set) var shouldShowWarning: Bool = false
 
@@ -51,6 +52,7 @@ final class TradeViewModel: ViewModel {
         let action: AnyPublisher<Action, Never>
         let ticker: AnyPublisher<LivePriceEntity, Never>
         let availableCurrency: AnyPublisher<String, Never>
+        let totalQuantity: AnyPublisher<String, Never>
         let inputAmountText: AnyPublisher<String, Never>
         let shouldShowWarning: AnyPublisher<Bool, Never>
         let isLivePriceLoaded: AnyPublisher<Bool, Never>
@@ -87,7 +89,10 @@ final class TradeViewModel: ViewModel {
         let availableCurrencyStream = $availableCurrency
             .map { FormatUtility.decimalToString($0) }
             .eraseToAnyPublisher()
-        
+
+        let totalQuantityStream = $totalQuantity
+            .map { FormatUtility.decimalToFullString($0) }
+            .eraseToAnyPublisher()
 
         let inputAmountStream = $inputAmount
             .map { FormatUtility.decimalToString($0) }
@@ -125,6 +130,7 @@ final class TradeViewModel: ViewModel {
         return Output(action: actionStream,
                       ticker: tickerStream,
                       availableCurrency: availableCurrencyStream,
+                      totalQuantity: totalQuantityStream,
                       inputAmountText: inputAmountStream,
                       shouldShowWarning: warningStream,
                       isLivePriceLoaded: isLivePriceLoaded.eraseToAnyPublisher(), isTradeButtonEnabled: isTradeButtonEnabled)
@@ -136,6 +142,7 @@ final class TradeViewModel: ViewModel {
             .sink { [weak self] entity in
                 self?.livePriceEntity = entity
                 self?.updateAvailableCurrencyIfNeeded()
+                self?.updateTotalQuantityIfNeeded()
             }
             .store(in: &cancellables)
     }
@@ -146,6 +153,12 @@ final class TradeViewModel: ViewModel {
 
         let holdingQuantity = tradeUseCase.getHoldingQuantity(of: name)
         availableCurrency = Decimal(livePrice) * holdingQuantity
+    }
+
+    private func updateTotalQuantityIfNeeded() {
+        guard let livePrice = livePriceEntity?.price else { return }
+        totalQuantity = inputAmount / Decimal(livePrice)
+        print("📊 Calculated totalQuantity: \(totalQuantity)")
     }
 
     private func loadAvailableCurrency() {
@@ -181,6 +194,7 @@ final class TradeViewModel: ViewModel {
             shouldShowWarning = false
             inputAmount = Decimal(nextAmount)
         }
+        updateTotalQuantityIfNeeded()
     }
 
 
