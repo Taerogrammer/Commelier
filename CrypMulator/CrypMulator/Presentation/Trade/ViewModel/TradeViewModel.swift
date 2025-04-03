@@ -51,6 +51,7 @@ final class TradeViewModel: ViewModel {
         let availableCurrency: AnyPublisher<String, Never>
         let inputAmountText: AnyPublisher<String, Never>
         let shouldShowWarning: AnyPublisher<Bool, Never>
+        let isLivePriceLoaded: AnyPublisher<Bool, Never>
         let isTradeButtonEnabled: AnyPublisher<Bool, Never>
     }
 
@@ -94,8 +95,20 @@ final class TradeViewModel: ViewModel {
             .removeDuplicates()
             .eraseToAnyPublisher()
 
-        let isButtonEnabled = $livePriceEntity
+        let isLivePriceLoaded = $livePriceEntity
             .map { $0 != nil }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+
+        let isCurrencyAvailable = $availableCurrency
+            .map { $0 > 0 }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+
+        let isTradeButtonEnabled = Publishers.CombineLatest(isLivePriceLoaded, isCurrencyAvailable)
+            .map { isLoaded, hasCurrency in
+                return isLoaded && hasCurrency
+            }
             .removeDuplicates()
             .eraseToAnyPublisher()
 
@@ -104,7 +117,7 @@ final class TradeViewModel: ViewModel {
                       availableCurrency: availableCurrencyStream,
                       inputAmountText: inputAmountStream,
                       shouldShowWarning: warningStream,
-                      isTradeButtonEnabled: isButtonEnabled)
+                      isLivePriceLoaded: isLivePriceLoaded.eraseToAnyPublisher(), isTradeButtonEnabled: isTradeButtonEnabled)
     }
 
     private func bindWebSocket() {

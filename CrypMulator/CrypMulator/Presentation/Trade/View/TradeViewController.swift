@@ -148,14 +148,20 @@ final class TradeViewController: BaseViewController {
             }
             .store(in: &cancellables)
 
-        output.isTradeButtonEnabled
+        output.isLivePriceLoaded
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] isEnabled in
-                if !isEnabled {
+            .sink { isLoaded in
+                if !isLoaded {
                     LoadingIndicator.showLoading()
                 } else {
                     LoadingIndicator.hideLoading()
                 }
+            }
+            .store(in: &cancellables)
+
+        output.isTradeButtonEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEnabled in
                 self?.actionButton.isEnabled = isEnabled
                 self?.actionButton.alpha = isEnabled ? 1.0 : 0.5
             }
