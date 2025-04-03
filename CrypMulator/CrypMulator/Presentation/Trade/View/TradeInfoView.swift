@@ -16,20 +16,21 @@ final class TradeInfoView: BaseView {
 
     let balanceInfoView: TradeAmountInfoView
     private let totalInfoView: TradeAmountInfoView
+    private let name: String
 
     private let infoStackView = UIStackView()
 
-    init(type: OrderType) {
+    init(type: OrderType, name: String) {
         self.balanceInfoView = TradeAmountInfoView(
             title: type.balanceTitle,
             amountText: StringLiteral.Trade.defaultString,
             unit: type.unit
         )
-
+        self.name = name
         self.totalInfoView = TradeAmountInfoView(
             title: StringLiteral.Trade.total,
             amountText: StringLiteral.Trade.defaultString,
-            unit: type.coinUnit
+            unit: FormatUtility.nameToSymbol(name)
         )
 
         super.init(frame: .zero)

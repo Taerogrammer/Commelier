@@ -23,7 +23,9 @@ final class TradeViewController: BaseViewController {
         action: nil)
     private let favoriteButton = UIBarButtonItem()
 
-    private lazy var currentPriceView = TradeInfoView(type: type)
+    private lazy var currentPriceView = TradeInfoView(
+        type: type,
+        name: titleEntity.title)
 
     private let amountLabel = UILabel()
     private let warningLabel = UILabel()
