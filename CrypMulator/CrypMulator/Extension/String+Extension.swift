@@ -56,4 +56,13 @@ extension String {
         dateFormatter.dateFormat = "MM/dd HH:mm 기준"
         return dateFormatter.string(from: date)
     }
+
+    static func convertTradeHistoryDate(timestamp: Int64) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd HH:mm"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return formatter.string(from: date)
+    }
 }

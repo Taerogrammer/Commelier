@@ -17,7 +17,10 @@ struct PortfolioFactory {
             viewModel: totalAssetVM,
             chargeRepository: chargeRepository
         )
-        let transactionVC = TradeHistoryViewController()
+
+        let tradeRepository = TradeRepository()
+        let tradeUseCase = TradeHistoryUseCase(tradeRepository: tradeRepository)
+        let transactionVC = TradeHistoryViewController(useCase: tradeUseCase)
         return PortfolioViewController(
             totalAssetViewController: totalAssetVC,
             transactionViewController: transactionVC

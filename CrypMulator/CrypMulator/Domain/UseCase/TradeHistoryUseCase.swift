@@ -14,8 +14,8 @@ final class TradeHistoryUseCase: TradeHistoryUseCaseProtocol {
         self.tradeRepository = tradeRepository
     }
 
-    func getTradeHistory() -> [TradeEntity] {
-        return tradeRepository.getAllTrade().map { $0.toEntity()}
+    func getTradeHistory() -> [TradeHistoryEntity] {
+        return tradeRepository.getAllTrade().reversed().map { $0.toHistoryEntity() }
     }
 
 }

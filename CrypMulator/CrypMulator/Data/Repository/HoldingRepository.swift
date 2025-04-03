@@ -11,6 +11,8 @@ import RealmSwift
 final class HoldingRepository: HoldingRepositoryProtocol {
     private let realm = try! Realm()
 
+    // TODO: - 매도할 때 로직 확인해보기,,!
+    // TODO: - 평가금액 - 판매가격으로 업데이트 해야됨!!!!!!
     func getHoldingMarket(name: String) -> HoldingDTO? {
         let object = realm.objects(HoldingObject.self)
             .filter("name == %@", name, name)

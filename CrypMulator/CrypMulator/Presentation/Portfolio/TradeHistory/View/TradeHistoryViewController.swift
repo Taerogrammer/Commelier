@@ -11,7 +11,18 @@ import SnapKit
 final class TradeHistoryViewController: BaseViewController {
 
     private let tableView = UITableView()
-    private var data: [TradeHistoryModel] = []
+    private var data: [TradeHistoryEntity] = []
+    private let useCase: TradeHistoryUseCaseProtocol
+
+    init(useCase: TradeHistoryUseCaseProtocol) {
+        self.useCase = useCase
+        super.init()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupData()
+    }
 
     override func configureHierarchy() {
         view.addSubview(tableView)
@@ -33,12 +44,7 @@ final class TradeHistoryViewController: BaseViewController {
     }
 
     private func setupData() {
-        data = [
-            TradeHistoryModel(type: .buy, pair: "KRW-BTC", price: "1,123,123 KRW", amount: "0.0125 ETH", total: "124,532,51 KRW", date: "2024.02.20 10:45"),
-            TradeHistoryModel(type: .sell, pair: "KRW-BTC", price: "1,123,123 KRW", amount: "0.0125 ETH", total: "124,532,51 KRW", date: "2024.02.20 10:45"),
-            TradeHistoryModel(type: .sell, pair: "KRW-BTC", price: "1,123,123 KRW", amount: "0.0125 ETH", total: "124,532,51 KRW", date: "2024.02.20 10:45"),
-            TradeHistoryModel(type: .sell, pair: "KRW-BTC", price: "1,123,123 KRW", amount: "0.0125 ETH", total: "124,532,51 KRW", date: "2024.02.20 10:45")
-        ]
+        data = useCase.getTradeHistory()
         tableView.reloadData()
     }
 }

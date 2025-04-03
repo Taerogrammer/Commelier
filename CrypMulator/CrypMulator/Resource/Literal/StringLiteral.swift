@@ -92,4 +92,13 @@ enum StringLiteral {
         static let failureMessage = "문제가 발생했습니다. 다시 시도해주세요."
         static let warning = "보유 금액보다 클 수 없습니다."
     }
+
+    enum TradeHistory {
+        static let sell = "매도"
+        static let buy = "매수"
+        static let price = "거래 금액"
+        static let quantity = "체결 수량"
+        static let coinPrice = "거래 단가"
+        static let date = "체결 일시"
+    }
 }
