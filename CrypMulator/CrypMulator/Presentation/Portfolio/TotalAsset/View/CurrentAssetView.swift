@@ -144,7 +144,10 @@ final class CurrentAssetView: BaseView {
         realCurrencyLabel.text = StringLiteral.Currency.krw
         realCurrencyLabel.font = SystemFont.Body.boldPrimary
 
-        realCurrencyAmountLabel.text = "1,123,123 " + StringLiteral.Currency.krw
+        // TODO: - 의존성 주입
+        // TODO: - 충전 완료 시 화면에 바로 보여줘야 함
+        let repo = PortfolioUseCase(chargeRepository: ChargeRepository(), tradeRepository: TradeRepository())
+        realCurrencyAmountLabel.text = repo.getTotalCurrency().formattedWithComma + StringLiteral.Currency.krw
         realCurrencyAmountLabel.font = SystemFont.Title.small
 
         /// Coin asset
