@@ -71,7 +71,6 @@ final class WebSocketManager: WebSocketProvider {
 
         let payload: [[String: Any]] = [
             ["ticket": ticket],
-            ["type": "orderbook", "codes": markets],
             ["type": "ticker", "codes": markets]
         ]
 
