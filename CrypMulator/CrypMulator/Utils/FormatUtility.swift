@@ -91,4 +91,11 @@ enum FormatUtility {
         let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
         return String(name[symbolStartIndex...])
     }
+
+    static let decimalStyle: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        return formatter
+    }()
 }
