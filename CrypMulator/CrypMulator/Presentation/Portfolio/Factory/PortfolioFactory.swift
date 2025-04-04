@@ -13,9 +13,13 @@ struct PortfolioFactory {
     static func make() -> PortfolioViewController {
         let chargeRepository = ChargeRepository()
         let tradeRepository = TradeRepository()
+        let holdingRepository = HoldingRepository()
         let tradeUseCase = TradeHistoryUseCase(tradeRepository: tradeRepository)
         let transactionVC = TradeHistoryViewController(useCase: tradeUseCase)
-        let portfolioUseCase = PortfolioUseCase(chargeRepository: chargeRepository, tradeRepository: tradeRepository)
+        let portfolioUseCase = PortfolioUseCase(
+            chargeRepository: chargeRepository,
+            tradeRepository: tradeRepository,
+            holdingRepository: holdingRepository)
 
         let totalAssetVM = TotalAssetViewModel(portfolioUseCase: portfolioUseCase)
         let totalAssetVC = TotalAssetViewController(

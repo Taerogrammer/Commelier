@@ -31,4 +31,12 @@ extension HoldingDTO {
 
         return object
     }
+
+    func toEntity() -> HoldingEntity {
+        return HoldingEntity(
+            name: name,
+            totalBuyPrice: totalBuyPrice,
+            transactionQuantity: transactionQuantity,
+            symbol: symbol)
+    }
 }

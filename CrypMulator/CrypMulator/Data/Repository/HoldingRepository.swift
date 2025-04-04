@@ -11,6 +11,11 @@ import RealmSwift
 final class HoldingRepository: HoldingRepositoryProtocol {
     private let realm = try! Realm()
 
+    func getHolding() -> [HoldingDTO] {
+        let objects = realm.objects(HoldingObject.self)
+        return objects.map { $0.toDTO() }
+    }
+
     func getHoldingMarket(name: String) -> HoldingDTO? {
         let object = realm.objects(HoldingObject.self)
             .filter("name == %@", name, name)

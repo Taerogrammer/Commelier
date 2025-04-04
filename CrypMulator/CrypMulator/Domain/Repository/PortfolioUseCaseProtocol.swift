@@ -12,8 +12,11 @@ protocol PortfolioUseCaseProtocol: AnyObject {
     /// 총 현금 자산 (총 보유 자산이 아님)
     func getTotalCurrency() -> Int64
 
-    /// 총 가상 자산: 현재가를 기반으로 계산
-//    func getTotalCoin() -> Int64
+    /// 보유 코인 목록
+    func getHoldings() -> [HoldingDTO]
+
+    /// 엔티티 반환
+    func getCurrentAssetEntity() -> CurrentAssetEntity
 
     // 포트폴리오
     // 누적 투자 손익

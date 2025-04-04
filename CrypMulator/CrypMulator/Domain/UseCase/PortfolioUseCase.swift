@@ -10,10 +10,14 @@ import Foundation
 final class PortfolioUseCase: PortfolioUseCaseProtocol {
     private let chargeRepository: ChargeRepositoryProtocol
     private let tradeRepository: TradeRepositoryProtocol
+    private let holdingRepository: HoldingRepositoryProtocol
 
-    init(chargeRepository: ChargeRepositoryProtocol, tradeRepository: TradeRepositoryProtocol) {
+    init(chargeRepository: ChargeRepositoryProtocol,
+         tradeRepository: TradeRepositoryProtocol,
+         holdingRepository: HoldingRepositoryProtocol) {
         self.chargeRepository = chargeRepository
         self.tradeRepository = tradeRepository
+        self.holdingRepository = holdingRepository
     }
 
     func getTotalCurrency() -> Int64 {
@@ -39,4 +43,16 @@ final class PortfolioUseCase: PortfolioUseCaseProtocol {
     }
 
 
+    func getHoldings() -> [HoldingDTO] {
+        return holdingRepository.getHolding()
+    }
+
+    func getCurrentAssetEntity() -> CurrentAssetEntity {
+        let totalCurrency = getTotalCurrency()
+        let holdings = getHoldings().map { $0.toEntity() }
+
+        return CurrentAssetEntity(
+            totalCurrency: totalCurrency,
+            totalCoin: holdings)
+    }
 }
