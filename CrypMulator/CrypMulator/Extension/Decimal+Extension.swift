@@ -1,23 +1,12 @@
 //
-//  DecimalHelper.swift
+//  Decimal+Extension.swift
 //  CrypMulator
 //
-//  Created by 김태형 on 4/1/25.
+//  Created by 김태형 on 4/4/25.
 //
 
 import Foundation
 import RealmSwift
-
-extension Decimal128 {
-    func toDecimal() -> Decimal {
-        self.decimalValue
-    }
-
-    static func toInt64(_ value: Decimal128) -> Int64 {
-        let decimal = value.decimalValue
-        return NSDecimalNumber(decimal: decimal).int64Value
-    }
-}
 
 extension Decimal {
     static func + (lhs: Decimal, rhs: Decimal) -> Decimal {
@@ -86,10 +75,9 @@ extension Decimal {
         NSDecimalRound(&result, &base, scale, mode)
         return result
     }
-}
 
-extension Int64 {
-    static func toDecimal(_ intValue: Int64) -> Decimal {
-        return Decimal(intValue)
+    func toInt64Rounded() -> Int64 {
+        let rounded = self.rounded(scale: 0, mode: .plain)
+        return NSDecimalNumber(decimal: rounded).int64Value
     }
 }

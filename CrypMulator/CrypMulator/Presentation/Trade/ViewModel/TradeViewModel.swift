@@ -8,8 +8,6 @@
 import Combine
 import Foundation
 
-// TODO: - 매도 시 현재가 * transactionQuantity 기준으로 판매 되도록 하기
-
 final class TradeViewModel: ViewModel {
     private let type: OrderType
     private var cancellables = Set<AnyCancellable>()
@@ -165,8 +163,20 @@ final class TradeViewModel: ViewModel {
     private func printProfitInfoIfNeeded() {
         guard let livePrice = livePriceEntity?.price else { return }
         if let holding = tradeUseCase.getHoldingMarket(name: name) {
-            let profit = holding.profitAmount(currentPrice: Decimal(livePrice))
-            let ratio = holding.profitRatio(currentPrice: Decimal(livePrice))
+            let quantity = holding.transactionQuantity
+            let totalBuyPrice = holding.totalBuyPrice
+
+            let profit = Calculator.profitAmount(
+                transactionQuantity: quantity,
+                totalBuyPrice: totalBuyPrice,
+                currentPrice: Decimal(livePrice)
+            )
+
+            let ratio = Calculator.profitRatio(
+                transactionQuantity: quantity,
+                totalBuyPrice: totalBuyPrice,
+                currentPrice: Decimal(livePrice)
+            )
             print("💰 평가손익: \(profit)")
             print("📈 수익률: \(ratio)%")
         }
@@ -208,16 +218,17 @@ final class TradeViewModel: ViewModel {
         updateTotalQuantityIfNeeded()
     }
 
-
-    // TODO: - error문 나올 시 false로
     private func tradeClicked(price: Int64) -> Bool {
+        guard let livePrice = livePriceEntity?.price else { return false }
+        let quantityToTrade = Decimal(price) / Decimal(livePrice)   // 매도 수량
+
         let entity = TradeEntity(
             name: name,
             buySell: type.rawValue,
-            transactionQuantity: Decimal(price) / Decimal(livePriceEntity?.price ?? 1),
+            transactionQuantity: quantityToTrade,
             price: price,
-            timestamp: Int64(Date().timeIntervalSince1970))
-
+            timestamp: Int64(Date().timeIntervalSince1970)
+        )
         tradeUseCase.trade(with: entity)
         return true
     }
