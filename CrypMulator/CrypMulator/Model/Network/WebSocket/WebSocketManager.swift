@@ -66,6 +66,29 @@ final class WebSocketManager: WebSocketProvider {
         }
     }
 
+    func send(markets: [String]) {
+        let ticket = TicketGenerator.generate(prefix: "iOS")
+
+        let payload: [[String: Any]] = [
+            ["ticket": ticket],
+            ["type": "orderbook", "codes": markets],
+            ["type": "ticker", "codes": markets]
+        ]
+
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: payload) else {
+            print("❌ JSON serialization failed")
+            return
+        }
+
+        webSocket?.send(.data(jsonData)) { error in
+            if let error = error {
+                print("❌ Send Error:", error)
+            } else {
+                print("✅ Sent payload for markets: \(markets.joined(separator: ", "))")
+            }
+        }
+    }
+
     private func receiveMessage() {
         webSocket?.receive { [weak self] result in
             switch result {

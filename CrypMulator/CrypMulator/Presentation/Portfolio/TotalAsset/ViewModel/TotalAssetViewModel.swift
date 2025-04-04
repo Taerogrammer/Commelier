@@ -20,7 +20,15 @@ final class TotalAssetViewModel: ViewModel {
         self.portfolioUseCase = portfolioUseCase
         self.webSocket = webSocket
 
-        print("====", portfolioUseCase.getCurrentAssetEntity())
+        let holdings = portfolioUseCase.getHoldings()
+        let marketList = holdings.map { $0.name }
+
+        print("📡 WebSocket Send for Markets:", marketList)
+
+        webSocket.connect()
+        webSocket.send(markets: marketList)
+
+        print("==== Current Asset:", portfolioUseCase.getCurrentAssetEntity())
     }
 
     enum Action {
