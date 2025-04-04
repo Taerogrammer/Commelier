@@ -32,6 +32,10 @@ final class TradeUseCase: TradeUseCaseProtocol {
         )
     }
 
+    func getHoldingMarket(name: String) -> HoldingDTO? {
+        return holdingRepository.getHoldingMarket(name: name)
+    }
+
     func getHoldingAmount(of name: String) -> Int64 {
         guard let holding = holdingRepository.getHoldingMarket(name: name) else { return 0 }
         return holding.totalBuyPrice

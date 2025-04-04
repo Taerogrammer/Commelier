@@ -143,6 +143,8 @@ final class TradeViewModel: ViewModel {
                 self?.livePriceEntity = entity
                 self?.updateAvailableCurrencyIfNeeded()
                 self?.updateTotalQuantityIfNeeded()
+                /// 평가손익, 수익률
+                self?.printProfitInfoIfNeeded()
             }
             .store(in: &cancellables)
     }
@@ -158,6 +160,16 @@ final class TradeViewModel: ViewModel {
     private func updateTotalQuantityIfNeeded() {
         guard let livePrice = livePriceEntity?.price else { return }
         totalQuantity = inputAmount / Decimal(livePrice)
+    }
+
+    private func printProfitInfoIfNeeded() {
+        guard let livePrice = livePriceEntity?.price else { return }
+        if let holding = tradeUseCase.getHoldingMarket(name: name) {
+            let profit = holding.profitAmount(currentPrice: Decimal(livePrice))
+            let ratio = holding.profitRatio(currentPrice: Decimal(livePrice))
+            print("💰 평가손익: \(profit)")
+            print("📈 수익률: \(ratio)%")
+        }
     }
 
     private func loadAvailableCurrency() {
