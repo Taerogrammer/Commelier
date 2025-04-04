@@ -9,11 +9,16 @@ import Foundation
 
 enum StringLiteral {
 
+    enum Operator {
+        static let plus = "+"
+        static let minus = "-"
+        static let percentage = "%"
+    }
+
     enum Currency {
         static let krw = "KRW"
         static let won = "원"
         static let wonMark = "₩"
-        static let percentage = "%"
         static let tmpCoin = "BTC(변경)"
     }
 

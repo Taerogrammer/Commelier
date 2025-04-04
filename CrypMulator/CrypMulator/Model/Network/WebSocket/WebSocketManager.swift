@@ -30,6 +30,12 @@ final class WebSocketManager: WebSocketProvider {
         symbolInfoSubject.eraseToAnyPublisher()
     }
 
+    private let assetSnapshotPublisher = CurrentValueSubject<AssetSnapshotEntity?, Never>(nil)
+
+    var snapshotPublisher: AnyPublisher<AssetSnapshotEntity?, Never> {
+        return assetSnapshotPublisher.eraseToAnyPublisher()
+    }
+
     // 연결
     func connect() {
         guard let url = URL(string: BaseURL.WebSocket.upbitWebSocket) else { return }
@@ -67,6 +73,11 @@ final class WebSocketManager: WebSocketProvider {
     }
 
     func send(markets: [String]) {
+        guard !markets.isEmpty else {
+            print("⚠️ Send skipped: market list is empty")
+            return
+        }
+
         let ticket = TicketGenerator.generate(prefix: "iOS")
 
         let payload: [[String: Any]] = [

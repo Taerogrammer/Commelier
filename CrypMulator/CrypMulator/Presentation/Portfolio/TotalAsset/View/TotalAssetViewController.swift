@@ -68,5 +68,12 @@ final class TotalAssetViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
+
+        output.snapshot
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] snapshot in
+                self?.currentAssetView.update(snapshot: snapshot)
+            }
+            .store(in: &cancellables)
     }
 }

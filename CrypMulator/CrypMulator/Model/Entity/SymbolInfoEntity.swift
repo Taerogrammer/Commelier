@@ -50,7 +50,7 @@ extension SymbolInfoEntity {
             ),
             DetailInformation(
                 title: "전일 대비 변동률",
-                money: FormatUtility.formattedPercent(signedChangeRate) + StringLiteral.Currency.percentage,
+                money: FormatUtility.formattedPercent(signedChangeRate) + StringLiteral.Operator.percentage,
                 date: ""
             ),
             DetailInformation(
