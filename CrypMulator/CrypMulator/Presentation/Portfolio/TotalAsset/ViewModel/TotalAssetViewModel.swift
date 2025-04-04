@@ -5,40 +5,43 @@
 //  Created by 김태형 on 3/28/25.
 //
 
-import RxSwift
-import RxCocoa
+import Combine
+import Foundation
 
 final class TotalAssetViewModel: ViewModel {
     private let portfolioUseCase: PortfolioUseCaseProtocol
+    private let webSocket: WebSocketProvider
 
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
+    private let actionPublisher = PassthroughSubject<Action, Never>()
+
+    init(portfolioUseCase: PortfolioUseCaseProtocol,
+         webSocket: WebSocketProvider) {
+        self.portfolioUseCase = portfolioUseCase
+        self.webSocket = webSocket
+
+        print("====", portfolioUseCase.getCurrentAssetEntity())
+    }
 
     enum Action {
         case presentCharge
     }
 
-    init(portfolioUseCase: PortfolioUseCaseProtocol) {
-        self.portfolioUseCase = portfolioUseCase
-    }
-
     struct Input {
-        let chargeButtonTapped: ControlEvent<Void>
+        let chargeButtonTapped: AnyPublisher<Void, Never>
     }
 
     struct Output {
-        let action: Signal<Action>
+        let action: AnyPublisher<Action, Never>
     }
 
     func transform(input: Input) -> Output {
-        let actionRelay = PublishRelay<Action>()
-
         input.chargeButtonTapped
-            .bind(with: self) { owner, _ in
-                actionRelay.accept(Action.presentCharge)
+            .sink { [weak self] in
+                self?.actionPublisher.send(.presentCharge)
             }
-            .disposed(by: disposeBag)
+            .store(in: &cancellables)
 
-        return Output(action: actionRelay.asSignal(onErrorSignalWith: .empty()))
+        return Output(action: actionPublisher.eraseToAnyPublisher())
     }
-
 }

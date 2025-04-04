@@ -14,6 +14,8 @@ struct PortfolioFactory {
         let chargeRepository = ChargeRepository()
         let tradeRepository = TradeRepository()
         let holdingRepository = HoldingRepository()
+        let webSocket: WebSocketProvider = WebSocketManager.shared
+
         let tradeUseCase = TradeHistoryUseCase(tradeRepository: tradeRepository)
         let transactionVC = TradeHistoryViewController(useCase: tradeUseCase)
         let portfolioUseCase = PortfolioUseCase(
@@ -21,7 +23,9 @@ struct PortfolioFactory {
             tradeRepository: tradeRepository,
             holdingRepository: holdingRepository)
 
-        let totalAssetVM = TotalAssetViewModel(portfolioUseCase: portfolioUseCase)
+        let totalAssetVM = TotalAssetViewModel(
+            portfolioUseCase: portfolioUseCase,
+            webSocket: webSocket)
         let totalAssetVC = TotalAssetViewController(
             viewModel: totalAssetVM,
             chargeRepository: chargeRepository
