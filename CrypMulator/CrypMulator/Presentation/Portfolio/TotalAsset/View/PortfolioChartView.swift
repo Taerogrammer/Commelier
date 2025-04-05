@@ -97,6 +97,11 @@ extension PortfolioChartView {
         let percentLabel = UILabel()
         percentLabel.text = String(format: "%.2f%%", percent)
         percentLabel.font = SystemFont.Body.content
+        percentLabel.textAlignment = .right
+
+        percentLabel.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
 
         let hStack = UIStackView(arrangedSubviews: [colorDot, nameLabel, percentLabel])
         hStack.axis = .horizontal

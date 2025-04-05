@@ -58,15 +58,12 @@ final class TotalAssetViewModel: ViewModel {
                       snapshot: snapshot)
     }
 
-    private func connectWebSocketAndSendMarkets() {
+     func connectWebSocketAndSendMarkets() {
         let holdings = portfolioUseCase.getHoldings()
-        let marketList = holdings.map { $0.name }
+        /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생
+        let marketList = holdings.map { $0.name }.ifEmpty(default: ["KRW-BTC"])
         print("📡 WebSocket Send for Markets:", marketList)
         webSocket.connect()
-        guard !marketList.isEmpty else {
-            print("⚠️ 마켓이 비어 있어 send 생략")
-            return
-        }
         webSocket.send(markets: marketList)
     }
 
@@ -102,4 +99,10 @@ final class TotalAssetViewModel: ViewModel {
         print("🧮 [EVALUATED] 총 코인: \(snapshot.totalCoinValue.toInt64Rounded()) 원")
     }
 
+}
+
+extension Array {
+    func ifEmpty(default defaultValue: [Element]) -> [Element] {
+        return self.isEmpty ? defaultValue : self
+    }
 }

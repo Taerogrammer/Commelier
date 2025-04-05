@@ -23,6 +23,11 @@ final class TotalAssetViewController: BaseViewController {
         super.init()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        totalAssetViewModel.connectWebSocketAndSendMarkets()
+    }
+
     override func configureHierarchy() {
         view.addSubviews([currentAssetView, portfolioChartView, profitView])
     }
