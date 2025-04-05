@@ -11,7 +11,7 @@ struct AssetSnapshotEntity {
     let totalAsset: Decimal               // 총 자산 = 현금 + 코인 평가 금액 합계
     let totalCurrency: Decimal            // 보유 현금
     let totalCoinValue: Decimal           // 코인 평가금액 총합
-
+    let totalBuyValue: Decimal              // 총 매수
     let holdingProfit: Decimal          // 평가 손익 총합
     let holdingYieldRate: Decimal       // 평가 수익률 평균
 
@@ -50,6 +50,7 @@ struct AssetEvaluator {
             totalAsset: totalAssetDecimal,
             totalCurrency: Int64.toDecimal(currentAsset.totalCurrency),
             totalCoinValue: totalMarketValue,
+            totalBuyValue: totalBuyValue,
             holdingProfit: totalProfit,
             holdingYieldRate: yieldRate
         )
