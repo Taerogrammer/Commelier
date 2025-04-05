@@ -15,17 +15,24 @@ final class TotalAssetViewController: BaseViewController {
     private let portfolioChartView = PortfolioChartView()
     private let profitView = ProfitView()
     private let totalAssetViewModel: TotalAssetViewModel
+    private let profitViewModel: ProfitViewModel
     private let chargeRepository: ChargeRepositoryProtocol
 
-    init(viewModel: TotalAssetViewModel, chargeRepository: ChargeRepositoryProtocol) {
+    init(viewModel: TotalAssetViewModel,
+         chargeRepository: ChargeRepositoryProtocol,
+         profitViewModel: ProfitViewModel) {
         self.totalAssetViewModel = viewModel
         self.chargeRepository = chargeRepository
+        self.profitViewModel = profitViewModel
         super.init()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         totalAssetViewModel.connectWebSocketAndSendMarkets()
+        let profitOutput = profitViewModel.transform(input: .init())
+        profitView.update(amount: profitOutput.totalProfitAmount,
+                          rate: profitOutput.totalProfitRate)
     }
 
     override func configureHierarchy() {

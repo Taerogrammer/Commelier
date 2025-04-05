@@ -79,12 +79,25 @@ final class ProfitView: BaseView {
         profitRateTitleLabel.text = StringLiteral.Portfolio.cumulativeRate
         profitRateTitleLabel.font = SystemFont.Body.boldPrimary
 
-        profitAmountLabel.text = "+636,236,355 KRW"
+        profitAmountLabel.text = "0 " + StringLiteral.Currency.krw
         profitAmountLabel.font = SystemFont.Body.boldContent
         profitAmountLabel.textColor = .systemRed
 
-        profitRateLabel.text = "46.62 %"
+        profitRateLabel.text = "0 " + StringLiteral.Operator.percentage
         profitRateLabel.font = SystemFont.Body.boldContent
         profitRateLabel.textColor = .systemRed
+    }
+}
+
+extension ProfitView {
+    func update(amount: String, rate: String) {
+        profitAmountLabel.text = amount
+        profitRateLabel.text = rate
+
+        let isProfit = amount.contains(StringLiteral.Operator.plus)
+        let color: UIColor = isProfit ? SystemColor.red : SystemColor.blue
+
+        profitAmountLabel.textColor = color
+        profitRateLabel.textColor = color
     }
 }

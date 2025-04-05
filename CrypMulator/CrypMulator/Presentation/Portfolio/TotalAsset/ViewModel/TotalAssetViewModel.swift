@@ -58,6 +58,7 @@ final class TotalAssetViewModel: ViewModel {
                       snapshot: snapshot)
     }
 
+    // TODO: - !긴급! 연동 여러 개 있을 때 다른 가격이 호출될 때도 있음
      func connectWebSocketAndSendMarkets() {
         let holdings = portfolioUseCase.getHoldings()
         /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생

@@ -18,6 +18,6 @@ protocol PortfolioUseCaseProtocol: AnyObject {
     /// 엔티티 반환
     func getCurrentAssetEntity() -> CurrentAssetEntity
 
-    // 포트폴리오
     // 누적 투자 손익
+    func getRealizedProfit() -> [RealizedProfit]
 }

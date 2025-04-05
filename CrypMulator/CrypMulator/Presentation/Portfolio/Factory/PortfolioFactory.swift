@@ -26,9 +26,11 @@ struct PortfolioFactory {
         let totalAssetVM = TotalAssetViewModel(
             portfolioUseCase: portfolioUseCase,
             webSocket: webSocket)
+        let profitVM = ProfitViewModel(portfolioUseCase: portfolioUseCase)
         let totalAssetVC = TotalAssetViewController(
             viewModel: totalAssetVM,
-            chargeRepository: chargeRepository
+            chargeRepository: chargeRepository,
+            profitViewModel: profitVM
         )
         return PortfolioViewController(
             totalAssetViewController: totalAssetVC,
