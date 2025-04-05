@@ -176,6 +176,7 @@ final class CurrentAssetView: BaseView {
     }
 }
 
+// MARK: - configure
 extension CurrentAssetView {
     func update(snapshot: AssetSnapshotEntity) {
         totalAssetAmountLabel.text = snapshot.totalAsset.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won

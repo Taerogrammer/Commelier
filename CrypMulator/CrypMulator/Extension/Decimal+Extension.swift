@@ -9,6 +9,11 @@ import Foundation
 import RealmSwift
 
 extension Decimal {
+
+    var doubleValue: Double {
+        return NSDecimalNumber(decimal: self).doubleValue
+    }
+
     static func + (lhs: Decimal, rhs: Decimal) -> Decimal {
         var result = Decimal()
         var lhs = lhs

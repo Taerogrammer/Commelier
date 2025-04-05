@@ -74,8 +74,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
 
             // 방어 로직
             let epsilon = Decimal128(0.00000001)
-            if holding.transactionQuantity < epsilon || holding.totalBuyPrice <= 0 {
-                print("⚠️ 남은 값이 너무 작아 삭제 처리됨")
+            if holding.transactionQuantity < epsilon || holding.totalBuyPrice <= 1 {
                 realm.delete(holding)
             }
         }

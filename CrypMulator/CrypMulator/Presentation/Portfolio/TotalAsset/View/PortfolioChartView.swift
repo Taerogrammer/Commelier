@@ -58,13 +58,6 @@ final class PortfolioChartView: BaseView {
         legendStackView.axis = .vertical
         legendStackView.spacing = 12
         legendStackView.alignment = .center
-
-        // ✅ 테스트 데이터 적용
-        let sampleData: [(String, Double, UIColor)] = [
-            ("KRW", 99.7, .systemGreen),
-            ("DOGE", 0.3, SystemColor.blue)
-        ]
-        configureChart(data: sampleData)
     }
 }
 
@@ -102,7 +95,7 @@ extension PortfolioChartView {
         nameLabel.font = SystemFont.Body.content
 
         let percentLabel = UILabel()
-        percentLabel.text = String(format: "%.1f%%", percent)
+        percentLabel.text = String(format: "%.2f%%", percent)
         percentLabel.font = SystemFont.Body.content
 
         let hStack = UIStackView(arrangedSubviews: [colorDot, nameLabel, percentLabel])
@@ -110,5 +103,29 @@ extension PortfolioChartView {
         hStack.spacing = 8
         hStack.alignment = .center
         return hStack
+    }
+}
+
+// MARK: - configure
+extension PortfolioChartView {
+    func update(snapshot: AssetSnapshotEntity) {
+        let total = snapshot.totalAsset
+
+        guard total > 0 else {
+            // 데이터가 유효하지 않을 경우 차트 클리어
+            configureChart(data: [])
+            return
+        }
+
+        let cashPercent = (snapshot.totalCurrency / total * 100).doubleValue
+        let coinPercent = (snapshot.totalCoinValue / total * 100).doubleValue
+
+        // TODO: - 각 코인에 대해 나타내주기
+        let chartData: [(String, Double, UIColor)] = [
+            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.blue),
+            (StringLiteral.Portfolio.coin, coinPercent, SystemColor.yellow)
+        ]
+
+        configureChart(data: chartData)
     }
 }
