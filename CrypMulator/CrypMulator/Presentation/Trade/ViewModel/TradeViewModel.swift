@@ -160,6 +160,7 @@ final class TradeViewModel: ViewModel {
         totalQuantity = inputAmount / Decimal(livePrice)
     }
 
+    // TODO: - 평가손익이 0일 때 파랑색인 경우 존재
     private func printProfitInfoIfNeeded() {
         guard let livePrice = livePriceEntity?.price else { return }
         if let holding = tradeUseCase.getHoldingMarket(name: name) {

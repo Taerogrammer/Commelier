@@ -35,6 +35,7 @@ final class DetailViewModel: ViewModel {
         let chartRelay = PublishRelay<[ChartEntity]>()
         let action = PublishRelay<Action>()
 
+        //  TODO: - !긴급! ticket Send 시점 바꾸기!!!!
         webSocket.connect()
         webSocket.send(market: request.market)
 
