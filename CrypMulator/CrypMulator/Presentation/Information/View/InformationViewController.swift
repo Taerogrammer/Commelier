@@ -61,7 +61,7 @@ final class InformationViewController: BaseViewController {
 
     override func configureView() {
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
-        collectionView.register(FavoriteCoinCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCoinCollectionViewCell.identifier)
+        collectionView.register(HoldingCollectionViewCell.self, forCellWithReuseIdentifier: HoldingCollectionViewCell.identifier)
         collectionView.register(InformationCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: InformationCollectionHeaderView.identifier)
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
@@ -73,6 +73,7 @@ final class InformationViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.reloadHoldingSection()
         viewModel.getDataByTimer()
     }
 
@@ -182,9 +183,9 @@ extension InformationViewController {
 
                 case .holding(let coin):
                     let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: FavoriteCoinCollectionViewCell.identifier,
+                        withReuseIdentifier: HoldingCollectionViewCell.identifier,
                         for: indexPath
-                    ) as! FavoriteCoinCollectionViewCell
+                    ) as! HoldingCollectionViewCell
 
                     cell.configureCell(with: coin)
 

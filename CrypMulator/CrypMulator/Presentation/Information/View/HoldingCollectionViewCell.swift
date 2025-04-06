@@ -10,7 +10,7 @@ import Kingfisher
 import SnapKit
 import RxSwift
 
-final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
+final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
     var disposeBag = DisposeBag()
     private let image = CircleImage(frame: .zero)
     private let transactionQuantity = UILabel()
@@ -51,7 +51,7 @@ final class FavoriteCoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentif
 
 
 // MARK: - configure cell
-extension FavoriteCoinCollectionViewCell {
+extension HoldingCollectionViewCell {
     func configureCell(with item: HoldingEntity) {
         if let urlString = item.imageURL, let url = URL(string: urlString) {
             image.kf.setImage(with: url, placeholder: UIImage(systemName: "bitcoinsign.circle"))
