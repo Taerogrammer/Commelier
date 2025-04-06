@@ -45,9 +45,9 @@ final class CustomNumberPadView: BaseView {
             for title in row {
                 let button = UIButton(type: .system)
                 button.setTitle(title, for: .normal)
-                button.setTitleColor(.black, for: .normal)
+                button.setTitleColor(SystemColor.white, for: .normal)
                 button.titleLabel?.font = SystemFont.Title.large
-                button.backgroundColor = SystemColor.white
+                button.backgroundColor = SystemColor.black
                 button.layer.cornerRadius = 8
                 button.addAction(UIAction(handler: { [weak self] _ in
                     self?.buttonTapped.send(title)

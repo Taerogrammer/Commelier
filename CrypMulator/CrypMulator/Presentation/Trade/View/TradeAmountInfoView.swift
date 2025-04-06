@@ -21,9 +21,11 @@ final class TradeAmountInfoView: BaseView {
 
     private func configure(title: String, amountText: String, unit: String) {
         leftTitleLabel.text = title
+        leftTitleLabel.textColor = SystemColor.white
         leftTitleLabel.font = SystemFont.Body.boldPrimary
 
         amountLabel.text = amountText
+        amountLabel.textColor = SystemColor.white
         amountLabel.font = SystemFont.Title.small
         amountLabel.textAlignment = .right
 

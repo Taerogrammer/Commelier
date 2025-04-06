@@ -19,10 +19,10 @@ struct ChartView: View {
 
     @State private var selectedIndex: Int?
 
-    private let linearGradient = LinearGradient(
+    private let redGradient = LinearGradient(
         gradient: Gradient(colors: [
-            Color.accentColor.opacity(0.4),
-            Color.accentColor.opacity(0.1)
+            Color(SystemColor.red).opacity(0.35),
+            Color(SystemColor.red).opacity(0.08)
         ]),
         startPoint: .top,
         endPoint: .bottom
@@ -47,14 +47,14 @@ struct ChartView: View {
                         y: .value("가격", entity.price)
                     )
                     .interpolationMethod(.catmullRom)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color(SystemColor.red))
 
                     AreaMark(
                         x: .value("Index", index),
                         y: .value("가격", entity.price)
                     )
                     .interpolationMethod(.cardinal)
-                    .foregroundStyle(linearGradient)
+                    .foregroundStyle(redGradient)
                 }
 
                 if let selectedIndex, selectedIndex < data.count {
@@ -69,7 +69,7 @@ struct ChartView: View {
                         y: .value("가격", selected.price)
                     )
                     .symbolSize(50)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Color(SystemColor.green))
                 }
             }
             .chartOverlay { proxy in
@@ -102,6 +102,7 @@ struct ChartView: View {
                                         .bold()
                                     Text("\(FormatUtility.formattedPrice(selected.price)) \(StringLiteral.Currency.won)")
                                 }
+                                .foregroundColor(Color(SystemColor.black))
                                 .font(.caption)
                                 .padding(6)
                                 .background(Color.white)
