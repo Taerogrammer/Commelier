@@ -60,6 +60,6 @@ extension HoldingCollectionViewCell {
         }
 
         nameLabel.text = item.symbol.uppercased()
-        transactionQuantity.text = "\(item.transactionQuantity) \(item.symbol.uppercased())"
+        transactionQuantity.text = "\(item.transactionQuantity.rounded(scale: 6)) \(item.symbol.uppercased())"
     }
 }
