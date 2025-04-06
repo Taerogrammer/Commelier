@@ -22,4 +22,5 @@ enum SystemIcon {
     static let chartBarFilled = UIImage(systemName: "chart.bar.fill")!
     static let chartPie = UIImage(systemName: "chart.pie")!
     static let chartPieFilled = UIImage(systemName: "chart.pie.fill")!
+    static let coin = UIImage(systemName: "bitcoinsign.circle")!
 }

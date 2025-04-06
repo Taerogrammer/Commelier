@@ -40,6 +40,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
         nameLabel.font = SystemFont.Body.boldPrimary
         transactionQuantity.font = SystemFont.Body.content
         transactionQuantity.textColor = SystemColor.gray
+        image.tintColor = SystemColor.blue
     }
 
     // 중첩 구독 방지
@@ -53,12 +54,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
 // MARK: - configure cell
 extension HoldingCollectionViewCell {
     func configureCell(with item: HoldingEntity) {
-        if let urlString = item.imageURL, let url = URL(string: urlString) {
-            image.kf.setImage(with: url, placeholder: UIImage(systemName: "bitcoinsign.circle"))
-        } else {
-            image.image = UIImage(systemName: "bitcoinsign.circle")
-        }
-
+        image.setCoinImage(with: item.imageURL)
         nameLabel.text = item.symbol.uppercased()
         transactionQuantity.text = "\(item.transactionQuantity.rounded(scale: 6)) \(item.symbol.uppercased())"
     }

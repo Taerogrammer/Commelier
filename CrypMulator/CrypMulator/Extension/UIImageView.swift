@@ -15,16 +15,16 @@ extension UIImageView {
                 // 웹 이미지 로딩
                 self.kf.setImage(
                     with: url,
-                    placeholder: UIImage(systemName: "bitcoinsign.circle"),
+                    placeholder: SystemIcon.coin,
                     options: [.transition(.fade(0.2))]
                 )
             } else {
                 // 로컬 이미지
-                self.image = UIImage(named: imageURL) ?? UIImage(systemName: "bitcoinsign.circle")
+                self.image = UIImage(named: imageURL) ?? SystemIcon.coin
             }
         } else {
             // imageURL 자체가 nil인 경우
-            self.image = UIImage(systemName: "bitcoinsign.circle")
+            self.image = SystemIcon.coin
         }
     }
 }
