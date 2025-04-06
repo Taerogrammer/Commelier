@@ -17,7 +17,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
     private let nameLabel = UILabel()
 
     override func configureHierarchy() {
-        contentView.addSubviews([image, nameLabel, transactionQuantity/*, favoriteButton*/])
+        contentView.addSubviews([image, nameLabel, transactionQuantity])
     }
 
     override func configureLayout() {
@@ -39,7 +39,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
     override func configureView() {
         nameLabel.font = SystemFont.Body.boldPrimary
         transactionQuantity.font = SystemFont.Body.content
-        transactionQuantity.textColor = SystemColor.gray
+        transactionQuantity.textColor = SystemColor.whiteGray
         image.tintColor = SystemColor.green
     }
 
