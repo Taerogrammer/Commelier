@@ -70,6 +70,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
+        backgroundColor = SystemColor.black
         topLineView.backgroundColor = SystemColor.gray
 
         typeLabel.font = SystemFont.Title.small

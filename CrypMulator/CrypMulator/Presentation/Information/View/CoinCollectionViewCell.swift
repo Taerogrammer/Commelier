@@ -82,7 +82,7 @@ extension CoinCollectionViewCell {
             rateLabel.textColor = SystemColor.red
             rateLabel.text = "▲ \(rounded)%"
         } else {
-            rateLabel.textColor = SystemColor.blue
+            rateLabel.textColor = SystemColor.green
             rateLabel.text = "▼ \(abs(rounded))%"
         }
     }

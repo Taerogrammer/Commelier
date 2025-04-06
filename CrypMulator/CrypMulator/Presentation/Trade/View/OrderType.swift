@@ -28,7 +28,7 @@ enum OrderType: String {
     var buttonColor: UIColor {
         switch self {
         case .buy: return SystemColor.red
-        case .sell: return SystemColor.blue
+        case .sell: return SystemColor.green
         }
     }
 

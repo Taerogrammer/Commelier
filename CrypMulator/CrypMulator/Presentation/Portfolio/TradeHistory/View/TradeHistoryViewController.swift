@@ -35,6 +35,7 @@ final class TradeHistoryViewController: BaseViewController {
     }
 
     override func configureView() {
+        tableView.backgroundColor = SystemColor.black
         tableView.register(TradeHistoryCell.self, forCellReuseIdentifier: TradeHistoryCell.identifier)
         tableView.dataSource = self
         tableView.separatorStyle = .none

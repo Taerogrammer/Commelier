@@ -127,8 +127,8 @@ extension PortfolioChartView {
 
         // TODO: - 각 코인에 대해 나타내주기
         let chartData: [(String, Double, UIColor)] = [
-            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.blue),
-            (StringLiteral.Portfolio.coin, coinPercent, SystemColor.yellow)
+            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.green),
+            (StringLiteral.Portfolio.coin, coinPercent, SystemColor.gold)
         ]
 
         configureChart(data: chartData)

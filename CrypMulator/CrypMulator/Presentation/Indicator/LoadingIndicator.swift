@@ -19,7 +19,7 @@ final class LoadingIndicator {
             } else {
                 loadingIndicatorView = UIActivityIndicatorView(style: .large)
                 loadingIndicatorView.frame = window.frame
-                loadingIndicatorView.color = SystemColor.blue
+                loadingIndicatorView.color = SystemColor.green
                 window.addSubview(loadingIndicatorView)
             }
 

@@ -130,6 +130,10 @@ struct ChartView: View {
                     }
                 }
             }
+            .chartPlotStyle { plotArea in
+                plotArea.background(Color(SystemColor.black))
+            }
+            .background(Color(SystemColor.black))
         }
     }
 }

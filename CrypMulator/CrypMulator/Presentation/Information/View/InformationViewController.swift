@@ -60,6 +60,7 @@ final class InformationViewController: BaseViewController {
     }
 
     override func configureView() {
+        collectionView.backgroundColor = SystemColor.black
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
         collectionView.register(HoldingCollectionViewCell.self, forCellWithReuseIdentifier: HoldingCollectionViewCell.identifier)
         collectionView.register(InformationCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: InformationCollectionHeaderView.identifier)

@@ -57,6 +57,8 @@ final class TickerListHeaderView: BaseView, ReuseIdentifiable {
     }
 
     override func configureView() {
+        backgroundColor = SystemColor.black
+
         coinLabel.text = StringLiteral.Ticker.coin
         coinLabel.textAlignment = .left
         coinLabel.font = SystemFont.Body.primary

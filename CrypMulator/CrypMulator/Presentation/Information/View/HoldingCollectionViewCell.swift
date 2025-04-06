@@ -40,7 +40,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
         nameLabel.font = SystemFont.Body.boldPrimary
         transactionQuantity.font = SystemFont.Body.content
         transactionQuantity.textColor = SystemColor.gray
-        image.tintColor = SystemColor.blue
+        image.tintColor = SystemColor.green
     }
 
     // 중첩 구독 방지

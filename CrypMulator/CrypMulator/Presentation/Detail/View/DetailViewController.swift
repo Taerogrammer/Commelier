@@ -35,7 +35,7 @@ final class DetailViewController: BaseViewController {
     private let coinMetricsView: CoinMetricsView
 
     private let sellButton = ActionButton(title: StringLiteral.Button.sell,
-                                          backgroundColor: SystemColor.blue)
+                                          backgroundColor: SystemColor.green)
     private let buyButton = ActionButton(title: StringLiteral.Button.buy,
                                          backgroundColor: SystemColor.red)
 

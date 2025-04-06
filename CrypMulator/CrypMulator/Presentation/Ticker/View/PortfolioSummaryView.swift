@@ -45,8 +45,8 @@ final class PortfolioSummaryView: BaseView {
     }
 
     override func configureView() {
-        backgroundColor = SystemColor.whiteGray
-        bottomLine.backgroundColor = SystemColor.blue
+        backgroundColor = SystemColor.gray
+        bottomLine.backgroundColor = SystemColor.green
     }
 
     func update(purchase: Double, eval: Double, profit: Double, yield: Double) {
@@ -71,7 +71,7 @@ final class PortfolioSummaryView: BaseView {
 
         let color: UIColor = {
             guard applyColor else { return .label }
-            return value > 0 ? SystemColor.red : (value < 0 ? SystemColor.blue : .label)
+            return value > 0 ? SystemColor.red : (value < 0 ? SystemColor.green : .label)
         }()
 
         view.updateValue(formattedText, color: color)

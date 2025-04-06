@@ -95,7 +95,7 @@ extension ProfitView {
         profitRateLabel.text = rate
 
         let isProfit = amount.contains(StringLiteral.Operator.plus)
-        let color: UIColor = isProfit ? SystemColor.red : SystemColor.blue
+        let color: UIColor = isProfit ? SystemColor.red : SystemColor.green
 
         profitAmountLabel.textColor = color
         profitRateLabel.textColor = color

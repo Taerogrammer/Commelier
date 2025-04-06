@@ -16,8 +16,8 @@ final class CurrentAssetView: BaseView {
     private let totalAssetAmountLabel = UILabel()
     let chargeButton = ActionButton(
         title: StringLiteral.Button.charge,
-        titleColor: SystemColor.blue,
-        backgroundColor: SystemColor.whiteBlue,
+        titleColor: SystemColor.green,
+        backgroundColor: SystemColor.whiteGreen,
         font: SystemFont.Button.secondary
     )
 
@@ -188,11 +188,11 @@ extension CurrentAssetView {
         let profit = snapshot.holdingProfit
         let profitText = profit.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
         coinProfitAmountLabel.text = profitText
-        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.blue : SystemColor.black)
+        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.green : SystemColor.black)
 
         let yield = snapshot.holdingYieldRate
         let yieldText = yield.formatted() + StringLiteral.Operator.percentage
         coinProfitRatioAmountLabel.text = yieldText
-        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.blue : SystemColor.black)
+        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.green : SystemColor.black)
     }
 }

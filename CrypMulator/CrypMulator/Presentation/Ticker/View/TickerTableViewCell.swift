@@ -52,6 +52,8 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
+        backgroundColor = SystemColor.black
+
         name.font = SystemFont.Body.boldContent
         price.font = SystemFont.Body.content
         changeRate.font = SystemFont.Body.content
@@ -68,14 +70,14 @@ final class TickerTableViewCell: BaseTableViewCell, ReuseIdentifiable {
     func updateColor(number: Double) {
 
         if round(number * 100) / 100 == 0.00 {
-            changeRate.textColor = SystemColor.black
-            changePrice.textColor = SystemColor.black
+            changeRate.textColor = SystemColor.white
+            changePrice.textColor = SystemColor.white
         } else if round(number * 100) / 100 > 0 {
             changeRate.textColor = SystemColor.red
             changePrice.textColor = SystemColor.red
         } else {
-            changeRate.textColor = SystemColor.blue
-            changePrice.textColor = SystemColor.blue
+            changeRate.textColor = SystemColor.green
+            changePrice.textColor = SystemColor.green
         }
     }
 
