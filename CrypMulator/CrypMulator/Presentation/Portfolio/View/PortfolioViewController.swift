@@ -55,18 +55,22 @@ final class PortfolioViewController: BaseViewController {
     }
 
     override func configureView() {
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: SystemColor.gray], for: .normal)
         segmentedControl.setTitleTextAttributes([
-            .font: UIFont.boldSystemFont(ofSize: 12)
+            .foregroundColor: SystemColor.white,
+            .font: SystemFont.Body.primary
+        ], for: .normal)
+
+        segmentedControl.setTitleTextAttributes([
+            .foregroundColor: SystemColor.white,
+            .font: SystemFont.Body.boldPrimary
         ], for: .selected)
+
         segmentedControl.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
         segmentedControl.selectedSegmentIndex = 0
         changeValue(control: segmentedControl)
 
         pageViewController.delegate = self
         pageViewController.dataSource = self
-
-
     }
 
     override func configureNavigation() {
