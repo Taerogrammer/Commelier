@@ -18,20 +18,13 @@ final class PortfolioSummaryView: BaseView {
     private lazy var rightStack = UIStackView(arrangedSubviews: [profitView, yieldView])
     private lazy var mainStack = UIStackView(arrangedSubviews: [leftStack, rightStack])
 
-    private let bottomLine = BaseView()
-
     override func configureHierarchy() {
-        addSubviews([mainStack, bottomLine])
+        addSubviews([mainStack])
     }
 
     override func configureLayout() {
         mainStack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-
-        bottomLine.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalToSuperview()
-            make.height.equalTo(1)
         }
 
         [leftStack, rightStack].forEach {
@@ -46,7 +39,6 @@ final class PortfolioSummaryView: BaseView {
 
     override func configureView() {
         backgroundColor = SystemColor.gray
-        bottomLine.backgroundColor = SystemColor.green
     }
 
     func update(purchase: Double, eval: Double, profit: Double, yield: Double) {
