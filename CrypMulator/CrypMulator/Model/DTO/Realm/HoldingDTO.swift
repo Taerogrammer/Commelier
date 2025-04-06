@@ -13,6 +13,7 @@ struct HoldingDTO {
     let totalBuyPrice: Int64
     let transactionQuantity: Decimal
     let symbol: String
+    let imageURL: String?
 }
 
 extension HoldingDTO {
@@ -28,6 +29,7 @@ extension HoldingDTO {
         object.totalBuyPrice = totalBuyPrice
         object.transactionQuantity = Decimal128(value: transactionQuantity)
         object.symbol = symbol
+        object.imageURL = imageURL
 
         return object
     }
@@ -37,6 +39,7 @@ extension HoldingDTO {
             name: name,
             totalBuyPrice: totalBuyPrice,
             transactionQuantity: transactionQuantity,
-            symbol: symbol)
+            symbol: symbol,
+            imageURL: imageURL)
     }
 }

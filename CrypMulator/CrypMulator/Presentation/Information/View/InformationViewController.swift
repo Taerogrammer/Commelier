@@ -19,7 +19,7 @@ struct InformationSection {
 
 enum InformationItem {
     case coins(CoinRankingViewData)
-    case favorite(OldFavoriteCoin)
+    case holding(HoldingEntity)
 }
 
 struct CoinRankingViewData: Equatable {
@@ -45,7 +45,7 @@ final class InformationViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: createCompositionalLayout())
-    private let viewModel = InformationViewModel(repository: OldFavoriteCoinRepository())
+    private let viewModel = InformationViewModel(repository: HoldingRepository())
     private var disposeBag = DisposeBag()
     private var dataSource: RxCollectionViewSectionedReloadDataSource<InformationSection>!
 
@@ -61,7 +61,7 @@ final class InformationViewController: BaseViewController {
 
     override func configureView() {
         collectionView.register(CoinCollectionViewCell.self, forCellWithReuseIdentifier: CoinCollectionViewCell.identifier)
-        collectionView.register(FavoriteCoinCollectionViewCell.self, forCellWithReuseIdentifier: FavoriteCoinCollectionViewCell.identifier)
+        collectionView.register(HoldingCollectionViewCell.self, forCellWithReuseIdentifier: HoldingCollectionViewCell.identifier)
         collectionView.register(InformationCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: InformationCollectionHeaderView.identifier)
         collectionView.showsVerticalScrollIndicator = false
         configureDataSource()
@@ -73,6 +73,7 @@ final class InformationViewController: BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.reloadHoldingSection()
         viewModel.getDataByTimer()
     }
 
@@ -146,7 +147,7 @@ extension InformationViewController {
 
                 return section
 
-            case 1: // 관심 목록
+            case 1: // 보유 목록
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(56))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
@@ -180,17 +181,13 @@ extension InformationViewController {
 
                     return cell
 
-                case .favorite(let coin):
+                case .holding(let coin):
                     let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: FavoriteCoinCollectionViewCell.identifier,
+                        withReuseIdentifier: HoldingCollectionViewCell.identifier,
                         for: indexPath
-                    ) as! FavoriteCoinCollectionViewCell
+                    ) as! HoldingCollectionViewCell
 
-                    let vm = SearchCoinCollectionCellViewModel(coinData:
-                                                                CoinSearchData(id: coin.id, name: "", symbol: coin.symbol, market_cap_rank: nil, thumb: coin.image)
-                    )
-                    cell.configureCell(with: vm.coinData)
-                    cell.bind(with: vm)
+                    cell.configureCell(with: coin)
 
                     return cell
                 }
@@ -200,7 +197,7 @@ extension InformationViewController {
                         ofKind: kind,
                         withReuseIdentifier: InformationCollectionHeaderView.identifier,
                         for: indexPath) as! InformationCollectionHeaderView
-                header.configureTitle(with: dataSource[indexPath.section].title, updateTime: dataSource[indexPath.section].updated)
+                header.configureTitle(with: dataSource[indexPath.section].title)
 
                 return header
             }

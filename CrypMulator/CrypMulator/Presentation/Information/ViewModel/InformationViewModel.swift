@@ -13,15 +13,19 @@ final class InformationViewModel: ViewModel {
     private let disposeBag = DisposeBag()
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
-    let result = PublishRelay<CoingeckoTrendingResponse>()
-    private let repository: OldFavoriteCoinRepositoryProtocol
 
-    init(repository: OldFavoriteCoinRepositoryProtocol) {
+    let result = PublishRelay<CoingeckoTrendingResponse>()
+    private let holdingSectionRelay = BehaviorRelay<InformationSection>(
+        value: InformationSection(title: StringLiteral.Information.holding, updated: nil, items: [])
+    )
+
+    private let repository: HoldingRepositoryProtocol
+
+    init(repository: HoldingRepositoryProtocol) {
         self.repository = repository
     }
 
-    struct Input {
-    }
+    struct Input { }
 
     struct Output {
         let sectionResult: Observable<[InformationSection]>
@@ -31,23 +35,27 @@ final class InformationViewModel: ViewModel {
     func transform(input: Input) -> Output {
         getData()
         getDataByTimer()
+        reloadHoldingSection() // 초기 로딩
 
-        let sections = result
-            .map { response -> [InformationSection] in
-                let coins = response.coins.map { coin in
-                    InformationItem.coins(CoinRankingViewData(
-                        id: coin.item.id,
-                        rank: "\(coin.item.score + 1)",
-                        imageURL: coin.item.thumb,
-                        symbol: coin.item.symbol,
-                        name: coin.item.name,
-                        rate: coin.item.data.price_change_percentage_24h.krw))
-                }
+        // 코인 트렌딩 스트림
+        let coinsObservable = result.map { response -> [InformationItem] in
+            return response.coins.map { coin in
+                InformationItem.coins(CoinRankingViewData(
+                    id: coin.item.id,
+                    rank: "\(coin.item.score + 1)",
+                    imageURL: coin.item.thumb,
+                    symbol: coin.item.symbol,
+                    name: coin.item.name,
+                    rate: coin.item.data.price_change_percentage_24h.krw))
+            }
+        }
 
-                let favoriteSection = self.loadFavoriteSection()
-
+        // 두 섹션을 combineLatest로 병합
+        let sections = Observable.combineLatest(coinsObservable, holdingSectionRelay)
+            .map { coins, holding in
                 return [
-                    InformationSection(title: StringLiteral.Information.popular, updated: .convertUpdateDate(date: Date()), items: coins), favoriteSection
+                    InformationSection(title: StringLiteral.Information.popular, updated: .convertUpdateDate(date: Date()), items: coins),
+                    holding
                 ]
             }
 
@@ -55,11 +63,23 @@ final class InformationViewModel: ViewModel {
                       error: error.asObservable())
     }
 
-    private func getData() {
+    func reloadHoldingSection() {
+        let holdings = repository.getHolding().map { $0.toEntity() }
+        let items = holdings.map { InformationItem.holding($0) }
+        let section = InformationSection(
+            title: StringLiteral.Information.holding,
+            updated: nil,
+            items: items
+        )
+        holdingSectionRelay.accept(section)
+    }
+
+    func getData() {
         LoadingIndicator.showLoading()
         NetworkManager.shared.getItem(
             api: CoingeckoRouter.getTrending,
-            type: CoingeckoTrendingResponse.self)
+            type: CoingeckoTrendingResponse.self
+        )
         .subscribe(with: self) { owner, value in
             owner.result.accept(value)
             LoadingIndicator.hideLoading()
@@ -83,13 +103,16 @@ final class InformationViewModel: ViewModel {
     }
 
     private func loadFavoriteSection() -> InformationSection {
-        let favorites = repository.getAll()
-        let items = favorites.map { InformationItem.favorite($0) }
+        let holdings: [HoldingEntity] = repository.getHolding().map { $0.toEntity() }
+
+        let items: [InformationItem] = holdings.map { holding in
+            return InformationItem.holding(holding)
+        }
 
         return InformationSection(
-            title: StringLiteral.Information.favorite,
+            title: StringLiteral.Information.holding,
             updated: nil,
-            items: Array(items)
+            items: items
         )
     }
 }

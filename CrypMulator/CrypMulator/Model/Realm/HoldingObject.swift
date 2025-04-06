@@ -13,6 +13,7 @@ final class HoldingObject: Object {
     @Persisted var totalBuyPrice: Int64
     @Persisted var transactionQuantity: Decimal128
     @Persisted var symbol: String
+    @Persisted var imageURL: String?
 
     var transactionPrice: Int64 {
         Decimal128.toInt64(transactionQuantity) * totalBuyPrice
@@ -25,6 +26,7 @@ extension HoldingObject {
             name: name,
             totalBuyPrice: totalBuyPrice,
             transactionQuantity: transactionQuantity.decimalValue,
-            symbol: symbol)
+            symbol: symbol,
+            imageURL: imageURL)
     }
 }

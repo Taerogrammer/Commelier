@@ -67,7 +67,7 @@ enum StringLiteral {
 
     enum Information {
         static let popular = "인기 검색어"
-        static let favorite = "관심 목록"
+        static let holding = "보유 목록"
         static let graph = "그래프"
         static let orderBook = "호가"
         static let summary = "종목정보"
