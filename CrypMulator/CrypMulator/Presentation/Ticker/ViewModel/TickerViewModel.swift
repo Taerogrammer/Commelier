@@ -10,10 +10,17 @@ import RxSwift
 
 final class TickerViewModel: ViewModel {
     let tickerListViewModel: TickerListViewModel
+    let portfolioUseCase: PortfolioUseCaseProtocol
+    let webSocket: WebSocketProvider
+
     private let disposeBag = DisposeBag()
 
-    init(tickerListViewModel: TickerListViewModel) {
+    init(tickerListViewModel: TickerListViewModel,
+         portfolioUseCase: PortfolioUseCaseProtocol,
+         webSocket: WebSocketProvider) {
         self.tickerListViewModel = tickerListViewModel
+        self.portfolioUseCase = portfolioUseCase
+        self.webSocket = webSocket
     }
 
     struct Input {

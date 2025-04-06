@@ -66,3 +66,14 @@ final class TickerListHeaderView: BaseView, ReuseIdentifiable {
         bottomLine.backgroundColor = SystemColor.gray
     }
 }
+
+extension TickerListHeaderView {
+    func updatePortfolioSummary(from snapshot: AssetSnapshotEntity) {
+        portfolioSummaryView.update(
+            purchase: snapshot.totalBuyValue.doubleValue,
+            eval: snapshot.totalCoinValue.doubleValue,
+            profit: snapshot.holdingProfit.doubleValue,
+            yield: snapshot.holdingYieldRate.doubleValue
+        )
+    }
+}
