@@ -197,7 +197,7 @@ extension InformationViewController {
                         ofKind: kind,
                         withReuseIdentifier: InformationCollectionHeaderView.identifier,
                         for: indexPath) as! InformationCollectionHeaderView
-                header.configureTitle(with: dataSource[indexPath.section].title, updateTime: dataSource[indexPath.section].updated)
+                header.configureTitle(with: dataSource[indexPath.section].title)
 
                 return header
             }

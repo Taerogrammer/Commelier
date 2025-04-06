@@ -10,7 +10,6 @@ import SnapKit
 
 final class InformationCollectionHeaderView: UICollectionReusableView, ReuseIdentifiable {
     private let titleLabel = UILabel()
-    private let updateLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +27,7 @@ final class InformationCollectionHeaderView: UICollectionReusableView, ReuseIden
 // MARK: - configure view
 extension InformationCollectionHeaderView: ViewConfiguration {
     func configureHierarchy() {
-        addSubviews([titleLabel, updateLabel])
+        addSubviews([titleLabel])
     }
 
     func configureLayout() {
@@ -36,22 +35,14 @@ extension InformationCollectionHeaderView: ViewConfiguration {
             make.leading.equalTo(safeAreaLayoutGuide)
             make.centerY.equalTo(safeAreaLayoutGuide)
         }
-        updateLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
-            make.centerY.equalTo(safeAreaLayoutGuide)
-        }
     }
 
     func configureView() {
         titleLabel.font = SystemFont.Title.small
         titleLabel.textColor = SystemColor.black
-        updateLabel.font = SystemFont.Body.content
-        updateLabel.textColor = SystemColor.gray
     }
 
-    func configureTitle(with title: String, updateTime: String?) {
+    func configureTitle(with title: String) {
         titleLabel.text = title
-        guard let updateTime = updateTime else { return }
-        updateLabel.text = updateTime
     }
 }
