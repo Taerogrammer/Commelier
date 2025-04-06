@@ -87,7 +87,7 @@ final class InformationViewModel: ViewModel {
         let items = favorites.map { InformationItem.favorite($0) }
 
         return InformationSection(
-            title: StringLiteral.Information.favorite,
+            title: StringLiteral.Information.holding,
             updated: nil,
             items: Array(items)
         )

@@ -146,7 +146,7 @@ extension InformationViewController {
 
                 return section
 
-            case 1: // 관심 목록
+            case 1: // 보유 목록
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(56))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
