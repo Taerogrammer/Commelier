@@ -12,6 +12,7 @@ struct HoldingEntity {
     let totalBuyPrice: Int64
     let transactionQuantity: Decimal
     let symbol: String
+    let imageURL: String?
 }
 
 extension HoldingEntity {
@@ -20,6 +21,7 @@ extension HoldingEntity {
             name: name,
             totalBuyPrice: totalBuyPrice,
             transactionQuantity: transactionQuantity,
-            symbol: symbol)
+            symbol: symbol,
+            imageURL: imageURL)
     }
 }

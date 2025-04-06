@@ -33,10 +33,12 @@ extension TradeEntity {
     func toHoldingDTO() -> HoldingDTO {
         let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
         let symbol = String(name[symbolStartIndex...])
+        let imageURL = ImageURLMapper.imageURL(for: name)
         return HoldingDTO(
             name: name,
             totalBuyPrice: price,
             transactionQuantity: transactionQuantity,
-            symbol: symbol)
+            symbol: symbol,
+            imageURL: imageURL)
     }
 }

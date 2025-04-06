@@ -14,9 +14,9 @@ final class InformationViewModel: ViewModel {
     private let error = PublishRelay<APIError>()
     private var disposable: Disposable?
     let result = PublishRelay<CoingeckoTrendingResponse>()
-    private let repository: OldFavoriteCoinRepositoryProtocol
+    private let repository: HoldingRepositoryProtocol
 
-    init(repository: OldFavoriteCoinRepositoryProtocol) {
+    init(repository: HoldingRepositoryProtocol) {
         self.repository = repository
     }
 
@@ -83,13 +83,16 @@ final class InformationViewModel: ViewModel {
     }
 
     private func loadFavoriteSection() -> InformationSection {
-        let favorites = repository.getAll()
-        let items = favorites.map { InformationItem.favorite($0) }
+        let holdings: [HoldingEntity] = repository.getHolding().map { $0.toEntity() }
+
+        let items: [InformationItem] = holdings.map { holding in
+            return InformationItem.holding(holding)
+        }
 
         return InformationSection(
             title: StringLiteral.Information.holding,
             updated: nil,
-            items: Array(items)
+            items: items
         )
     }
 }
