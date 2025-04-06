@@ -61,8 +61,8 @@ final class CoinLivePriceView: BaseView {
 // MARK: - configure
 extension CoinLivePriceView {
     private func configure(with entity: LivePriceEntity) {
-        priceLabel.text = StringLiteral.Currency.wonMark + entity.price.description
-        changePriceLabel.text = entity.signedChangePrice.description
+        priceLabel.text = StringLiteral.Currency.wonMark + Int64(entity.price).formattedWithComma
+        changePriceLabel.text = Int64(entity.signedChangePrice).formattedWithComma
         changeRate.text = entity.priceChangeState.symbol +  entity.signedChangeRate.description + StringLiteral.Operator.percentage
         changeRate.textColor = entity.priceChangeState.color
     }
