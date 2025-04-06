@@ -70,15 +70,16 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
+        backgroundColor = SystemColor.black
         topLineView.backgroundColor = SystemColor.gray
 
         typeLabel.font = SystemFont.Title.small
         pairLabel.font = SystemFont.Body.small
-        pairLabel.textColor = SystemColor.gray
+        pairLabel.textColor = SystemColor.whiteGray
 
         [priceTitleLabel, amountTitleLabel, totalTitleLabel, dateTitleLabel].forEach {
             $0.font = SystemFont.Body.content
-            $0.textColor = SystemColor.black
+            $0.textColor = SystemColor.white
         }
 
         [priceValueLabel, amountValueLabel, totalValueLabel, dateValueLabel].forEach {
@@ -86,7 +87,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
             $0.textAlignment = .right
         }
 
-        dateValueLabel.textColor = SystemColor.gray
+        dateValueLabel.textColor = SystemColor.whiteGray
 
         leftStackView.axis = .vertical
         leftStackView.spacing = 4

@@ -44,17 +44,28 @@ final class PortfolioChartView: BaseView {
 
     override func configureView() {
         titleLabel.text = StringLiteral.Portfolio.portfolioRatio
+        titleLabel.textColor = SystemColor.white
         titleLabel.font = SystemFont.Title.large
 
         pieChartView.highlightPerTapEnabled = false
         pieChartView.usePercentValuesEnabled = true
         pieChartView.drawHoleEnabled = true
-        pieChartView.holeRadiusPercent = 0.5
+        pieChartView.holeRadiusPercent = 0.4
         pieChartView.transparentCircleRadiusPercent = 0
         pieChartView.drawEntryLabelsEnabled = false
         pieChartView.legend.enabled = false
-        pieChartView.centerText = StringLiteral.Portfolio.chartText
+        pieChartView.holeColor = SystemColor.whiteGreen
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
 
+        let centerText = NSAttributedString(
+            string: StringLiteral.Portfolio.chartText,
+            attributes: [
+                .foregroundColor: SystemColor.white,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+        pieChartView.centerAttributedText = centerText
         legendStackView.axis = .vertical
         legendStackView.spacing = 12
         legendStackView.alignment = .center
@@ -92,10 +103,12 @@ extension PortfolioChartView {
 
         let nameLabel = UILabel()
         nameLabel.text = name
+        nameLabel.textColor = SystemColor.white
         nameLabel.font = SystemFont.Body.content
 
         let percentLabel = UILabel()
         percentLabel.text = String(format: "%.2f%%", percent)
+        percentLabel.textColor = SystemColor.white
         percentLabel.font = SystemFont.Body.content
         percentLabel.textAlignment = .right
 
@@ -127,8 +140,8 @@ extension PortfolioChartView {
 
         // TODO: - 각 코인에 대해 나타내주기
         let chartData: [(String, Double, UIColor)] = [
-            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.blue),
-            (StringLiteral.Portfolio.coin, coinPercent, SystemColor.yellow)
+            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.darkGreen),
+            (StringLiteral.Portfolio.coin, coinPercent, SystemColor.bronze)
         ]
 
         configureChart(data: chartData)

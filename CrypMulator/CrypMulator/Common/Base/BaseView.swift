@@ -10,6 +10,7 @@ import UIKit
 class BaseView: UIView, ViewConfiguration {
     override init(frame: CGRect) {
         super.init(frame: .zero)
+//        backgroundColor = SystemColor.black
         configureHierarchy()
         configureLayout()
         configureView()

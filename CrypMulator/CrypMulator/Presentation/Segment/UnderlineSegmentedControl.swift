@@ -15,7 +15,7 @@ final class UnderlineSegmentedControl: UISegmentedControl {
         let yPosition = self.bounds.size.height - 1.0
         let frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         let view = UIView(frame: frame)
-        view.backgroundColor = SystemColor.black
+        view.backgroundColor = SystemColor.whiteGray
         self.addSubview(view)
         return view
     }()

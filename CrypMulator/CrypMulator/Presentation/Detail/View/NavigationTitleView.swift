@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
+// TODO: - 숫자 Int64 + 쉼표로 바꾸기
 final class NavigationTitleView: BaseView {
     private let stackView = UIStackView()
     let image = UIImageView()
@@ -40,7 +41,7 @@ final class NavigationTitleView: BaseView {
         image.layer.cornerRadius = 14
 
         marketLabel.font = SystemFont.Title.small
-        marketLabel.textColor = SystemColor.black
+        marketLabel.textColor = SystemColor.white
 
         stackView.axis = .horizontal
         stackView.spacing = 8
@@ -49,14 +50,6 @@ final class NavigationTitleView: BaseView {
 
     private func configure(entity: NavigationTitleEntity) {
         marketLabel.text = entity.title
-
-        if let urlString = entity.imageURLString,
-           let url = URL(string: urlString) {
-            image.kf.setImage(
-                with: url,
-                placeholder: UIImage(systemName: "bitcoinsign.circle.fill"))
-        } else {
-            image.image = UIImage(systemName: "bitcoinsign.circle.fill")
-        }
+        image.setCoinImage(with: entity.imageURLString)
     }
 }

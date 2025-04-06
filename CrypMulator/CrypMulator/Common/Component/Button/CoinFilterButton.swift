@@ -55,19 +55,19 @@ final class CoinFilterButton: BaseView {
             title.font = SystemFont.Body.primary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
-            upImage.tintColor = SystemColor.gray
-            downImage.tintColor = SystemColor.gray
+            upImage.tintColor = SystemColor.white
+            downImage.tintColor = SystemColor.white
         case .upClicked:
             title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
             upImage.tintColor = SystemColor.black
-            downImage.tintColor = SystemColor.gray
+            downImage.tintColor = SystemColor.white
         case .downClicked:
             title.font = SystemFont.Body.boldPrimary
             upImage.image = SystemIcon.arrowUp
             downImage.image = SystemIcon.arrowDown
-            upImage.tintColor = SystemColor.gray
+            upImage.tintColor = SystemColor.white
             downImage.tintColor = SystemColor.black
         }
     }

@@ -16,8 +16,8 @@ final class CurrentAssetView: BaseView {
     private let totalAssetAmountLabel = UILabel()
     let chargeButton = ActionButton(
         title: StringLiteral.Button.charge,
-        titleColor: SystemColor.blue,
-        backgroundColor: SystemColor.whiteBlue,
+        titleColor: SystemColor.white,
+        backgroundColor: SystemColor.green,
         font: SystemFont.Button.secondary
     )
 
@@ -111,9 +111,11 @@ final class CurrentAssetView: BaseView {
     override func configureView() {
         /// Title
         titleLabel.text = StringLiteral.Portfolio.assetOverview
+        titleLabel.textColor = SystemColor.white
         titleLabel.font = SystemFont.Title.large
 
         totalAssetTitleLabel.text = StringLiteral.Portfolio.totalAsset
+        totalAssetTitleLabel.textColor = SystemColor.white
         totalAssetTitleLabel.font = SystemFont.Title.small
 
         totalAssetAmountLabel.text = "0 " + StringLiteral.Currency.won
@@ -142,36 +144,38 @@ final class CurrentAssetView: BaseView {
 
         /// Real asset
         realCurrencyLabel.text = StringLiteral.Currency.krw
+        realCurrencyLabel.textColor = SystemColor.white
         realCurrencyLabel.font = SystemFont.Body.boldPrimary
 
-        // TODO: - 충전 완료 시 화면에 바로 보여줘야 함
         realCurrencyAmountLabel.text = "0 " + StringLiteral.Currency.krw
+        realCurrencyAmountLabel.textColor = SystemColor.white
         realCurrencyAmountLabel.font = SystemFont.Title.small
 
         /// Coin asset
         coinCurrencyLabel.text = StringLiteral.Portfolio.coinAsset
+        coinCurrencyLabel.textColor = SystemColor.white
         coinCurrencyLabel.font = SystemFont.Body.boldPrimary
 
         coinCurrencyAmountLabel.text = "0 " + StringLiteral.Currency.krw
+        coinCurrencyAmountLabel.textColor = SystemColor.white
         coinCurrencyAmountLabel.font = SystemFont.Title.small
-        coinCurrencyAmountLabel.textColor = SystemColor.black
 
         coinProfitLabel.text = StringLiteral.Portfolio.profitLoss
+        coinProfitLabel.textColor = SystemColor.white
         coinProfitLabel.font = SystemFont.Body.boldContent
-        coinProfitLabel.textColor = SystemColor.gray
 
         coinProfitAmountLabel.text = "0 " + StringLiteral.Currency.krw
         coinProfitAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitAmountLabel.textColor = SystemColor.black
+        coinProfitAmountLabel.textColor = SystemColor.white
         coinProfitAmountLabel.textAlignment = .right
 
         coinProfitRatioLabel.text = StringLiteral.Portfolio.yieldRate
+        coinProfitRatioLabel.textColor = SystemColor.white
         coinProfitRatioLabel.font = SystemFont.Body.boldContent
-        coinProfitRatioLabel.textColor = SystemColor.gray
 
         coinProfitRatioAmountLabel.text = "0 %"
         coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitRatioAmountLabel.textColor = SystemColor.black
+        coinProfitRatioAmountLabel.textColor = SystemColor.white
         coinProfitRatioAmountLabel.textAlignment = .right
     }
 }
@@ -188,11 +192,11 @@ extension CurrentAssetView {
         let profit = snapshot.holdingProfit
         let profitText = profit.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
         coinProfitAmountLabel.text = profitText
-        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.blue : SystemColor.black)
+        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.green : SystemColor.white)
 
         let yield = snapshot.holdingYieldRate
         let yieldText = yield.formatted() + StringLiteral.Operator.percentage
         coinProfitRatioAmountLabel.text = yieldText
-        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.blue : SystemColor.black)
+        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.green : SystemColor.white)
     }
 }

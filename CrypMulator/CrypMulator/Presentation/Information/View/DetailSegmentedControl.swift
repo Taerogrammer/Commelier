@@ -52,7 +52,7 @@ final class CustomSegmentedControl: BaseView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 
-        selectorView.backgroundColor = SystemColor.black
+        selectorView.backgroundColor = SystemColor.whiteGray
         selectorView.layer.cornerRadius = 2
         clipsToBounds = true
     }
@@ -64,8 +64,6 @@ final class CustomSegmentedControl: BaseView {
         for (index, title) in items.enumerated() {
             let button = UIButton(type: .system)
             button.setTitle(title, for: .normal)
-            button.setTitleColor(SystemColor.gray, for: .normal)
-            button.titleLabel?.font = SystemFont.Body.boldPrimary
             button.tag = index
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             buttons.append(button)
@@ -83,7 +81,7 @@ final class CustomSegmentedControl: BaseView {
 
         selectorView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
-            make.height.equalTo(2)
+            make.height.equalTo(1)
             make.width.equalToSuperview().multipliedBy(1.0 / CGFloat(items.count))
         }
 
@@ -109,7 +107,11 @@ final class CustomSegmentedControl: BaseView {
 
     private func updateButtonAppearance() {
         for (index, button) in buttons.enumerated() {
-            button.setTitleColor(index == selectedIndex ? .black : .gray, for: .normal)
+            let isSelected = index == selectedIndex
+            button.setTitleColor(isSelected ? SystemColor.white : SystemColor.whiteGray, for: .normal)
+            button.titleLabel?.font = isSelected
+                ? SystemFont.Body.boldPrimary
+                : SystemFont.Body.primary
         }
     }
 

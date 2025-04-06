@@ -44,8 +44,9 @@ final class PortfolioMetricView: BaseView {
 
     override func configureView() {
         contentLabel.font = SystemFont.Body.primary
-        contentLabel.textColor = SystemColor.black
-        valueLabel.font = SystemFont.Body.primary
+        contentLabel.textColor = SystemColor.white
+        valueLabel.font = SystemFont.Body.boldPrimary
+        valueLabel.textColor = SystemColor.white
     }
 
     func updateValue(_ value: Double) {

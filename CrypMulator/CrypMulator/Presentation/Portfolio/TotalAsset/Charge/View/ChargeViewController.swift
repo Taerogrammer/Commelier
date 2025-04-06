@@ -30,7 +30,7 @@ final class ChargeViewController: BaseViewController {
     private let amountLabel = UILabel()
     private let unitLabel = UILabel()
     private let chargeButton = ActionButton(title: StringLiteral.Button.charge,
-                                            backgroundColor: SystemColor.blue)
+                                            backgroundColor: SystemColor.green)
 
     private lazy var buttonStack = UIStackView(arrangedSubviews: amountButtons)
     private lazy var amountContainer = UIStackView(arrangedSubviews: [amountLabel, unitLabel])

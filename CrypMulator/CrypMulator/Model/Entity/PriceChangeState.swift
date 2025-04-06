@@ -16,7 +16,7 @@ enum PriceChangeState: String, Decodable {
     var color: UIColor {
         switch self {
         case .rise: return SystemColor.red
-        case .fall: return SystemColor.blue
+        case .fall: return SystemColor.green
         case .even: return SystemColor.gray
         }
     }
