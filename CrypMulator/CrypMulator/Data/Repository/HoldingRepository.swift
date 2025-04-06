@@ -11,6 +11,11 @@ import RealmSwift
 final class HoldingRepository: HoldingRepositoryProtocol {
     private let realm = try! Realm()
 
+    func getHolding() -> [HoldingDTO] {
+        let objects = realm.objects(HoldingObject.self)
+        return objects.map { $0.toDTO() }
+    }
+
     func getHoldingMarket(name: String) -> HoldingDTO? {
         let object = realm.objects(HoldingObject.self)
             .filter("name == %@", name, name)
@@ -22,37 +27,56 @@ final class HoldingRepository: HoldingRepositoryProtocol {
     func saveTradeResult(_ entity: TradeEntity) {
         do {
             try realm.write {
-                let holdingExist = realm.objects(HoldingObject.self)
-                    .filter("name == %@", entity.name)
-                    .first
-
-                // 보유 목록이 존재한다면
-                if let holdingExist = holdingExist {
-                    if entity.buySell.lowercased() == "buy" {
-                        // 매수인 경우: 총 매수 금액(TotalBuyPrice) 및 수량(TransactionQuantity) 증가
-                        holdingExist.totalBuyPrice += entity.price
-                        holdingExist.transactionQuantity +=  Decimal128(value: entity.transactionQuantity)
-                    } else {
-                        // 매수인 경우: 총 매수 금액(TotalBuyPrice) 및 수량(TransactionQuantity) 감소
-                        holdingExist.totalBuyPrice -= entity.price
-                        holdingExist.transactionQuantity -= Decimal128(value: entity.transactionQuantity)
-
-                        // TODO: - 조금 남아있을 수 있는 경우 처리하기 (판매해도 DB에 찌꺼기? 저장되어있음)
-                        let epsilon = Decimal128(0.00000001) // 충분히 작은 값 설정
-                        // 수량이 0 이하가 되면 해당 보유 자산 삭제
-                        if holdingExist.transactionQuantity <= 0 || holdingExist.transactionQuantity < epsilon || holdingExist.totalBuyPrice <= 0 {
-                            realm.delete(holdingExist)
-                        }
-                    }
-                } else {    // 보유 자산이 없는 경우
-                    if entity.buySell.lowercased() == "buy" {
-                        realm.add(entity.toHoldingDTO().toObject())
-                        print("✅ 저장 완료: \(entity.toHoldingDTO())")
-                    }
-                }
+                if entity.buySell.lowercased() == "buy" { handleBuy(entity) }
+                else { handleSell(entity) }
             }
         } catch {
             print("❌ Realm 저장 실패: \(error)")
+        }
+    }
+
+    private func handleBuy(_ entity: TradeEntity) {
+        if let holding = realm.object(ofType: HoldingObject.self, forPrimaryKey: entity.name) {
+            holding.totalBuyPrice += entity.price
+            holding.transactionQuantity += Decimal128(value: entity.transactionQuantity)
+        } else {
+            realm.add(entity.toHoldingDTO().toObject())
+            print("✅ 새 보유 생성: \(entity.name)")
+        }
+    }
+
+    private func handleSell(_ entity: TradeEntity) {
+        guard let holding = realm.object(ofType: HoldingObject.self, forPrimaryKey: entity.name) else { return }
+
+        // 매도 수량
+        let quantitySold = entity.transactionQuantity
+        // 판매 후 남은 수량 (기존 수량 - 매도 수량)
+        let remainingQuantity = holding.transactionQuantity.toDecimal() - quantitySold
+
+        // 기존 평균 단가
+        let avgBuyPrice = Int64.toDecimal(holding.totalBuyPrice) / holding.transactionQuantity.toDecimal()
+
+        // 남은 수량이 없다면 Realm에서 삭제
+        if remainingQuantity <= 0 {
+            print("🗑 전체 매도: \(entity.name)")
+            realm.delete(holding)
+        } else {
+            // 남은 수량(기존 수량 - 매도 수량)을 반영한 구매 총합
+            let remainingTotalBuyPrice = avgBuyPrice * remainingQuantity
+
+            holding.transactionQuantity = Decimal128(value: remainingQuantity)
+            holding.totalBuyPrice = remainingTotalBuyPrice.toInt64Rounded()
+
+            // ✅ 로그 출력
+            print("📉 매도 후 남은 수량: \(remainingQuantity)")
+            print("💰 매도 후 남은 총 매수금액: \(remainingTotalBuyPrice)")
+            print("holding.totalBuyPrice:", holding.totalBuyPrice)
+
+            // 방어 로직
+            let epsilon = Decimal128(0.00000001)
+            if holding.transactionQuantity < epsilon || holding.totalBuyPrice <= 1 {
+                realm.delete(holding)
+            }
         }
     }
 }

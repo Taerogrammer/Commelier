@@ -20,6 +20,10 @@ enum FormatUtility {
         return formatter.string(from: nsNumber) ?? "\(decimal)"
     }
 
+    static func decimalToFullString(_ decimal: Decimal) -> String {
+        return NSDecimalNumber(decimal: decimal).stringValue
+    }
+
     static func formatAmount(_ number: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -88,7 +92,10 @@ enum FormatUtility {
         return String(name[symbolStartIndex...])
     }
 
-    static func decimalToFullString(_ decimal: Decimal) -> String {
-        return NSDecimalNumber(decimal: decimal).stringValue
-    }
+    static let decimalStyle: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        return formatter
+    }()
 }

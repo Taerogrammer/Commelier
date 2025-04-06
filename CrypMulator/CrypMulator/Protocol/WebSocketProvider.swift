@@ -15,4 +15,5 @@ protocol WebSocketProvider {
     func connect()
     func disconnect()
     func send(market: String)
+    func send(markets: [String])
 }

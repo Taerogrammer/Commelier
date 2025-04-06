@@ -13,6 +13,11 @@ struct TradeEntity {
     let transactionQuantity: Decimal
     let price: Int64
     let timestamp: Int64
+
+    var unitPrice: Decimal {
+        guard transactionQuantity > 0 else { return 0 }
+        return Int64.toDecimal(price) / transactionQuantity
+    }
 }
 
 extension TradeEntity {

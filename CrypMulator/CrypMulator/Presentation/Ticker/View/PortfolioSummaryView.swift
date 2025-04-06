@@ -50,9 +50,31 @@ final class PortfolioSummaryView: BaseView {
     }
 
     func update(purchase: Double, eval: Double, profit: Double, yield: Double) {
-        purchaseView.updateValue(purchase)
-        evalView.updateValue(eval)
-        profitView.updateValue(profit)
-        yieldView.updateValueFormatted(yield)
+        setFormattedValue(for: purchaseView, value: purchase)
+        setFormattedValue(for: evalView, value: eval)
+        setFormattedValue(for: profitView, value: profit, applyColor: true)
+        setFormattedValue(for: yieldView, value: yield, isPercent: true, applyColor: true)
     }
+
+    private func setFormattedValue(
+        for view: PortfolioMetricView,
+        value: Double,
+        isPercent: Bool = false,
+        applyColor: Bool = false
+    ) {
+        let formattedText: String
+        if isPercent {
+            formattedText = String(format: "%.2f%%", value)
+        } else {
+            formattedText = Int64(value).formattedWithComma
+        }
+
+        let color: UIColor = {
+            guard applyColor else { return .label }
+            return value > 0 ? SystemColor.red : (value < 0 ? SystemColor.blue : .label)
+        }()
+
+        view.updateValue(formattedText, color: color)
+    }
+
 }

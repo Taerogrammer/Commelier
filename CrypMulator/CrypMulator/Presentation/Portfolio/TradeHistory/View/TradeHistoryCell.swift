@@ -58,6 +58,10 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
             make.bottom.equalTo(bottomLineView.snp.top)
         }
 
+        leftStackView.snp.makeConstraints { make in
+            make.width.equalTo(120) // 원하는 고정값 (조절 가능)
+        }
+
         bottomLineView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
             make.height.equalTo(0.5)
@@ -102,38 +106,23 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
 
 // MARK: - configure
 extension TradeHistoryCell {
-    func configure(with model: TradeHistoryModel) {
-        typeLabel.text = model.type == .buy ? "매수" : "매도"
-        typeLabel.textColor = model.type == .buy ? SystemColor.red : SystemColor.blue
+    func configure(with model: TradeHistoryEntity) {
+        typeLabel.text = model.type.text
+        typeLabel.textColor = model.type.color
 
-        pairLabel.text = model.pair
+        pairLabel.text = model.market
 
-        priceTitleLabel.text = "체결 가격"
+        priceTitleLabel.text = StringLiteral.TradeHistory.price
         priceValueLabel.text = model.price
 
-        amountTitleLabel.text = "체결 수량"
+        amountTitleLabel.text = StringLiteral.TradeHistory.quantity
         amountValueLabel.text = model.amount
-        amountValueLabel.textColor = model.type == .buy ? SystemColor.red : SystemColor.blue
+        amountValueLabel.textColor = model.type.color
 
-        totalTitleLabel.text = "거래 금액"
+        totalTitleLabel.text = StringLiteral.TradeHistory.coinPrice
         totalValueLabel.text = model.total
 
-        dateTitleLabel.text = "체결 일시"
+        dateTitleLabel.text = StringLiteral.TradeHistory.date
         dateValueLabel.text = model.date
     }
-
-}
-
-enum TradeType {
-    case buy
-    case sell
-}
-
-struct TradeHistoryModel {
-    let type: TradeType
-    let pair: String
-    let price: String
-    let amount: String
-    let total: String
-    let date: String
 }

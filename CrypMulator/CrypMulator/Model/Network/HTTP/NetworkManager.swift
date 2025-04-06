@@ -67,7 +67,7 @@ final class NetworkManager {
 //                    debugPrint(response.result)
                 }
             return Disposables.create {
-                print("끝")
+//                print("끝")
             }
         }
     }

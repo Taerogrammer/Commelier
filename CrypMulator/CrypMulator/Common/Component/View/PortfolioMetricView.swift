@@ -55,4 +55,9 @@ final class PortfolioMetricView: BaseView {
     func updateValueFormatted(_ value: Double) {
         valueLabel.text = String(format: "%.2f%%", value)
     }
+
+    func updateValue(_ text: String, color: UIColor) {
+        valueLabel.text = text
+        valueLabel.textColor = color
+    }
 }

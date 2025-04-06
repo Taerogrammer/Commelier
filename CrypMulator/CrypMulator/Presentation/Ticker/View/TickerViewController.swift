@@ -5,6 +5,7 @@
 //  Created by 김태형 on 3/6/25.
 //
 
+import Combine
 import UIKit
 import SnapKit
 import RxCocoa
@@ -13,12 +14,19 @@ import RxSwift
 
 final class TickerViewController: BaseViewController {
     private let tickerViewModel: TickerViewModel
+    private let summaryViewModel: PortfolioSummaryViewModel
+
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private lazy var tickerListView = TickerListView(
         tickerListViewModel: tickerViewModel.tickerListViewModel)
 
     init(tickerViewModel: TickerViewModel) {
         self.tickerViewModel = tickerViewModel
+        self.summaryViewModel = PortfolioSummaryViewModel(
+            portfolioUseCase: tickerViewModel.portfolioUseCase,
+            webSocket: tickerViewModel.webSocket
+        )
         super.init()
     }
 
@@ -44,14 +52,15 @@ final class TickerViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tickerListView.tickerListViewModel.getDataByTimer()
+        summaryViewModel.connectWebSocketAndSendMarkets()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         tickerListView.tickerListViewModel.disposeTimer()
     }
 
-    // TODO: - 분리 고민하기
     override func bind() {
+        /// listViewModel
         let listInput = TickerListViewModel.Input(
             priceTapped: tickerListView.headerView.priceButton.rx.tapGesture(),
             changedPriceTapped: tickerListView.headerView.changedPriceButton.rx.tapGesture(),
@@ -62,6 +71,7 @@ final class TickerViewController: BaseViewController {
 
         tickerListView.bindViewModelOutput(listOutput)
 
+        /// TickerViewModel
         let input = TickerViewModel.Input(listInput: listInput)
         let output = tickerViewModel.transform(input: input)
 
@@ -84,6 +94,18 @@ final class TickerViewController: BaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+
+        /// PortfolioSummaryViewModel
+        let summaryOutput = summaryViewModel.transform(input: .init())
+
+        summaryOutput.snapshot
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] snapshot in
+                self?.tickerListView.headerView.updatePortfolioSummary(from: snapshot)
+            }
+            .store(in: &cancellables)
+
+
     }
 
 }

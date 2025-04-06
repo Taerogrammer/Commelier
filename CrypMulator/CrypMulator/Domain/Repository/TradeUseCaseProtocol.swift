@@ -9,6 +9,7 @@ import Foundation
 
 protocol TradeUseCaseProtocol: AnyObject {
     func getCurrentCurrency() -> Int64
+    func getHoldingMarket(name: String) -> HoldingDTO?
     func getHoldingAmount(of market: String) -> Int64
     func getHoldingQuantity(of name: String) -> Decimal
     func trade(with entity: TradeEntity)
