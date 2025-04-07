@@ -26,10 +26,12 @@ struct CoinRankingViewData: Equatable {
     let id: String
     let rank: String
     let imageURL: String
-    let graphURL: String
     let symbol: String
     let name: String
     let rate: Double
+    let marketCapRank: Int
+    let marketCap: String
+    let totalVolume: String
 }
 
 extension InformationSection: SectionModelType {
@@ -134,15 +136,15 @@ extension InformationViewController {
             switch sectionIndex {
             case 0: // 인기 검색어
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .absolute(140),
-                    heightDimension: .absolute(150)
+                    widthDimension: .absolute(180),
+                    heightDimension: .absolute(170)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
 
                 let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .estimated(140),
-                    heightDimension: .absolute(150)
+                    widthDimension: .estimated(180),
+                    heightDimension: .absolute(170)
                 )
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 

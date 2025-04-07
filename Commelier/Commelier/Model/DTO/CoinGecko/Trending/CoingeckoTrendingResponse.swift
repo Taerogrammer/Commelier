@@ -22,12 +22,14 @@ struct Coin: Decodable {
     let name: String
     let thumb: String
     let score: Int
+    let market_cap_rank: Int
     let data: PriceChangeData
 }
 
 struct PriceChangeData: Decodable {
     let price_change_percentage_24h: KrwChangePercentage
-    let sparkline: String
+    let market_cap: String
+    let total_volume: String
 }
 
 struct KrwChangePercentage: Decodable {
