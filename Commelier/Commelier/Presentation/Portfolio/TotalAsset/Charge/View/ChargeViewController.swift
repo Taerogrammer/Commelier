@@ -32,6 +32,16 @@ final class ChargeViewController: BaseViewController {
     private let chargeButton = ActionButton(title: StringLiteral.Button.charge,
                                             backgroundColor: SystemColor.green)
 
+    private let warningLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최대 금액은 1억원까지 충전할 수 있어요."
+        label.textColor = .systemRed
+        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.textAlignment = .center
+        label.isHidden = true
+        return label
+    }()
+
     private lazy var buttonStack = UIStackView(arrangedSubviews: amountButtons)
     private lazy var amountContainer = UIStackView(arrangedSubviews: [amountLabel, unitLabel])
 
@@ -40,6 +50,7 @@ final class ChargeViewController: BaseViewController {
             titleLabel,
             buttonStack,
             amountContainer,
+            warningLabel,
             chargeButton
         ])
     }
@@ -61,6 +72,11 @@ final class ChargeViewController: BaseViewController {
 
         amountContainer.snp.makeConstraints { make in
             make.top.equalTo(buttonStack.snp.bottom).offset(36)
+            make.centerX.equalToSuperview()
+        }
+
+        warningLabel.snp.makeConstraints { make in
+            make.top.equalTo(amountContainer.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
 
@@ -118,6 +134,15 @@ final class ChargeViewController: BaseViewController {
                 switch action {
                 case .dismiss:
                     owner.dismiss(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
+
+        output.showLimitReached
+            .emit(with: self) { owner, _ in
+                owner.warningLabel.isHidden = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    owner.warningLabel.isHidden = true
                 }
             }
             .disposed(by: disposeBag)

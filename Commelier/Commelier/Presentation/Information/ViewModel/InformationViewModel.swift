@@ -46,7 +46,11 @@ final class InformationViewModel: ViewModel {
                     imageURL: coin.item.thumb,
                     symbol: coin.item.symbol,
                     name: coin.item.name,
-                    rate: coin.item.data.price_change_percentage_24h.krw))
+                    rate: coin.item.data.price_change_percentage_24h.krw,
+                    marketCapRank: coin.item.market_cap_rank,
+                    marketCap: coin.item.data.market_cap,
+                    totalVolume: coin.item.data.total_volume
+                ))
             }
         }
 

@@ -7,83 +7,156 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 import SnapKit
 
 final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
-    let rankLabel = UILabel()
-    let thumbnailImage = CircleImage(frame: .zero)
-    let symbolLabel = UILabel()
-    let nameLabel = UILabel()
-    let rateLabel = UILabel()
+    private var disposeBag = DisposeBag()
+
+    private let rankLabel = UILabel()
+    private let marketCapRankLabel = UILabel()
+    private let thumbnailImage = CircleImage(frame: .zero)
+
+    private let rateLabel = UILabel()
+    private let volumeLabel = UILabel()
+
+    private let symbolLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let marketCapLabel = UILabel()
+
+    private let stackView = UIStackView()
 
     override func configureHierarchy() {
-        contentView.addSubviews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
+        // 순위 + 마켓 랭크
+        let rankRow = UIStackView(arrangedSubviews: [rankLabel, UIView(), marketCapRankLabel])
+        rankRow.axis = .horizontal
+        rankRow.alignment = .center
+
+        // 퍼센트 + Vol 수직 스택
+        let rateVolumeStack = UIStackView(arrangedSubviews: [rateLabel, volumeLabel])
+        rateVolumeStack.axis = .vertical
+        rateVolumeStack.alignment = .trailing
+        rateVolumeStack.spacing = 2
+
+        // 썸네일 + 오른쪽 정보 수평 스택
+        let thumbnailRow = UIStackView(arrangedSubviews: [thumbnailImage, rateVolumeStack])
+        thumbnailRow.axis = .horizontal
+        thumbnailRow.alignment = .center
+        thumbnailRow.spacing = 8
+
+        // 심볼 + 이름 수직
+        let labelStack = UIStackView(arrangedSubviews: [symbolLabel, nameLabel])
+        labelStack.axis = .vertical
+        labelStack.alignment = .leading
+        labelStack.spacing = 2
+
+        // 전체 스택
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        stackView.addArrangedSubviews([
+            rankRow,
+            thumbnailRow,
+            labelStack,
+            marketCapLabel
+        ])
+
+        contentView.addSubview(stackView)
     }
 
     override func configureLayout() {
-        rankLabel.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide)
-            make.centerY.equalTo(safeAreaLayoutGuide)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(12)
         }
 
         thumbnailImage.snp.makeConstraints { make in
-            make.leading.equalTo(rankLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(safeAreaLayoutGuide)
-            make.size.equalTo(26)
+            make.size.equalTo(36)
         }
 
-        symbolLabel.snp.makeConstraints { make in
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(4)
-            make.trailing.greaterThanOrEqualTo(rateLabel.snp.leading).offset(4)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(-6)
-        }
-
-        nameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(symbolLabel)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(6)
-        }
-
-        rateLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(nameLabel.snp.trailing).offset(8)
-            make.trailing.equalTo(safeAreaLayoutGuide)
-            make.centerY.equalTo(safeAreaLayoutGuide)
-        }
-
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        rateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        rateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        marketCapRankLabel.setContentHuggingPriority(.required, for: .horizontal)
+        marketCapRankLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     override func configureView() {
-        rankLabel.font = SystemFont.Body.content
-        symbolLabel.font = SystemFont.Body.boldContent
-        nameLabel.font = SystemFont.Body.small
-        rateLabel.font = SystemFont.Body.boldSmall
-    }
-}
+        contentView.layer.cornerRadius = 12
+        contentView.backgroundColor = SystemColor.darkBrown
 
-// MARK: - configure cell
-extension CoinCollectionViewCell {
+        rankLabel.font = SystemFont.Title.medium
+        rankLabel.textColor = SystemColor.white
+
+        marketCapRankLabel.font = SystemFont.Body.content
+        marketCapRankLabel.textColor = SystemColor.whiteGray
+
+        thumbnailImage.contentMode = .scaleAspectFill
+        thumbnailImage.clipsToBounds = true
+
+        rateLabel.font = SystemFont.Body.boldContent
+        rateLabel.textColor = SystemColor.white
+        rateLabel.textAlignment = .right
+
+        volumeLabel.font = SystemFont.Body.content
+        volumeLabel.textColor = SystemColor.white
+        volumeLabel.textAlignment = .right
+
+        symbolLabel.font = SystemFont.Body.boldContent
+        symbolLabel.textColor = SystemColor.white
+
+        nameLabel.font = SystemFont.Body.small
+        nameLabel.textColor = SystemColor.white
+
+        marketCapLabel.font = SystemFont.Body.boldSmall
+        marketCapLabel.textColor = SystemColor.white
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+
     func configureCell(with coin: CoinRankingViewData) {
         rankLabel.text = coin.rank
+        marketCapRankLabel.text = "#\(coin.marketCapRank)"
         thumbnailImage.kf.setImage(with: URL(string: coin.imageURL))
         symbolLabel.text = coin.symbol
         nameLabel.text = coin.name
-        updateRateLabel(with: coin.rate)
+        rateLabel.text = formatRate(coin.rate)
+        volumeLabel.text = "Vol: \(coin.totalVolume.formattedShortNumber())"
+        marketCapLabel.text = "Total: \(coin.marketCap.formattedShortNumber())"
     }
 
-    private func updateRateLabel(with number: Double) {
+    private func formatRate(_ number: Double) -> String {
         let rounded = round(number * 100) / 100
-        if rounded == 0.00 {
-            rateLabel.textColor = SystemColor.black
-            rateLabel.text = "\(rounded)%"
+        if rounded == 0 {
+            rateLabel.textColor = .black
+            return "\(rounded)%"
         } else if rounded > 0 {
-            rateLabel.textColor = SystemColor.red
-            rateLabel.text = "▲ \(rounded)%"
+            rateLabel.textColor = .systemRed
+            return "▲ \(rounded)%"
         } else {
-            rateLabel.textColor = SystemColor.green
-            rateLabel.text = "▼ \(abs(rounded))%"
+            rateLabel.textColor = .systemGreen
+            return "▼ \(abs(rounded))%"
+        }
+    }
+}
+
+extension String {
+    func formattedShortNumber() -> String {
+        guard let value = Double(self.filter("0123456789.".contains)) else {
+            return self
+        }
+
+        let absValue = abs(value)
+        switch absValue {
+        case 1_000_000_000_000...:
+            return String(format: "$%.2fT", value / 1_000_000_000_000)
+        case 1_000_000_000...:
+            return String(format: "$%.2fB", value / 1_000_000_000)
+        case 1_000_000...:
+            return String(format: "$%.2fM", value / 1_000_000)
+        case 1_000...:
+            return String(format: "$%.2fK", value / 1_000)
+        default:
+            return String(format: "$%.0f", value)
         }
     }
 }
