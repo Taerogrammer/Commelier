@@ -7,9 +7,11 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 import SnapKit
 
 final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
+    private var disposeBag = DisposeBag()
 
     private let rankLabel = UILabel()
     private let marketCapRankLabel = UILabel()
@@ -104,6 +106,11 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
         marketCapLabel.font = SystemFont.Body.boldSmall
         marketCapLabel.textColor = SystemColor.white
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
 
     func configureCell(with coin: CoinRankingViewData) {

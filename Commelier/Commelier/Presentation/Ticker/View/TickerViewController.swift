@@ -91,6 +91,7 @@ final class TickerViewController: BaseViewController {
             .subscribe(with: self) { owner, entity in
                 let market = entity.market
                 let vc = DetailFactory.make(with: market)
+                vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
