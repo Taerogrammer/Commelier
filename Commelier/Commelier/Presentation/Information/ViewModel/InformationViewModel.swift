@@ -44,6 +44,7 @@ final class InformationViewModel: ViewModel {
                     id: coin.item.id,
                     rank: "\(coin.item.score + 1)",
                     imageURL: coin.item.thumb,
+                    graphURL: coin.item.data.sparkline,
                     symbol: coin.item.symbol,
                     name: coin.item.name,
                     rate: coin.item.data.price_change_percentage_24h.krw))

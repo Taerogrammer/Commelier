@@ -10,63 +10,51 @@ import Kingfisher
 import SnapKit
 
 final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
-    let rankLabel = UILabel()
-    let thumbnailImage = CircleImage(frame: .zero)
-    let symbolLabel = UILabel()
-    let nameLabel = UILabel()
-    let rateLabel = UILabel()
+    private let thumbnailImage = CircleImage(frame: .zero)
+    private let symbolLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let rateLabel = UILabel()
+    private let stackView = UIStackView()
 
     override func configureHierarchy() {
-        contentView.addSubviews([rankLabel, thumbnailImage, symbolLabel, nameLabel, rateLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.alignment = .leading
+
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubviews([thumbnailImage, symbolLabel, nameLabel, rateLabel])
     }
 
     override func configureLayout() {
-        rankLabel.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide)
-            make.centerY.equalTo(safeAreaLayoutGuide)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(12)
         }
 
         thumbnailImage.snp.makeConstraints { make in
-            make.leading.equalTo(rankLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(safeAreaLayoutGuide)
-            make.size.equalTo(26)
+            make.size.equalTo(28)
         }
-
-        symbolLabel.snp.makeConstraints { make in
-            make.leading.equalTo(thumbnailImage.snp.trailing).offset(4)
-            make.trailing.greaterThanOrEqualTo(rateLabel.snp.leading).offset(4)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(-6)
-        }
-
-        nameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(symbolLabel)
-            make.centerY.equalTo(safeAreaLayoutGuide).offset(6)
-        }
-
-        rateLabel.snp.makeConstraints { make in
-            make.leading.greaterThanOrEqualTo(nameLabel.snp.trailing).offset(8)
-            make.trailing.equalTo(safeAreaLayoutGuide)
-            make.centerY.equalTo(safeAreaLayoutGuide)
-        }
-
-        nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        rateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        rateLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     override func configureView() {
-        rankLabel.font = SystemFont.Body.content
+        contentView.layer.cornerRadius = 12
+        contentView.backgroundColor = .white
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOpacity = 0.05
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowRadius = 6
+
         symbolLabel.font = SystemFont.Body.boldContent
         nameLabel.font = SystemFont.Body.small
         rateLabel.font = SystemFont.Body.boldSmall
+
+        symbolLabel.textColor = .black
+        nameLabel.textColor = .darkGray
     }
 }
 
 // MARK: - configure cell
 extension CoinCollectionViewCell {
     func configureCell(with coin: CoinRankingViewData) {
-        rankLabel.text = coin.rank
         thumbnailImage.kf.setImage(with: URL(string: coin.imageURL))
         symbolLabel.text = coin.symbol
         nameLabel.text = coin.name
@@ -76,7 +64,7 @@ extension CoinCollectionViewCell {
     private func updateRateLabel(with number: Double) {
         let rounded = round(number * 100) / 100
         if rounded == 0.00 {
-            rateLabel.textColor = SystemColor.black
+            rateLabel.textColor = .black
             rateLabel.text = "\(rounded)%"
         } else if rounded > 0 {
             rateLabel.textColor = SystemColor.red

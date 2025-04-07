@@ -26,6 +26,7 @@ struct CoinRankingViewData: Equatable {
     let id: String
     let rank: String
     let imageURL: String
+    let graphURL: String
     let symbol: String
     let name: String
     let rate: Double
@@ -132,18 +133,22 @@ extension InformationViewController {
 
             switch sectionIndex {
             case 0: // 인기 검색어
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1 / 8))
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .absolute(140),
+                    heightDimension: .absolute(150)
+                )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4)
 
-                let innerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 2), heightDimension: .fractionalHeight(1.0))
-                let innerGroup = NSCollectionLayoutGroup.vertical(layoutSize: innerSize, subitems: [item])
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44 * 8))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [innerGroup])
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .estimated(140),
+                    heightDimension: .absolute(150)
+                )
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
+                section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
                 section.boundarySupplementaryItems = [header]
 
                 return section
