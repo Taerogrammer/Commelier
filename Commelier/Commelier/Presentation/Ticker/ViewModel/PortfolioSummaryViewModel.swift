@@ -49,7 +49,6 @@ final class PortfolioSummaryViewModel: ViewModel {
        /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생
        let marketList = holdings.map { $0.name }.ifEmpty(default: ["KRW-BTC"])
        print("📡 WebSocket Send for Markets:", marketList)
-       webSocket.connect()
        webSocket.send(markets: marketList)
    }
 

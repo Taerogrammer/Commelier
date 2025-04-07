@@ -35,7 +35,6 @@ final class DetailViewModel: ViewModel {
         let chartRelay = PublishRelay<[ChartEntity]>()
         let action = PublishRelay<Action>()
 
-        webSocket.connect()
         webSocket.send(market: request.market)
 
         input.barButtonTapped
@@ -64,9 +63,5 @@ final class DetailViewModel: ViewModel {
 
         return Output(chartEntity: chartRelay,
                       action: action)
-    }
-
-    deinit {
-        webSocket.disconnect()
     }
 }

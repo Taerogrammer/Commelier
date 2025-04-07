@@ -12,6 +12,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = SystemColor.black
+        WebSocketManager.shared.connect()
         configureTabBar()
         configureTabBarAppearance()
     }
