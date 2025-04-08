@@ -57,7 +57,7 @@ final class PortfolioUseCase: PortfolioUseCaseProtocol {
     }
 
     func getRealizedProfit() -> [RealizedProfit] {
-        let trades = tradeRepository.getAllTrade().map { $0.toEntity() }
+        let trades = tradeRepository.getAllTrade()
         return RealizedProfitCalculator.calculate(for: trades)
     }
 }

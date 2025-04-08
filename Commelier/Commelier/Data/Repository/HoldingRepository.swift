@@ -40,7 +40,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
             holding.totalBuyPrice += entity.price
             holding.transactionQuantity += Decimal128(value: entity.transactionQuantity)
         } else {
-            realm.add(entity.toHoldingDTO().toObject())
+            realm.add(entity.toHoldingEntity().toObject())
             print("✅ 새 보유 생성: \(entity.name)")
         }
     }
