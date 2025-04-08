@@ -68,7 +68,7 @@ final class InformationViewModel: ViewModel {
     }
 
     func reloadHoldingSection() {
-        let holdings = repository.getHolding().map { $0.toEntity() }
+        let holdings = repository.getHolding()
         let items = holdings.map { InformationItem.holding($0) }
         let section = InformationSection(
             title: StringLiteral.Information.holding,
@@ -107,7 +107,7 @@ final class InformationViewModel: ViewModel {
     }
 
     private func loadFavoriteSection() -> InformationSection {
-        let holdings: [HoldingEntity] = repository.getHolding().map { $0.toEntity() }
+        let holdings: [HoldingEntity] = repository.getHolding()
 
         let items: [InformationItem] = holdings.map { holding in
             return InformationItem.holding(holding)

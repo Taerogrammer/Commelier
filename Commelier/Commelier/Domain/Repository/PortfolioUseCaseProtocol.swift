@@ -13,7 +13,7 @@ protocol PortfolioUseCaseProtocol: AnyObject {
     func getTotalCurrency() -> Int64
 
     /// 보유 코인 목록
-    func getHoldings() -> [HoldingDTO]
+    func getHoldings() -> [HoldingEntity]
 
     /// 엔티티 반환
     func getCurrentAssetEntity() -> CurrentAssetEntity

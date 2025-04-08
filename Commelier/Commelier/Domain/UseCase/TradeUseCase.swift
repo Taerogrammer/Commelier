@@ -32,7 +32,7 @@ final class TradeUseCase: TradeUseCaseProtocol {
         )
     }
 
-    func getHoldingMarket(name: String) -> HoldingDTO? {
+    func getHoldingMarket(name: String) -> HoldingEntity? {
         return holdingRepository.getHoldingMarket(name: name)
     }
 

@@ -43,13 +43,13 @@ final class PortfolioUseCase: PortfolioUseCaseProtocol {
     }
 
 
-    func getHoldings() -> [HoldingDTO] {
+    func getHoldings() -> [HoldingEntity] {
         return holdingRepository.getHolding()
     }
 
     func getCurrentAssetEntity() -> CurrentAssetEntity {
         let totalCurrency = getTotalCurrency()
-        let holdings = getHoldings().map { $0.toEntity() }
+        let holdings = getHoldings()
 
         return CurrentAssetEntity(
             totalCurrency: totalCurrency,
