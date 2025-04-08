@@ -11,9 +11,3 @@ struct ChargeEntity {
     let amount: Int64
     let timestamp: Int64
 }
-
-extension ChargeEntity {
-    func toDTO() -> ChargeDTO {
-        return ChargeDTO(amount: self.amount, timestamp: self.timestamp)
-    }
-}

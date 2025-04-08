@@ -10,7 +10,7 @@ import Foundation
 /// 계산
 struct Calculator {
     static func calculateAvailableKRW(
-        charges: [ChargeDTO],
+        charges: [ChargeEntity],
         trades: [TradeDTO]
     ) -> Int64 {
         let totalCharge = charges.reduce(0) { $0 + $1.amount }
