@@ -1,5 +1,5 @@
 {
-  "originHash" : "2b36b14c402104f5890d1b54dabd2dfc0b3408ad7a66f63d9343b62491385431",
+  "originHash" : "a8d2e37851a752c5901948f87291c219eb2582eab6e87a2fbb2d096b1c9e43c2",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -29,6 +29,15 @@
       }
     },
     {
+      "identity" : "numberterkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Taerogrammer/NumberterKit.git",
+      "state" : {
+        "revision" : "fc044c87990e0183262fe7dae283b90df6dce39d",
+        "version" : "1.0.2"
+      }
+    },
+    {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core.git",
@@ -49,7 +58,7 @@
     {
       "identity" : "rxdatasources",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RxSwiftCommunity/RxDataSources",
+      "location" : "https://github.com/RxSwiftCommunity/RxDataSources.git",
       "state" : {
         "revision" : "90c29b48b628479097fe775ed1966d75ac374518",
         "version" : "5.0.2"
