@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 import RealmSwift
 
 struct TradeEntity {
@@ -17,7 +18,7 @@ struct TradeEntity {
 
     var unitPrice: Decimal {
         guard transactionQuantity > 0 else { return 0 }
-        return Int64.toDecimal(price) / transactionQuantity
+        return price.decimalValue / transactionQuantity
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 import RealmSwift
 
 final class HoldingRepository: HoldingRepositoryProtocol {
@@ -54,7 +55,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
         let remainingQuantity = holding.transactionQuantity.toDecimal() - quantitySold
 
         // 기존 평균 단가
-        let avgBuyPrice = Int64.toDecimal(holding.totalBuyPrice) / holding.transactionQuantity.toDecimal()
+        let avgBuyPrice = holding.totalBuyPrice.decimalValue / holding.transactionQuantity.toDecimal()
 
         // 남은 수량이 없다면 Realm에서 삭제
         if remainingQuantity <= 0 {

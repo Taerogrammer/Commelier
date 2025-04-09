@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 
 struct AssetSnapshotEntity {
     let totalAsset: Decimal               // 총 자산 = 현금 + 코인 평가 금액 합계
@@ -39,7 +40,7 @@ struct AssetEvaluator {
             let profit = Calculator.profitAmount(transactionQuantity: quantity, totalBuyPrice: buyPrice, currentPrice: currentPrice)
 
             totalMarketValue += marketValue
-            totalBuyValue += Int64.toDecimal(buyPrice)
+            totalBuyValue += buyPrice.decimalValue
             totalProfit += profit
         }
 
@@ -48,7 +49,7 @@ struct AssetEvaluator {
 
         return AssetSnapshotEntity(
             totalAsset: totalAssetDecimal,
-            totalCurrency: Int64.toDecimal(currentAsset.totalCurrency),
+            totalCurrency: currentAsset.totalCurrency.decimalValue,
             totalCoinValue: totalMarketValue,
             totalBuyValue: totalBuyValue,
             holdingProfit: totalProfit,
