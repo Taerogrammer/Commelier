@@ -450,7 +450,7 @@
 		};
 		16158CA92D799B0A00AC3458 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.2;
