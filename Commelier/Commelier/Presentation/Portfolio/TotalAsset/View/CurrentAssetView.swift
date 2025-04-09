@@ -183,14 +183,14 @@ final class CurrentAssetView: BaseView {
 // MARK: - configure
 extension CurrentAssetView {
     func update(snapshot: AssetSnapshotEntity) {
-        totalAssetAmountLabel.text = snapshot.totalAsset.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
+        totalAssetAmountLabel.text = snapshot.totalAsset.toRoundedInt64().formattedWithComma + " " + StringLiteral.Currency.won
 
-        realCurrencyAmountLabel.text = snapshot.totalCurrency.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
+        realCurrencyAmountLabel.text = snapshot.totalCurrency.toRoundedInt64().formattedWithComma + " " + StringLiteral.Currency.won
 
-        coinCurrencyAmountLabel.text = snapshot.totalCoinValue.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
+        coinCurrencyAmountLabel.text = snapshot.totalCoinValue.toRoundedInt64().formattedWithComma + " " + StringLiteral.Currency.won
 
         let profit = snapshot.holdingProfit
-        let profitText = profit.toInt64Rounded().formattedWithComma + " " + StringLiteral.Currency.won
+        let profitText = profit.toRoundedInt64().formattedWithComma + " " + StringLiteral.Currency.won
         coinProfitAmountLabel.text = profitText
         coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.green : SystemColor.white)
 

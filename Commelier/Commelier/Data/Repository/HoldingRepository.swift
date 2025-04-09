@@ -65,7 +65,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
             let remainingTotalBuyPrice = avgBuyPrice * remainingQuantity
 
             holding.transactionQuantity = Decimal128(value: remainingQuantity)
-            holding.totalBuyPrice = remainingTotalBuyPrice.toInt64Rounded()
+            holding.totalBuyPrice = remainingTotalBuyPrice.toRoundedInt64()
 
             // ✅ 로그 출력
             print("📉 매도 후 남은 수량: \(remainingQuantity)")
