@@ -17,6 +17,7 @@
 		16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB22D799BB000AC3458 /* Kingfisher */; };
 		16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB52D799BEA00AC3458 /* RxCocoa */; };
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
+		162B6CBE2DA6A14A00BA9218 /* NumberterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162B6CBD2DA6A14A00BA9218 /* NumberterKit */; };
 		165DB0812D95779100AE2A37 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 165DB0802D95779100AE2A37 /* DGCharts */; };
 		16C8DD932D7FB53A00907D86 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 16158CA12D799A6000AC3458 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162B6CBE2DA6A14A00BA9218 /* NumberterKit in Frameworks */,
 				16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */,
 				16158CA22D799A6000AC3458 /* RealmSwift in Frameworks */,
 				16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */,
@@ -130,6 +132,7 @@
 				16158CB52D799BEA00AC3458 /* RxCocoa */,
 				16158CB72D799BEA00AC3458 /* RxSwift */,
 				165DB0802D95779100AE2A37 /* DGCharts */,
+				162B6CBD2DA6A14A00BA9218 /* NumberterKit */,
 			);
 			productName = CryptoCollection;
 			productReference = 16158C852D79992E00AC3458 /* Commelier.app */;
@@ -169,6 +172,7 @@
 				16158CB12D799BB000AC3458 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */,
+				162B6CBC2DA6A14A00BA9218 /* XCRemoteSwiftPackageReference "NumberterKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 16158C862D79992E00AC3458 /* Products */;
@@ -480,6 +484,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		162B6CBC2DA6A14A00BA9218 /* XCRemoteSwiftPackageReference "NumberterKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Taerogrammer/NumberterKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 		165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
@@ -540,6 +552,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		162B6CBD2DA6A14A00BA9218 /* NumberterKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 162B6CBC2DA6A14A00BA9218 /* XCRemoteSwiftPackageReference "NumberterKit" */;
+			productName = NumberterKit;
 		};
 		165DB0802D95779100AE2A37 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
