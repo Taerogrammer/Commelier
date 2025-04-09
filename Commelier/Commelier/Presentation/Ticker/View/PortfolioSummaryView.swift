@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NumberterKit
 import SnapKit
 
 final class PortfolioSummaryView: BaseView {
@@ -58,7 +59,7 @@ final class PortfolioSummaryView: BaseView {
         if isPercent {
             formattedText = String(format: "%.2f%%", value)
         } else {
-            formattedText = Int64(value).formattedWithComma
+            formattedText = Int64(value).formatted
         }
 
         let color: UIColor = {

@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import NumberterKit
 import SnapKit
 
 final class CoinLivePriceView: BaseView {
@@ -61,9 +62,9 @@ final class CoinLivePriceView: BaseView {
 // MARK: - configure
 extension CoinLivePriceView {
     private func configure(with entity: LivePriceEntity) {
-        priceLabel.text = StringLiteral.Currency.wonMark + Int64(entity.price).formattedWithComma
-        changePriceLabel.text = Int64(entity.signedChangePrice).formattedWithComma
-        changeRate.text = entity.priceChangeState.symbol +  entity.signedChangeRate.description + StringLiteral.Operator.percentage
+        priceLabel.text = StringLiteral.Currency.wonMark + Int64(entity.price).formatted
+        changePriceLabel.text = Int64(entity.signedChangePrice).formatted
+        changeRate.text = entity.priceChangeState.symbol + (entity.signedChangeRate * 100.0).description + StringLiteral.Operator.percentage
         changeRate.textColor = entity.priceChangeState.color
     }
 }
