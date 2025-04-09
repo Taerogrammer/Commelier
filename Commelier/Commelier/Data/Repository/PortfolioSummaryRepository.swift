@@ -26,7 +26,7 @@ final class PortfolioSummaryRepository: PortfolioSummaryRepositoryProtocol {
 
             if let currentPrice = currentPrices[holding.symbol] {
                 let evaluation = holding.transactionQuantity.decimalValue * currentPrice
-                totalEvaluation += Decimal.toInt64(evaluation)
+                totalEvaluation += evaluation.int64Value
             }
         }
 

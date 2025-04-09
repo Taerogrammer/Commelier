@@ -65,7 +65,7 @@ final class TradeViewModel: ViewModel {
         let tradeButtonAction = input.tradeButtonTapped
             .map { [weak self] _ -> Action in
                 // TODO: - 여기
-                let isSuccess = self?.tradeClicked(price: Decimal.toInt64(self?.inputAmount ?? 0))
+                let isSuccess = self?.tradeClicked(price: self?.inputAmount.int64Value ?? 0)
                 return .tradeCompleted(success: isSuccess ?? false)
             }
             .eraseToAnyPublisher()

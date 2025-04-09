@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 
 /// 계산
 struct Calculator {
@@ -43,6 +44,6 @@ struct Calculator {
     /// 평균 매입 단가
     static func averageBuyPrice(transactionQuantity: Decimal, totalBuyPrice: Int64) -> Int64 {
         guard transactionQuantity > 0 else { return 0 }
-        return Decimal.toInt64(Int64.toDecimal(totalBuyPrice) / transactionQuantity)
+        return (totalBuyPrice.decimalValue / transactionQuantity).int64Value
     }
 }

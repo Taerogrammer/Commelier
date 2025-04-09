@@ -7,6 +7,7 @@
 
 import UIKit
 import DGCharts
+import NumberterKit
 import SnapKit
 
 final class PortfolioChartView: BaseView {

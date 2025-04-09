@@ -9,59 +9,6 @@ import Foundation
 import RealmSwift
 
 extension Decimal {
-
-    var doubleValue: Double {
-        return NSDecimalNumber(decimal: self).doubleValue
-    }
-
-    static func + (lhs: Decimal, rhs: Decimal) -> Decimal {
-        var result = Decimal()
-        var lhs = lhs
-        var rhs = rhs
-        NSDecimalAdd(&result, &lhs, &rhs, .plain)
-        return result
-    }
-
-    static func - (lhs: Decimal, rhs: Decimal) -> Decimal {
-        var result = Decimal()
-        var lhs = lhs
-        var rhs = rhs
-        NSDecimalSubtract(&result, &lhs, &rhs, .plain)
-        return result
-    }
-
-    static func * (lhs: Decimal, rhs: Decimal) -> Decimal {
-        var result = Decimal()
-        var lhs = lhs
-        var rhs = rhs
-        NSDecimalMultiply(&result, &lhs, &rhs, .plain)
-        return result
-    }
-
-    static func / (lhs: Decimal, rhs: Decimal) -> Decimal {
-        var result = Decimal()
-        var lhs = lhs
-        var rhs = rhs
-        NSDecimalDivide(&result, &lhs, &rhs, .plain)
-        return result
-    }
-
-    static func += (lhs: inout Decimal, rhs: Decimal) {
-        lhs = lhs + rhs
-    }
-
-    static func -= (lhs: inout Decimal, rhs: Decimal) {
-        lhs = lhs - rhs
-    }
-
-    static func *= (lhs: inout Decimal, rhs: Decimal) {
-        lhs = lhs * rhs
-    }
-
-    static func /= (lhs: inout Decimal, rhs: Decimal) {
-        lhs = lhs / rhs
-    }
-
     static func toNSDecimalNumber(_ decimal: Decimal) -> NSDecimalNumber {
         return NSDecimalNumber(decimal: decimal)
     }
@@ -70,9 +17,9 @@ extension Decimal {
         return Decimal128(number: toNSDecimalNumber(decimal))
     }
 
-    static func toInt64(_ decimal: Decimal) -> Int64 {
-        return toNSDecimalNumber(decimal).int64Value
-    }
+//    static func toInt64(_ decimal: Decimal) -> Int64 {
+//        return toNSDecimalNumber(decimal).int64Value
+//    }
 
     func rounded(scale: Int, mode: NSDecimalNumber.RoundingMode) -> Decimal {
         var result = Decimal()
