@@ -80,6 +80,6 @@ final class PortfolioSummaryViewModel: ViewModel {
         print("🧮 [EVALUATED] 총 자산: \(snapshot.totalAsset) 원")
         print("🧮 [EVALUATED] 총 현금: \(snapshot.totalCurrency) 원")
         print("SNAPSHOT =====", snapshot)
-        print("🧮 [EVALUATED] 총 코인: \(snapshot.totalCoinValue.toInt64Rounded()) 원")
+        print("🧮 [EVALUATED] 총 코인: \(snapshot.totalCoinValue.toRoundedInt64()) 원")
     }
 }

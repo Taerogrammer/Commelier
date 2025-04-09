@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NumberterKit
 import SnapKit
 
 final class TickerListHeaderView: BaseView, ReuseIdentifiable {

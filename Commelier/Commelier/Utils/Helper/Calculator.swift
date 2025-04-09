@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 
 /// 계산
 struct Calculator {
@@ -29,13 +30,13 @@ struct Calculator {
     /// 평가 손익 계산: (현재가 * 보유수량) - 총 매수금액
     static func profitAmount(transactionQuantity: Decimal, totalBuyPrice: Int64, currentPrice: Decimal) -> Decimal {
         let marketValue = currentPrice * transactionQuantity
-        return marketValue - Int64.toDecimal(totalBuyPrice)
+        return marketValue - totalBuyPrice.decimalValue
     }
 
     /// 수익률 계산: ((평가손익 / 총 매수금액) * 100)
     static func profitRatio(transactionQuantity: Decimal, totalBuyPrice: Int64, currentPrice: Decimal) -> Decimal {
         let profit = profitAmount(transactionQuantity: transactionQuantity, totalBuyPrice: totalBuyPrice, currentPrice: currentPrice)
-        let totalBuy = Int64.toDecimal(totalBuyPrice)
+        let totalBuy = totalBuyPrice.decimalValue
         guard totalBuy > 0 else { return 0 }
         return (profit / totalBuy * 100).rounded(scale: 2, mode: .plain)
     }
@@ -43,6 +44,6 @@ struct Calculator {
     /// 평균 매입 단가
     static func averageBuyPrice(transactionQuantity: Decimal, totalBuyPrice: Int64) -> Int64 {
         guard transactionQuantity > 0 else { return 0 }
-        return Decimal.toInt64(Int64.toDecimal(totalBuyPrice) / transactionQuantity)
+        return (totalBuyPrice.decimalValue / transactionQuantity).int64Value
     }
 }
