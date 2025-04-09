@@ -8,6 +8,6 @@
 import Foundation
 
 protocol TradeRepositoryProtocol: AnyObject {
-    func getAllTrade() -> [TradeDTO]
+    func getAllTrade() -> [TradeEntity]
     func trade(_ entity: TradeEntity)
 }

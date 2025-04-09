@@ -11,24 +11,17 @@ import RealmSwift
 final class TradeRepository: TradeRepositoryProtocol {
     private let realm = try! Realm()
 
-    func getAllTrade() -> [TradeDTO] {
+    func getAllTrade() -> [TradeEntity] {
         let trades = realm.objects(TradeObject.self)
-        return trades.map { $0.toDTO() }
+        return trades.map { $0.toEntity() }
     }
 
     func trade(_ entity: TradeEntity) {
-        let dto = entity.toDTO()
-        let object = TradeObject(
-            name: dto.name,
-            buySell: dto.buySell,
-            transactionQuantity: Decimal128(value: dto.transactionQuantity),
-            price: dto.price,
-            timestamp: dto.timestamp
-        )
+        let object = entity.toObject()
         do {
             try realm.write {
                 realm.add(object)
-                print("✅ 거래 완료: \(dto.name) => \(dto.buySell)")
+                print("✅ 거래 완료: \(entity.name) => \(entity.buySell)")
             }
         } catch {
             print("❌ Realm 저장 실패: \(error)")

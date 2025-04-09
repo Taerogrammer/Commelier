@@ -21,8 +21,8 @@ final class HoldingObject: Object {
 }
 
 extension HoldingObject {
-    func toDTO() -> HoldingDTO {
-        return HoldingDTO(
+    func toEntity() -> HoldingEntity {
+        return HoldingEntity(
             name: name,
             totalBuyPrice: totalBuyPrice,
             transactionQuantity: transactionQuantity.decimalValue,

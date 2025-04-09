@@ -58,7 +58,8 @@ enum FormatUtility {
     }
 
     static func rateConverter(number: Double) -> String {
-        return round(number * 100) / 100 == 0.00 ? "0.00" : String(format: "%.2f", (round(number * 100) / 100))
+        let percentage = number * 100
+        return String(format: "%.2f%%", percentage)
     }
 
     static let dateFormatter: DateFormatter = {

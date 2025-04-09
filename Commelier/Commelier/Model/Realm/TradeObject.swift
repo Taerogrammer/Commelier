@@ -31,8 +31,8 @@ final class TradeObject: Object {
 }
 
 extension TradeObject {
-    func toDTO() -> TradeDTO {
-        return TradeDTO(
+    func toEntity() -> TradeEntity {
+        return TradeEntity(
             name: name,
             buySell: buySell,
             transactionQuantity: transactionQuantity.decimalValue,
