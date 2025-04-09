@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct TradeEntity {
     let name: String
@@ -21,24 +22,47 @@ struct TradeEntity {
 }
 
 extension TradeEntity {
-    func toDTO() -> TradeDTO {
-        return TradeDTO(
+    func toObject() -> TradeObject {
+        let object = TradeObject()
+        object.name = name
+
+        return TradeObject(
             name: name,
             buySell: buySell,
-            transactionQuantity: transactionQuantity,
+            transactionQuantity: Decimal128(value: transactionQuantity),
             price: price,
             timestamp: timestamp)
     }
 
-    func toHoldingDTO() -> HoldingDTO {
+    func toHoldingEntity() -> HoldingEntity {
         let symbolStartIndex = name.index(name.startIndex, offsetBy: 4)
         let symbol = String(name[symbolStartIndex...])
         let imageURL = ImageURLMapper.imageURL(for: name)
-        return HoldingDTO(
+        return HoldingEntity(
             name: name,
             totalBuyPrice: price,
             transactionQuantity: transactionQuantity,
             symbol: symbol,
             imageURL: imageURL)
     }
+
+    func toHistoryEntity() -> TradeHistoryEntity {
+        let type: TradeHistoryType = buySell.lowercased() == "buy" ? .buy : .sell
+        let totalPrice = Decimal(price) / transactionQuantity
+
+        let formattedPrice = FormatUtility.decimalToString(Decimal(price)) + " " + StringLiteral.Currency.krw
+        let formattedAmount = FormatUtility.decimalToString(transactionQuantity, fractionDigits: 6) + " " + FormatUtility.nameToSymbol(name)
+        let formattedTotal = FormatUtility.decimalToString(totalPrice) + " " + StringLiteral.Currency.krw
+        let formattedDate = String.convertTradeHistoryDate(timestamp: timestamp)
+
+        return TradeHistoryEntity(
+            type: type,
+            market: name,
+            price: formattedPrice,
+            amount: formattedAmount,
+            total: formattedTotal,
+            date: formattedDate
+        )
+    }
+
 }

@@ -11,17 +11,17 @@ import RealmSwift
 final class HoldingRepository: HoldingRepositoryProtocol {
     private let realm = try! Realm()
 
-    func getHolding() -> [HoldingDTO] {
+    func getHolding() -> [HoldingEntity] {
         let objects = realm.objects(HoldingObject.self)
-        return objects.map { $0.toDTO() }
+        return objects.map { $0.toEntity() }
     }
 
-    func getHoldingMarket(name: String) -> HoldingDTO? {
+    func getHoldingMarket(name: String) -> HoldingEntity? {
         let object = realm.objects(HoldingObject.self)
             .filter("name == %@", name, name)
             .first
 
-        return object?.toDTO()
+        return object?.toEntity()
     }
 
     func saveTradeResult(_ entity: TradeEntity) {
@@ -40,7 +40,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
             holding.totalBuyPrice += entity.price
             holding.transactionQuantity += Decimal128(value: entity.transactionQuantity)
         } else {
-            realm.add(entity.toHoldingDTO().toObject())
+            realm.add(entity.toHoldingEntity().toObject())
             print("✅ 새 보유 생성: \(entity.name)")
         }
     }

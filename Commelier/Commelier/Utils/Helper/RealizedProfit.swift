@@ -19,7 +19,6 @@ struct RealizedProfit {
 }
 
 // TODO: - 식 완벽히 이해하기
-// TODO: - 덱으로 구현하기
 final class RealizedProfitCalculator {
 
     /// 마켓별 누적 실현 손익 및 수익률 계산기 (FIFO 기반)

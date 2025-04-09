@@ -21,10 +21,9 @@ final class ChargeObject: Object {
 }
 
 extension ChargeObject {
-    func toDTO() -> ChargeDTO {
-        return ChargeDTO(
+    func toEntity() -> ChargeEntity {
+        return ChargeEntity(
             amount: chargeAmount,
-            timestamp: timestamp
-        )
+            timestamp: timestamp)
     }
 }

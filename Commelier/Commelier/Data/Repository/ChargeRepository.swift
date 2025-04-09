@@ -15,23 +15,23 @@ final class ChargeRepository: ChargeRepositoryProtocol {
         print(realm.configuration.fileURL as Any)
     }
 
-    func saveCharge(_ dto: ChargeDTO) {
+    func saveCharge(_ entity: ChargeEntity) {
         let object = ChargeObject(
-            chargeAmount: dto.amount,
-            timestamp: dto.timestamp
+            chargeAmount: entity.amount,
+            timestamp: entity.timestamp
         )
         do {
             try realm.write {
                 realm.add(object)
-                print("✅ 충전 저장 완료: \(dto.amount)원 at \(dto.timestamp)")
+                print("✅ 충전 저장 완료: \(entity.amount)원 at \(entity.timestamp)")
             }
         } catch {
             print("❌ Realm 저장 실패: \(error)")
         }
     }
 
-    func fetchAllCharges() -> [ChargeDTO] {
+    func fetchAllCharges() -> [ChargeEntity] {
         let results = realm.objects(ChargeObject.self)
-        return results.map { $0.toDTO() }
+        return results.map { $0.toEntity() }
     }
 }

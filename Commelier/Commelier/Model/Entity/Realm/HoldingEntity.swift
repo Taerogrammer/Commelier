@@ -1,14 +1,14 @@
 //
-//  HoldingDTO.swift
+//  HoldingEntity.swift
 //  CrypMulator
 //
-//  Created by 김태형 on 4/2/25.
+//  Created by 김태형 on 4/4/25.
 //
 
 import Foundation
 import RealmSwift
 
-struct HoldingDTO {
+struct HoldingEntity {
     let name: String
     let totalBuyPrice: Int64
     let transactionQuantity: Decimal
@@ -16,13 +16,7 @@ struct HoldingDTO {
     let imageURL: String?
 }
 
-extension HoldingDTO {
-    func toHoldingMarketEntity() -> HoldingMarketEntity {
-        return HoldingMarketEntity(
-            symbol: symbol,
-            totalBuyPrice: totalBuyPrice)
-    }
-
+extension HoldingEntity {
     func toObject() -> HoldingObject {
         let object = HoldingObject()
         object.name = name
@@ -33,13 +27,9 @@ extension HoldingDTO {
 
         return object
     }
-
-    func toEntity() -> HoldingEntity {
-        return HoldingEntity(
-            name: name,
-            totalBuyPrice: totalBuyPrice,
-            transactionQuantity: transactionQuantity,
+    func toHoldingMarketEntity() -> HoldingMarketEntity {
+        return HoldingMarketEntity(
             symbol: symbol,
-            imageURL: imageURL)
+            totalBuyPrice: totalBuyPrice)
     }
 }

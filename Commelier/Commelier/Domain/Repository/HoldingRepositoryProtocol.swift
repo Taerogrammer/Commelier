@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HoldingRepositoryProtocol {
-    func getHoldingMarket(name: String) -> HoldingDTO?
+    func getHoldingMarket(name: String) -> HoldingEntity?
     func saveTradeResult(_ entity: TradeEntity)
-    func getHolding() -> [HoldingDTO]
+    func getHolding() -> [HoldingEntity]
 }

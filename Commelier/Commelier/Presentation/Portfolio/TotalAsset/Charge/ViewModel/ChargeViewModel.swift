@@ -67,8 +67,7 @@ final class ChargeViewModel: ViewModel {
                 let amount = Int64(owner.selectedAmount.value)
                 let now = Int64(Date().timeIntervalSince1970)
                 let entity = ChargeEntity(amount: amount, timestamp: now)
-                let dto = entity.toDTO()
-                owner.chargeRepository.saveCharge(dto)
+                owner.chargeRepository.saveCharge(entity)
                 owner.actionRelay.accept(.dismiss)
             }
             .disposed(by: disposeBag)
