@@ -42,11 +42,11 @@ final class SymbolInfoCell: BaseCollectionViewCell, ReuseIdentifiable {
         dateLabel.font = SystemFont.Body.small
 
         /// ㅇㅇㅇ
-        titleLabel.textColor = SystemColor.white
-        amountLabel.textColor = SystemColor.white
-        dateLabel.textColor = SystemColor.white
+        titleLabel.textColor = SystemColor.label
+        amountLabel.textColor = SystemColor.label
+        dateLabel.textColor = SystemColor.label
 
-        contentView.backgroundColor = SystemColor.darkBrown
+        contentView.backgroundColor = SystemColor.card
         contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
     }

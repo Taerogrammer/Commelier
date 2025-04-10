@@ -47,14 +47,14 @@ final class AlertView: BaseView {
         stackView.distribution = .fillProportionally
         titleLabel.textAlignment = .center
         titleLabel.font = .boldSystemFont(ofSize: 16)
-        titleLabel.textColor = SystemColor.black
+        titleLabel.textColor = SystemColor.background
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
         messageLabel.font = .systemFont(ofSize: 16)
-        messageLabel.textColor = SystemColor.black
+        messageLabel.textColor = SystemColor.background
         lineView.backgroundColor = SystemColor.gray
         retryButton.setTitle("다시 시도하기", for: .normal)
-        retryButton.setTitleColor(SystemColor.black, for: .normal)
+        retryButton.setTitleColor(SystemColor.background, for: .normal)
         retryButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
         titleLabel.text = "안내"
         messageLabel.text = "네트워크 연결이 일시적으로 원활하지 않습니다. 데이터 또는 Wi-Fi 연결 상태를 확인해주세요."

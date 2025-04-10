@@ -27,7 +27,7 @@ final class SettingViewController: BaseViewController {
 
     override func configureView() {
         title = "설정"
-        view.backgroundColor = SystemColor.black
+        view.backgroundColor = SystemColor.background
     }
 }
 

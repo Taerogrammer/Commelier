@@ -45,7 +45,7 @@ final class PortfolioChartView: BaseView {
 
     override func configureView() {
         titleLabel.text = StringLiteral.Portfolio.portfolioRatio
-        titleLabel.textColor = SystemColor.white
+        titleLabel.textColor = SystemColor.label
         titleLabel.font = SystemFont.Title.large
 
         pieChartView.highlightPerTapEnabled = false
@@ -55,14 +55,14 @@ final class PortfolioChartView: BaseView {
         pieChartView.transparentCircleRadiusPercent = 0
         pieChartView.drawEntryLabelsEnabled = false
         pieChartView.legend.enabled = false
-        pieChartView.holeColor = SystemColor.whiteGreen
+        pieChartView.holeColor = SystemColor.background
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
 
         let centerText = NSAttributedString(
             string: StringLiteral.Portfolio.chartText,
             attributes: [
-                .foregroundColor: SystemColor.white,
+                .foregroundColor: SystemColor.label,
                 .paragraphStyle: paragraphStyle
             ]
         )
@@ -104,12 +104,12 @@ extension PortfolioChartView {
 
         let nameLabel = UILabel()
         nameLabel.text = name
-        nameLabel.textColor = SystemColor.white
+        nameLabel.textColor = SystemColor.label
         nameLabel.font = SystemFont.Body.content
 
         let percentLabel = UILabel()
         percentLabel.text = String(format: "%.2f%%", percent)
-        percentLabel.textColor = SystemColor.white
+        percentLabel.textColor = SystemColor.label
         percentLabel.font = SystemFont.Body.content
         percentLabel.textAlignment = .right
 
@@ -141,7 +141,7 @@ extension PortfolioChartView {
 
         // TODO: - 각 코인에 대해 나타내주기
         let chartData: [(String, Double, UIColor)] = [
-            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.darkGreen),
+            (StringLiteral.Portfolio.currency, cashPercent, SystemColor.green),
             (StringLiteral.Portfolio.coin, coinPercent, SystemColor.bronze)
         ]
 

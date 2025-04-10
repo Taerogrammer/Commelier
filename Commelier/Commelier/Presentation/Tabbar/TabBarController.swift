@@ -11,7 +11,7 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = SystemColor.black
+        view.backgroundColor = SystemColor.background
         WebSocketManager.shared.connect()
         configureTabBar()
         configureTabBarAppearance()
@@ -35,9 +35,9 @@ final class TabBarController: UITabBarController {
 
     private func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = SystemColor.black
+        appearance.backgroundColor = SystemColor.background
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
-        tabBar.tintColor = SystemColor.white
+        tabBar.tintColor = SystemColor.label
     }
 }

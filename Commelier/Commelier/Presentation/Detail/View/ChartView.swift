@@ -102,7 +102,7 @@ struct ChartView: View {
                                         .bold()
                                     Text("\(FormatUtility.formattedPrice(selected.price)) \(StringLiteral.Currency.won)")
                                 }
-                                .foregroundColor(Color(SystemColor.black))
+                                .foregroundColor(Color(SystemColor.background))
                                 .font(.caption)
                                 .padding(6)
                                 .background(Color.white)
@@ -132,9 +132,9 @@ struct ChartView: View {
                 }
             }
             .chartPlotStyle { plotArea in
-                plotArea.background(Color(SystemColor.black))
+                plotArea.background(Color(SystemColor.background))
             }
-            .background(Color(SystemColor.black))
+            .background(Color(SystemColor.background))
         }
     }
 }

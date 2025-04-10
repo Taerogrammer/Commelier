@@ -54,10 +54,10 @@ final class ProfitView: BaseView {
     }
 
     override func configureView() {
-        backgroundColor = SystemColor.black
+        backgroundColor = SystemColor.background
 
         titleLabel.text = StringLiteral.Portfolio.totalProfit
-        titleLabel.textColor = SystemColor.white
+        titleLabel.textColor = SystemColor.label
         titleLabel.font = SystemFont.Title.large
 
         // StackView configs
@@ -75,20 +75,20 @@ final class ProfitView: BaseView {
 
         // Labels
         profitTitleLabel.text = StringLiteral.Portfolio.cumulativeProfit
-        profitTitleLabel.textColor = SystemColor.white
+        profitTitleLabel.textColor = SystemColor.label
         profitTitleLabel.font = SystemFont.Body.boldPrimary
 
         profitRateTitleLabel.text = StringLiteral.Portfolio.cumulativeRate
-        profitRateTitleLabel.textColor = SystemColor.white
+        profitRateTitleLabel.textColor = SystemColor.label
         profitRateTitleLabel.font = SystemFont.Body.boldPrimary
 
         profitAmountLabel.text = "0 " + StringLiteral.Currency.krw
         profitAmountLabel.font = SystemFont.Body.boldContent
-        profitAmountLabel.textColor = SystemColor.white
+        profitAmountLabel.textColor = SystemColor.label
 
         profitRateLabel.text = "0 " + StringLiteral.Operator.percentage
         profitRateLabel.font = SystemFont.Body.boldContent
-        profitRateLabel.textColor = SystemColor.white
+        profitRateLabel.textColor = SystemColor.label
     }
 }
 

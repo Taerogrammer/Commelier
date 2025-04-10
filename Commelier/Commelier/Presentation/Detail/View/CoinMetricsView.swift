@@ -50,7 +50,7 @@ final class CoinMetricsView: BaseView {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: CoinDetailHeaderView.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        collectionView.backgroundColor = SystemColor.black
+        collectionView.backgroundColor = SystemColor.background
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
         configureDiffableDataSource()

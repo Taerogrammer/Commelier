@@ -185,9 +185,9 @@ final class TradeViewController: BaseViewController {
         button.setTitle(title, for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = SystemFont.Body.content
-        button.backgroundColor = SystemColor.white
+        button.backgroundColor = SystemColor.label
         button.layer.borderWidth = 1
-        button.layer.borderColor = SystemColor.black.cgColor
+        button.layer.borderColor = SystemColor.background.cgColor
         button.layer.cornerRadius = 8
         return button
     }

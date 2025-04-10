@@ -42,7 +42,7 @@ extension CoinDetailHeaderView: ViewConfiguration {
     
     func configureView() {
         titleLabel.font = SystemFont.Title.medium
-        titleLabel.textColor = SystemColor.black
+        titleLabel.textColor = SystemColor.background
     }
 
     func configureTitle(with title: String) {
