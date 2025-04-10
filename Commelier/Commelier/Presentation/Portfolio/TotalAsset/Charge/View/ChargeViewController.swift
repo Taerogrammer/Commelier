@@ -21,9 +21,9 @@ final class ChargeViewController: BaseViewController {
 
     private let titleLabel = UILabel()
     private lazy var amountButtons: [ActionButton] = {
-        ["1,000,000", "5,000,000", "10,000,000"].map {
+        ["백만", "오백만", "천만"].map {
             ActionButton(title: $0 + StringLiteral.Currency.won,
-                         backgroundColor: SystemColor.gray,
+                         backgroundColor: SystemColor.gold,
                          font: SystemFont.Button.secondary) }
     }()
 

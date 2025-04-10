@@ -44,8 +44,8 @@ final class CoinFilterButton: BaseView {
         downImage.image = SystemIcon.arrowDown
         upImage.contentMode = .scaleAspectFit
         downImage.contentMode = .scaleAspectFit
-        upImage.tintColor = SystemColor.gray
-        downImage.tintColor = SystemColor.gray
+        upImage.tintColor = SystemColor.panelBackground
+        downImage.tintColor = SystemColor.panelBackground
         buttonStatus(status: .unClicked)
     }
 

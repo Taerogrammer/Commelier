@@ -52,7 +52,7 @@ final class AlertView: BaseView {
         messageLabel.textAlignment = .center
         messageLabel.font = .systemFont(ofSize: 16)
         messageLabel.textColor = SystemColor.background
-        lineView.backgroundColor = SystemColor.gray
+        lineView.backgroundColor = SystemColor.panelBackground
         retryButton.setTitle("다시 시도하기", for: .normal)
         retryButton.setTitleColor(SystemColor.background, for: .normal)
         retryButton.titleLabel?.font = .boldSystemFont(ofSize: 16)

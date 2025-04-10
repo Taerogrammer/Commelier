@@ -66,7 +66,7 @@ final class TickerListHeaderView: BaseView, ReuseIdentifiable {
         priceButton.title.text = StringLiteral.Ticker.currentPrice
         changedPriceButton.title.text = StringLiteral.Ticker.priceChanged
         accButton.title.text = StringLiteral.Ticker.tradeVolume
-        bottomLine.backgroundColor = SystemColor.gray
+        bottomLine.backgroundColor = SystemColor.panelBackground
     }
 }
 

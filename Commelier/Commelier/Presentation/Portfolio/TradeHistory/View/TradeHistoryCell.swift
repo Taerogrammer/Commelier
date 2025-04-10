@@ -94,7 +94,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
         containerStackView.spacing = 16
         containerStackView.alignment = .center
 
-        bottomLineView.backgroundColor = SystemColor.gray
+        bottomLineView.backgroundColor = SystemColor.panelBackground
     }
 }
 

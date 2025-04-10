@@ -28,11 +28,10 @@ enum SystemColor {
 
     // MARK: - Grayscale
 
-    static let gray = UIColor.dynamicColor(
-        light: "#C4C6CA",  // 중립 회색
-        dark: "#3C342F"    // 딥 브론즈 그레이
+    static let panelBackground = UIColor.dynamicColor(
+        light: "#D6CFC9",   // 따뜻한 웜 그레이 (C4C6CA보다 부드럽고 자연스러움)
+        dark: "#3C342F"     // 기존 딥 브론즈 그레이 유지
     )
-
     static let card = UIColor.dynamicColor(
         light: "#FFFFFF",  // 카드용 밝은 배경
         dark: "#2B2624"    // 초콜릿톤 카드

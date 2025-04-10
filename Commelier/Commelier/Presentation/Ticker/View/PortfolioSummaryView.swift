@@ -39,7 +39,7 @@ final class PortfolioSummaryView: BaseView {
     }
 
     override func configureView() {
-        backgroundColor = SystemColor.gray
+        backgroundColor = SystemColor.panelBackground
     }
 
     func update(purchase: Double, eval: Double, profit: Double, yield: Double) {
