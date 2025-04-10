@@ -29,7 +29,6 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
     private let dateTitleLabel = UILabel()
     private let dateValueLabel = UILabel()
 
-    private let topLineView = BaseView()
     private let bottomLineView = BaseView()
 
     override func configureHierarchy() {
@@ -43,17 +42,12 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
         ])
 
         containerStackView.addArrangedSubviews([leftStackView, infoStackView])
-        contentView.addSubviews([topLineView, containerStackView, bottomLineView])
+        contentView.addSubviews([/*topLineView,*/ containerStackView, bottomLineView])
     }
 
     override func configureLayout() {
-        topLineView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalTo(0.5)
-        }
         containerStackView.snp.makeConstraints { make in
-            make.top.equalTo(topLineView.snp.bottom)
+            make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
             make.bottom.equalTo(bottomLineView.snp.top)
         }
@@ -71,7 +65,6 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
 
     override func configureView() {
         backgroundColor = SystemColor.background
-        topLineView.backgroundColor = SystemColor.gray
 
         typeLabel.font = SystemFont.Title.small
         pairLabel.font = SystemFont.Body.small
