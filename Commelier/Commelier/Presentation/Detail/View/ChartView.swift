@@ -102,7 +102,7 @@ struct ChartView: View {
                                         .bold()
                                     Text("\(FormatUtility.formattedPrice(selected.price)) \(StringLiteral.Currency.won)")
                                 }
-                                .foregroundColor(Color(SystemColor.background))
+                                .foregroundColor(Color(SystemColor.black))
                                 .font(.caption)
                                 .padding(6)
                                 .background(Color.white)

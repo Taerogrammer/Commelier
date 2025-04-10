@@ -65,4 +65,5 @@ enum SystemColor {
 
     // MARK: - 고정 색상
     static let buttonText = UIColor(hex: "#F4F1EC")
+    static let black = UIColor(hex: "#000000")
 }
