@@ -84,7 +84,7 @@ final class TradeInfoView: BaseView {
         currentPriceLabel.textColor = SystemColor.label
         currentPriceLabel.textAlignment = .center
 
-        divider.backgroundColor = SystemColor.whiteGray
+        divider.backgroundColor = SystemColor.divider
 
         infoStackView.axis = .vertical
         infoStackView.spacing = 8

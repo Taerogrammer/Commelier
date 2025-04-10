@@ -9,8 +9,6 @@ import UIKit
 
 enum SystemColor {
 
-    static let whiteGray   = UIColor(hex: "#C4C6CA")  // 중립 회색
-
     // MARK: - Dynamic Colors (라이트/다크 자동 전환)
 
     static let background = UIColor.dynamicColor(

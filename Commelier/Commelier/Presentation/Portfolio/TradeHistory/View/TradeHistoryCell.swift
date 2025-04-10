@@ -68,7 +68,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
 
         typeLabel.font = SystemFont.Title.small
         pairLabel.font = SystemFont.Body.small
-        pairLabel.textColor = SystemColor.whiteGray
+        pairLabel.textColor = SystemColor.secondaryText
 
         [priceTitleLabel, amountTitleLabel, totalTitleLabel, dateTitleLabel].forEach {
             $0.font = SystemFont.Body.content
@@ -80,7 +80,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
             $0.textAlignment = .right
         }
 
-        dateValueLabel.textColor = SystemColor.whiteGray
+        dateValueLabel.textColor = SystemColor.secondaryText
 
         leftStackView.axis = .vertical
         leftStackView.spacing = 4
