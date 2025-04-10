@@ -85,7 +85,7 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
         rankLabel.textColor = SystemColor.label
 
         marketCapRankLabel.font = SystemFont.Body.content
-        marketCapRankLabel.textColor = SystemColor.whiteGray
+        marketCapRankLabel.textColor = SystemColor.gold
 
         thumbnailImage.contentMode = .scaleAspectFill
         thumbnailImage.clipsToBounds = true

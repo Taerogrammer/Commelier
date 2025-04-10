@@ -63,6 +63,11 @@ enum SystemColor {
         dark: "#2B332C"    // 다크 민트
     )
 
+    static let divider = UIColor.dynamicColor(
+        light: "#1E1E1E",  // 라이트 모드에서는 블랙 계열
+        dark: "#C4C6CA"    // 다크 모드에서는 밝은 회색
+    )
+
     // MARK: - 고정 색상
     static let buttonText = UIColor(hex: "#F4F1EC")
     static let black = UIColor(hex: "#000000")
