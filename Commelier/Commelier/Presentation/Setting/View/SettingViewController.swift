@@ -76,7 +76,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 final class ThemeManager {
     static let shared = ThemeManager()
 
-    enum Theme: CaseIterable {
+    enum Theme: String, CaseIterable {
         case system, light, dark
 
         var description: String {
@@ -96,10 +96,12 @@ final class ThemeManager {
         }
     }
 
-    var currentTheme: Theme = .dark
+    private(set) var currentTheme: Theme = .system
 
     func applyTheme(to window: UIWindow?, theme: Theme) {
         currentTheme = theme
+        UserDefaultsManager.shared.selectedTheme = theme
+
         switch theme {
         case .light:
             window?.overrideUserInterfaceStyle = .light
@@ -109,5 +111,10 @@ final class ThemeManager {
             window?.overrideUserInterfaceStyle = .unspecified
         }
     }
-}
 
+    func loadTheme() -> Theme {
+        let theme = UserDefaultsManager.shared.selectedTheme
+        currentTheme = theme
+        return theme
+    }
+}
