@@ -18,6 +18,8 @@ final class TickerViewController: BaseViewController {
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
+
+    private let settingButton = UIBarButtonItem()
     private lazy var tickerListView = TickerListView(
         tickerListViewModel: tickerViewModel.tickerListViewModel)
 
@@ -46,7 +48,12 @@ final class TickerViewController: BaseViewController {
     }
 
     override func configureNavigation() {
+        let buttonImage = UIImage(systemName: "gearshape")
+        settingButton.image = buttonImage
+        settingButton.style = .plain
+        settingButton.tintColor = .label
         navigationItem.title = StringLiteral.NavigationTitle.ticker
+        navigationItem.rightBarButtonItem = settingButton
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +79,8 @@ final class TickerViewController: BaseViewController {
         tickerListView.bindViewModelOutput(listOutput)
 
         /// TickerViewModel
-        let input = TickerViewModel.Input(listInput: listInput)
+        let input = TickerViewModel.Input(listInput: listInput,
+                                          settingButtonTapped: settingButton.rx.tap)
         let output = tickerViewModel.transform(input: input)
 
         output.error
@@ -93,6 +101,17 @@ final class TickerViewController: BaseViewController {
                 let vc = DetailFactory.make(with: market)
                 vc.hidesBottomBarWhenPushed = true
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        output.settingButtonTapped
+            .subscribe(with: self) { owner, action in
+                switch action {
+                case .navigateToSetting:
+                    let vc = SettingFactory.make()
+                    vc.hidesBottomBarWhenPushed = true
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             .disposed(by: disposeBag)
 
