@@ -11,7 +11,6 @@ enum SystemColor {
 
     static let whiteGray   = UIColor(hex: "#C4C6CA")  // 중립 회색
 
-
     // MARK: - Dynamic Colors (라이트/다크 자동 전환)
 
     static let background = UIColor.dynamicColor(
@@ -22,6 +21,11 @@ enum SystemColor {
     static let label = UIColor.dynamicColor(
         light: "#1E1E1E",  // 진한 블랙
         dark: "#F4F1EC"    // 따뜻한 화이트
+    )
+
+    static let secondaryText = UIColor.dynamicColor(
+        light: "#7A7A7A",   // 진한 회색
+        dark: "#868686"     // 다크 모드에서는 중간톤 유지
     )
 
     // MARK: - Grayscale
