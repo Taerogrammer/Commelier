@@ -26,7 +26,7 @@ final class SettingViewController: BaseViewController {
     }
 
     override func configureView() {
-        title = "설정"
+        title = StringLiteral.Setting.title
         view.backgroundColor = SystemColor.background
         tableView.backgroundColor = SystemColor.background
     }
@@ -46,7 +46,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 
         var content = cell.defaultContentConfiguration()
         content.text = theme.description
-        content.image = UIImage(systemName: theme.iconName)
+        content.image = theme.icon
         content.imageProperties.tintColor = .label
         content.textProperties.font = SystemFont.Body.primary
 
@@ -65,7 +65,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "화면 설정"
+        return StringLiteral.Setting.themeSectionTitle
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -81,17 +81,17 @@ final class ThemeManager {
 
         var description: String {
             switch self {
-            case .system: return "사용자 설정 따르기"
-            case .light: return "라이트 모드"
-            case .dark: return "다크 모드"
+            case .system: return StringLiteral.Setting.systemMode
+            case .light: return StringLiteral.Setting.lightMode
+            case .dark: return StringLiteral.Setting.darkMode
             }
         }
 
-        var iconName: String {
+        var icon: UIImage {
             switch self {
-            case .system: return "gearshape"
-            case .light: return "sun.max"
-            case .dark: return "moon.stars"
+            case .system: return SystemIcon.themeSystem
+            case .light: return SystemIcon.themeLight
+            case .dark: return SystemIcon.themeDark
             }
         }
     }
