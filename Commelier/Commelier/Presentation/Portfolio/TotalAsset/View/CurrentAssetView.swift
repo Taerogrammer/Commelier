@@ -17,7 +17,7 @@ final class CurrentAssetView: BaseView {
     private let totalAssetAmountLabel = UILabel()
     let chargeButton = ActionButton(
         title: StringLiteral.Button.charge,
-        titleColor: SystemColor.white,
+        titleColor: SystemColor.buttonText,
         backgroundColor: SystemColor.green,
         font: SystemFont.Button.secondary
     )
@@ -112,11 +112,11 @@ final class CurrentAssetView: BaseView {
     override func configureView() {
         /// Title
         titleLabel.text = StringLiteral.Portfolio.assetOverview
-        titleLabel.textColor = SystemColor.white
+        titleLabel.textColor = SystemColor.label
         titleLabel.font = SystemFont.Title.large
 
         totalAssetTitleLabel.text = StringLiteral.Portfolio.totalAsset
-        totalAssetTitleLabel.textColor = SystemColor.white
+        totalAssetTitleLabel.textColor = SystemColor.label
         totalAssetTitleLabel.font = SystemFont.Title.small
 
         totalAssetAmountLabel.text = "0 " + StringLiteral.Currency.won
@@ -145,38 +145,38 @@ final class CurrentAssetView: BaseView {
 
         /// Real asset
         realCurrencyLabel.text = StringLiteral.Currency.krw
-        realCurrencyLabel.textColor = SystemColor.white
+        realCurrencyLabel.textColor = SystemColor.label
         realCurrencyLabel.font = SystemFont.Body.boldPrimary
 
         realCurrencyAmountLabel.text = "0 " + StringLiteral.Currency.krw
-        realCurrencyAmountLabel.textColor = SystemColor.white
+        realCurrencyAmountLabel.textColor = SystemColor.label
         realCurrencyAmountLabel.font = SystemFont.Title.small
 
         /// Coin asset
         coinCurrencyLabel.text = StringLiteral.Portfolio.coinAsset
-        coinCurrencyLabel.textColor = SystemColor.white
+        coinCurrencyLabel.textColor = SystemColor.label
         coinCurrencyLabel.font = SystemFont.Body.boldPrimary
 
         coinCurrencyAmountLabel.text = "0 " + StringLiteral.Currency.krw
-        coinCurrencyAmountLabel.textColor = SystemColor.white
+        coinCurrencyAmountLabel.textColor = SystemColor.label
         coinCurrencyAmountLabel.font = SystemFont.Title.small
 
         coinProfitLabel.text = StringLiteral.Portfolio.profitLoss
-        coinProfitLabel.textColor = SystemColor.white
+        coinProfitLabel.textColor = SystemColor.label
         coinProfitLabel.font = SystemFont.Body.boldContent
 
         coinProfitAmountLabel.text = "0 " + StringLiteral.Currency.krw
         coinProfitAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitAmountLabel.textColor = SystemColor.white
+        coinProfitAmountLabel.textColor = SystemColor.label
         coinProfitAmountLabel.textAlignment = .right
 
         coinProfitRatioLabel.text = StringLiteral.Portfolio.yieldRate
-        coinProfitRatioLabel.textColor = SystemColor.white
+        coinProfitRatioLabel.textColor = SystemColor.label
         coinProfitRatioLabel.font = SystemFont.Body.boldContent
 
         coinProfitRatioAmountLabel.text = "0 %"
         coinProfitRatioAmountLabel.font = SystemFont.Body.boldPrimary
-        coinProfitRatioAmountLabel.textColor = SystemColor.white
+        coinProfitRatioAmountLabel.textColor = SystemColor.label
         coinProfitRatioAmountLabel.textAlignment = .right
     }
 }
@@ -193,11 +193,11 @@ extension CurrentAssetView {
         let profit = snapshot.holdingProfit
         let profitText = profit.toRoundedInt64().formatted + " " + StringLiteral.Currency.won
         coinProfitAmountLabel.text = profitText
-        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.green : SystemColor.white)
+        coinProfitAmountLabel.textColor = profit > 0 ? SystemColor.red : (profit < 0 ? SystemColor.green : SystemColor.label)
 
         let yield = snapshot.holdingYieldRate
         let yieldText = yield.formatted() + StringLiteral.Operator.percentage
         coinProfitRatioAmountLabel.text = yieldText
-        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.green : SystemColor.white)
+        coinProfitRatioAmountLabel.textColor = yield > 0 ? SystemColor.red : (yield < 0 ? SystemColor.green : SystemColor.label)
     }
 }

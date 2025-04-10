@@ -79,33 +79,33 @@ final class CoinCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable {
 
     override func configureView() {
         contentView.layer.cornerRadius = 12
-        contentView.backgroundColor = SystemColor.darkBrown
+        contentView.backgroundColor = SystemColor.card
 
         rankLabel.font = SystemFont.Title.medium
-        rankLabel.textColor = SystemColor.white
+        rankLabel.textColor = SystemColor.label
 
         marketCapRankLabel.font = SystemFont.Body.content
-        marketCapRankLabel.textColor = SystemColor.whiteGray
+        marketCapRankLabel.textColor = SystemColor.gold
 
         thumbnailImage.contentMode = .scaleAspectFill
         thumbnailImage.clipsToBounds = true
 
         rateLabel.font = SystemFont.Body.boldContent
-        rateLabel.textColor = SystemColor.white
+        rateLabel.textColor = SystemColor.label
         rateLabel.textAlignment = .right
 
         volumeLabel.font = SystemFont.Body.content
-        volumeLabel.textColor = SystemColor.white
+        volumeLabel.textColor = SystemColor.label
         volumeLabel.textAlignment = .right
 
         symbolLabel.font = SystemFont.Body.boldContent
-        symbolLabel.textColor = SystemColor.white
+        symbolLabel.textColor = SystemColor.label
 
         nameLabel.font = SystemFont.Body.small
-        nameLabel.textColor = SystemColor.white
+        nameLabel.textColor = SystemColor.label
 
         marketCapLabel.font = SystemFont.Body.boldSmall
-        marketCapLabel.textColor = SystemColor.white
+        marketCapLabel.textColor = SystemColor.label
     }
 
     override func prepareForReuse() {

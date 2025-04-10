@@ -108,4 +108,12 @@ enum StringLiteral {
         static let coinPrice = "거래 단가"
         static let date = "체결 일시"
     }
+
+    enum Setting {
+        static let title = "설정"
+        static let themeSectionTitle = "화면 설정"
+        static let systemMode = "사용자 설정 따르기"
+        static let lightMode = "라이트 모드"
+        static let darkMode = "다크 모드"
+    }
 }

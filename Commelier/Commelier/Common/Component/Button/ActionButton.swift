@@ -10,7 +10,10 @@ import UIKit
 // TODO: - height 고정
 final class ActionButton: UIButton {
 
-    init(title: String, titleColor: UIColor = SystemColor.white, backgroundColor: UIColor, font: UIFont = SystemFont.Button.primary) {
+    init(title: String,
+         titleColor: UIColor = SystemColor.buttonText,
+         backgroundColor: UIColor,
+         font: UIFont = SystemFont.Button.primary) {
         super.init(frame: .zero)
         configure(title: title, titleColor: titleColor, backgroundColor: backgroundColor, font: font)
     }

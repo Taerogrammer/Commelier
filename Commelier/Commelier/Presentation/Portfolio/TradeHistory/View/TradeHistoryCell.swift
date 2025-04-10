@@ -29,7 +29,6 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
     private let dateTitleLabel = UILabel()
     private let dateValueLabel = UILabel()
 
-    private let topLineView = BaseView()
     private let bottomLineView = BaseView()
 
     override func configureHierarchy() {
@@ -43,17 +42,12 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
         ])
 
         containerStackView.addArrangedSubviews([leftStackView, infoStackView])
-        contentView.addSubviews([topLineView, containerStackView, bottomLineView])
+        contentView.addSubviews([/*topLineView,*/ containerStackView, bottomLineView])
     }
 
     override func configureLayout() {
-        topLineView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalTo(0.5)
-        }
         containerStackView.snp.makeConstraints { make in
-            make.top.equalTo(topLineView.snp.bottom)
+            make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
             make.bottom.equalTo(bottomLineView.snp.top)
         }
@@ -70,16 +64,15 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
     }
 
     override func configureView() {
-        backgroundColor = SystemColor.black
-        topLineView.backgroundColor = SystemColor.gray
+        backgroundColor = SystemColor.background
 
         typeLabel.font = SystemFont.Title.small
         pairLabel.font = SystemFont.Body.small
-        pairLabel.textColor = SystemColor.whiteGray
+        pairLabel.textColor = SystemColor.secondaryText
 
         [priceTitleLabel, amountTitleLabel, totalTitleLabel, dateTitleLabel].forEach {
             $0.font = SystemFont.Body.content
-            $0.textColor = SystemColor.white
+            $0.textColor = SystemColor.label
         }
 
         [priceValueLabel, amountValueLabel, totalValueLabel, dateValueLabel].forEach {
@@ -87,7 +80,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
             $0.textAlignment = .right
         }
 
-        dateValueLabel.textColor = SystemColor.whiteGray
+        dateValueLabel.textColor = SystemColor.secondaryText
 
         leftStackView.axis = .vertical
         leftStackView.spacing = 4
@@ -101,7 +94,7 @@ final class TradeHistoryCell: BaseTableViewCell, ReuseIdentifiable {
         containerStackView.spacing = 16
         containerStackView.alignment = .center
 
-        bottomLineView.backgroundColor = SystemColor.gray
+        bottomLineView.backgroundColor = SystemColor.panelBackground
     }
 }
 

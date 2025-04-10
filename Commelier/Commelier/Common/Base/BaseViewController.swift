@@ -37,16 +37,16 @@ class BaseViewController: UIViewController, ViewConfiguration {
     func configureNavigation() { }
 
     func configureDefaultSetting() {
-        view.backgroundColor = SystemColor.black
+        view.backgroundColor = SystemColor.background
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = SystemColor.black
-        appearance.titleTextAttributes = [.foregroundColor: SystemColor.white]
+        appearance.backgroundColor = SystemColor.background
+        appearance.titleTextAttributes = [.foregroundColor: SystemColor.label]
 
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.tintColor = SystemColor.white
+        navigationController?.navigationBar.tintColor = SystemColor.label
     }
 
     func bind() { }

@@ -56,12 +56,12 @@ final class PortfolioViewController: BaseViewController {
 
     override func configureView() {
         segmentedControl.setTitleTextAttributes([
-            .foregroundColor: SystemColor.white,
+            .foregroundColor: SystemColor.label,
             .font: SystemFont.Body.primary
         ], for: .normal)
 
         segmentedControl.setTitleTextAttributes([
-            .foregroundColor: SystemColor.white,
+            .foregroundColor: SystemColor.label,
             .font: SystemFont.Body.boldPrimary
         ], for: .selected)
 

@@ -17,7 +17,7 @@ enum PriceChangeState: String, Decodable {
         switch self {
         case .rise: return SystemColor.red
         case .fall: return SystemColor.green
-        case .even: return SystemColor.gray
+        case .even: return SystemColor.panelBackground
         }
     }
 

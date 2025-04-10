@@ -41,7 +41,7 @@ final class NavigationTitleView: BaseView {
         image.layer.cornerRadius = 14
 
         marketLabel.font = SystemFont.Title.small
-        marketLabel.textColor = SystemColor.white
+        marketLabel.textColor = SystemColor.label
 
         stackView.axis = .horizontal
         stackView.spacing = 8

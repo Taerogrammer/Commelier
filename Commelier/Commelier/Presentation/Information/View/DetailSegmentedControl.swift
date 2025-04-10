@@ -52,7 +52,7 @@ final class CustomSegmentedControl: BaseView {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 
-        selectorView.backgroundColor = SystemColor.whiteGray
+        selectorView.backgroundColor = SystemColor.divider
         selectorView.layer.cornerRadius = 2
         clipsToBounds = true
     }
@@ -108,7 +108,7 @@ final class CustomSegmentedControl: BaseView {
     private func updateButtonAppearance() {
         for (index, button) in buttons.enumerated() {
             let isSelected = index == selectedIndex
-            button.setTitleColor(isSelected ? SystemColor.white : SystemColor.whiteGray, for: .normal)
+            button.setTitleColor(isSelected ? SystemColor.label : SystemColor.secondaryText, for: .normal)
             button.titleLabel?.font = isSelected
                 ? SystemFont.Body.boldPrimary
                 : SystemFont.Body.primary

@@ -39,7 +39,7 @@ final class HoldingCollectionViewCell: BaseCollectionViewCell, ReuseIdentifiable
     override func configureView() {
         nameLabel.font = SystemFont.Body.boldPrimary
         transactionQuantity.font = SystemFont.Body.content
-        transactionQuantity.textColor = SystemColor.whiteGray
+        transactionQuantity.textColor = SystemColor.secondaryText
         image.tintColor = SystemColor.green
     }
 

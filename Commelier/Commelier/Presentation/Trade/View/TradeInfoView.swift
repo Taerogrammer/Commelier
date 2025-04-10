@@ -71,20 +71,20 @@ final class TradeInfoView: BaseView {
     }
 
     override func configureView() {
-        backgroundColor = SystemColor.darkBrown
+        backgroundColor = SystemColor.card
         layer.cornerRadius = 12
         clipsToBounds = true
 
         currentPriceTitleLabel.text = StringLiteral.Trade.currentPrice
         currentPriceTitleLabel.font = SystemFont.Title.medium
-        currentPriceTitleLabel.textColor = SystemColor.white
+        currentPriceTitleLabel.textColor = SystemColor.label
 
         currentPriceLabel.text = StringLiteral.Trade.loadingDots
         currentPriceLabel.font = SystemFont.Title.xLarge
-        currentPriceLabel.textColor = SystemColor.white
+        currentPriceLabel.textColor = SystemColor.label
         currentPriceLabel.textAlignment = .center
 
-        divider.backgroundColor = SystemColor.whiteGray
+        divider.backgroundColor = SystemColor.divider
 
         infoStackView.axis = .vertical
         infoStackView.spacing = 8

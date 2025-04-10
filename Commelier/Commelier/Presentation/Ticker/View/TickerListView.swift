@@ -36,7 +36,7 @@ final class TickerListView: BaseView {
     }
 
     override func configureView() {
-        tickerTableView.backgroundColor = SystemColor.black
+        tickerTableView.backgroundColor = SystemColor.background
         tickerTableView.register(
             TickerTableViewCell.self,
             forCellReuseIdentifier: TickerTableViewCell.identifier)

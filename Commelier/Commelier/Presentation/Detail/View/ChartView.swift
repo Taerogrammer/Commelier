@@ -132,9 +132,9 @@ struct ChartView: View {
                 }
             }
             .chartPlotStyle { plotArea in
-                plotArea.background(Color(SystemColor.black))
+                plotArea.background(Color(SystemColor.background))
             }
-            .background(Color(SystemColor.black))
+            .background(Color(SystemColor.background))
         }
     }
 }
