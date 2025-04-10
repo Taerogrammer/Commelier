@@ -28,6 +28,7 @@ final class SettingViewController: BaseViewController {
     override func configureView() {
         title = "설정"
         view.backgroundColor = SystemColor.background
+        tableView.backgroundColor = SystemColor.background
     }
 }
 
@@ -50,6 +51,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         content.textProperties.font = SystemFont.Body.primary
 
         cell.contentConfiguration = content
+        cell.backgroundColor = SystemColor.panelBackground
         cell.accessoryType = (theme == ThemeManager.shared.currentTheme) ? .checkmark : .none
         return cell
     }
