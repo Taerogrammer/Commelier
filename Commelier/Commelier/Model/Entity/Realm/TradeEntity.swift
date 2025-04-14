@@ -49,11 +49,12 @@ extension TradeEntity {
 
     func toHistoryEntity() -> TradeHistoryEntity {
         let type: TradeHistoryType = buySell.lowercased() == "buy" ? .buy : .sell
-        let totalPrice = Decimal(price) / transactionQuantity
+        let totalPrice = price.decimalValue / transactionQuantity
 
-        let formattedPrice = FormatUtility.decimalToString(Decimal(price)) + " " + StringLiteral.Currency.krw
+        let formattedPrice = price.currencyString(.won)
+        // TODO: 변경
         let formattedAmount = FormatUtility.decimalToString(transactionQuantity, fractionDigits: 6) + " " + FormatUtility.nameToSymbol(name)
-        let formattedTotal = FormatUtility.decimalToString(totalPrice) + " " + StringLiteral.Currency.krw
+        let formattedTotal = totalPrice.currencyString(.won)
         let formattedDate = String.convertTradeHistoryDate(timestamp: timestamp)
 
         return TradeHistoryEntity(
