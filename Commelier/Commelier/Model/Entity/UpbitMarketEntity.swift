@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 
 struct UpbitMarketEntity {
     let market: String
@@ -24,7 +25,7 @@ struct UpbitMarketEntity {
     }
 
     var signed_change_rate_description: String {
-        return FormatUtility.rateConverter(number: signed_change_rate) + "%"
+        return signed_change_rate.percentString()
     }
 
     var acc_trade_price_24h_description: String {

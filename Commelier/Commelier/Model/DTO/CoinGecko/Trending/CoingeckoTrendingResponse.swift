@@ -9,7 +9,6 @@ import Foundation
 
 struct CoingeckoTrendingResponse: Decodable {
     let coins: [CoinItem]
-    let nfts: [Nft]
 }
 
 struct CoinItem: Decodable {
@@ -34,21 +33,4 @@ struct PriceChangeData: Decodable {
 
 struct KrwChangePercentage: Decodable {
     let krw: Double
-}
-
-struct Nft: Decodable {
-    let id: String
-    let name: String
-    let thumb: String
-    let data: NftData
-}
-
-struct NftData: Decodable {
-    let floor_price: String
-    let floor_price_in_usd_24h_percentage_change: String
-
-    var floor_price_in_usd_24h_percentage_change_description: String {
-        let doubleValue = Double(floor_price_in_usd_24h_percentage_change)
-        return FormatUtility.numberConverter(number: doubleValue ?? 0.0)
-    }
 }

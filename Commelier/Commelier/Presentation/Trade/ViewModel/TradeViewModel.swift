@@ -85,15 +85,15 @@ final class TradeViewModel: ViewModel {
             .eraseToAnyPublisher()
 
         let availableCurrencyStream = $availableCurrency
-            .map { FormatUtility.decimalToString($0) }
+            .map { $0.formatted() }
             .eraseToAnyPublisher()
 
         let totalQuantityStream = $totalQuantity
-            .map { FormatUtility.decimalToFullString($0) }
+            .map { $0.stringValue }
             .eraseToAnyPublisher()
 
         let inputAmountStream = $inputAmount
-            .map { FormatUtility.decimalToString($0) }
+            .map { $0.formatted() }
             .eraseToAnyPublisher()
 
         let warningStream = $shouldShowWarning

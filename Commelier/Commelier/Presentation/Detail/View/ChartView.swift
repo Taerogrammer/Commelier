@@ -100,7 +100,7 @@ struct ChartView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text("\(selected.date)")
                                         .bold()
-                                    Text("\(FormatUtility.formattedPrice(selected.price)) \(StringLiteral.Currency.won)")
+                                    Text("\(selected.price.formatted) \(StringLiteral.Currency.won)")
                                 }
                                 .foregroundColor(Color(SystemColor.black))
                                 .font(.caption)

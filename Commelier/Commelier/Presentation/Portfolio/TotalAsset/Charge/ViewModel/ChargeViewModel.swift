@@ -74,7 +74,7 @@ final class ChargeViewModel: ViewModel {
 
         // 금액 표시 포맷
         let amountText = selectedAmount
-            .map { FormatUtility.formatAmount($0) }
+            .map { $0.formatted }
             .asDriver(onErrorJustReturn: "0")
 
         // 버튼 활성화 조건
