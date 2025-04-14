@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import NumberterKit
 
 final class TradeViewModel: ViewModel {
     private let type: OrderType
@@ -152,7 +153,7 @@ final class TradeViewModel: ViewModel {
               let livePrice = livePriceEntity?.price else { return }
 
         let holdingQuantity = tradeUseCase.getHoldingQuantity(of: name)
-        availableCurrency = Decimal(livePrice) * holdingQuantity
+        availableCurrency = livePrice.decimalValue * holdingQuantity
     }
 
     private func updateTotalQuantityIfNeeded() {
@@ -186,9 +187,9 @@ final class TradeViewModel: ViewModel {
     private func loadAvailableCurrency() {
         switch type {
         case .buy:
-            self.availableCurrency = Decimal(tradeUseCase.getCurrentCurrency())
+            self.availableCurrency = tradeUseCase.getCurrentCurrency().decimalValue
         case .sell:
-            self.availableCurrency = Decimal(tradeUseCase.getHoldingAmount(of: name))
+            self.availableCurrency = tradeUseCase.getHoldingAmount(of: name).decimalValue
         }
     }
 
