@@ -52,8 +52,7 @@ extension TradeEntity {
         let totalPrice = price.decimalValue / transactionQuantity
 
         let formattedPrice = price.currencyString(.won)
-        // TODO: 변경
-        let formattedAmount = FormatUtility.decimalToString(transactionQuantity, fractionDigits: 6) + " " + FormatUtility.nameToSymbol(name)
+        let formattedAmount = transactionQuantity.formatted(fractionDigits: 6) + " " + FormatUtility.nameToSymbol(name)
         let formattedTotal = totalPrice.currencyString(.won)
         let formattedDate = String.convertTradeHistoryDate(timestamp: timestamp)
 

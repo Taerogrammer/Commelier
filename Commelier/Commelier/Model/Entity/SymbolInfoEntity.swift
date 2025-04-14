@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NumberterKit
 
 struct SymbolInfoEntity {
     let highPrice: Double                     // 고가
@@ -25,42 +26,42 @@ extension SymbolInfoEntity {
         return DetailSection(title: "종목정보", items: [
             DetailInformation(
                 title: "고가",
-                money: FormatUtility.formattedPrice(highPrice) + StringLiteral.Currency.wonMark,
+                money: highPrice.formatted + StringLiteral.Currency.wonMark,
                 date: ""
             ),
             DetailInformation(
                 title: "저가",
-                money: FormatUtility.formattedPrice(lowPrice) + StringLiteral.Currency.wonMark,
+                money: lowPrice.formatted + StringLiteral.Currency.wonMark,
                 date: ""
             ),
             DetailInformation(
                 title: "당일 누적 거래금액",
-                money: FormatUtility.formattedPrice(accTradePrice) + StringLiteral.Currency.wonMark,
+                money: accTradePrice.formatted + StringLiteral.Currency.wonMark,
                 date: ""
             ),
             DetailInformation(
                 title: "당일 누적 거래량",
-                money: FormatUtility.formattedVolume(accTradeVolume) + StringLiteral.Currency.wonMark,
+                money: accTradeVolume.formatted(fractionDigits: 2) + StringLiteral.Currency.wonMark,
                 date: ""
             ),
             DetailInformation(
                 title: "전일 종가",
-                money: FormatUtility.formattedPrice(prevClosingPrice) + StringLiteral.Currency.wonMark,
+                money: prevClosingPrice.formatted + StringLiteral.Currency.wonMark,
                 date: ""
             ),
             DetailInformation(
                 title: "전일 대비 변동률",
-                money: FormatUtility.formattedPercent(signedChangeRate) + StringLiteral.Operator.percentage,
+                money: signedChangeRate.percentString() + StringLiteral.Operator.percentage,
                 date: ""
             ),
             DetailInformation(
                 title: "52주 최고가",
-                money: FormatUtility.formattedPrice(highest52WeekPrice) + StringLiteral.Currency.wonMark,
+                money: highest52WeekPrice.formatted + StringLiteral.Currency.wonMark,
                 date: highest52WeekDate
             ),
             DetailInformation(
                 title: "52주 최저가",
-                money: FormatUtility.formattedPrice(lowest52WeekPrice) + StringLiteral.Currency.wonMark,
+                money: lowest52WeekPrice.formatted + StringLiteral.Currency.wonMark,
                 date: lowest52WeekDate
             )
         ])

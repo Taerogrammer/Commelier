@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Taerogrammer/NumberterKit.git",
       "state" : {
-        "revision" : "fc044c87990e0183262fe7dae283b90df6dce39d",
-        "version" : "1.0.2"
+        "revision" : "a84dcd221603df36da82aeae778c817d8df5bd07",
+        "version" : "1.0.4"
       }
     },
     {
