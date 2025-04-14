@@ -20,31 +20,11 @@ enum FormatUtility {
         return formatter.string(from: nsNumber) ?? "\(decimal)"
     }
 
-    static func decimalToFullString(_ decimal: Decimal) -> String {
-        return NSDecimalNumber(decimal: decimal).stringValue
-    }
-
     static func formatAmount(_ number: Int) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = "," // 명시적으로 지정
         return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
-    }
-
-    static func formatPercent(_ value: Double, fractionDigits: Int = 2) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .percent
-        formatter.minimumFractionDigits = fractionDigits
-        formatter.maximumFractionDigits = fractionDigits
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)%"
-    }
-
-    static func formatCurrency(_ value: Double, currencySymbol: String = "₩") -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        let formatted = formatter.string(from: NSNumber(value: value)) ?? "\(value)"
-        return "\(formatted) \(currencySymbol)"
     }
 
     static func numberConverter(number: Double, style: NumberFormatter.Style = .decimal) -> String {
@@ -93,10 +73,4 @@ enum FormatUtility {
         return String(name[symbolStartIndex...])
     }
 
-    static let decimalStyle: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ","
-        return formatter
-    }()
 }
