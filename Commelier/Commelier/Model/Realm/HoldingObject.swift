@@ -29,4 +29,8 @@ extension HoldingObject {
             symbol: symbol,
             imageURL: imageURL)
     }
+
+    func toWidgetModel() -> WidgetHoldingEntity {
+        return WidgetHoldingEntity(symbol: symbol, amount: transactionQuantity.decimalValue)
+    }
 }

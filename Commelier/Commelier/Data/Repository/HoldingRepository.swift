@@ -8,6 +8,7 @@
 import Foundation
 import NumberterKit
 import RealmSwift
+import WidgetKit
 
 final class HoldingRepository: HoldingRepositoryProtocol {
     private let realm = try! Realm()
@@ -30,6 +31,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
             try realm.write {
                 if entity.buySell.lowercased() == "buy" { handleBuy(entity) }
                 else { handleSell(entity) }
+                saveTopHoldingsToWidget()
             }
         } catch {
             print("❌ Realm 저장 실패: \(error)")
@@ -78,6 +80,27 @@ final class HoldingRepository: HoldingRepositoryProtocol {
             if holding.transactionQuantity < epsilon || holding.totalBuyPrice <= 1 {
                 realm.delete(holding)
             }
+        }
+    }
+
+    private func saveTopHoldingsToWidget() {
+        let holdings = realm.objects(HoldingObject.self)
+            .sorted(byKeyPath: "transactionQuantity", ascending: false)
+            .map { $0.toWidgetModel() }
+            .prefix(3)
+
+//        let topHoldings = Array(holdings.prefix(5))
+        print("🧾 저장될 위젯 데이터:")
+        holdings.forEach { print("- \($0.symbol): \($0.amount)") }
+
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(Array(holdings)) {
+            let defaults = UserDefaults(suiteName: "group.commelier.coin.holding") // App Group ID
+            defaults?.set(data, forKey: "holdings")
+            WidgetCenter.shared.reloadAllTimelines()
+            print("✅ 위젯용 Top 보유 저장 완료")
+        } else {
+            print("❌ 위젯 데이터 인코딩 실패")
         }
     }
 }

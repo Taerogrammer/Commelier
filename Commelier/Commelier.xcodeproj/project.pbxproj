@@ -19,10 +19,47 @@
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
 		162B6CBE2DA6A14A00BA9218 /* NumberterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162B6CBD2DA6A14A00BA9218 /* NumberterKit */; };
 		165DB0812D95779100AE2A37 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 165DB0802D95779100AE2A37 /* DGCharts */; };
+		168A2DDD2DB655C3001530B0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168A2DDC2DB655C3001530B0 /* WidgetKit.framework */; };
+		168A2DDF2DB655C3001530B0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168A2DDE2DB655C3001530B0 /* SwiftUI.framework */; };
+		168A2DEA2DB655C5001530B0 /* HoldingWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 168A2DDA2DB655C3001530B0 /* HoldingWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		168A2E212DB65876001530B0 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 168A2E202DB65876001530B0 /* RealmSwift */; };
+		168A2E222DB65876001530B0 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 168A2E202DB65876001530B0 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		16C8DD932D7FB53A00907D86 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 16158CA12D799A6000AC3458 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		168A2DE82DB655C5001530B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16158C7D2D79992E00AC3458 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 168A2DD92DB655C3001530B0;
+			remoteInfo = HoldingWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		168A2DEB2DB655C5001530B0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				168A2DEA2DB655C5001530B0 /* HoldingWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		168A2E232DB65876001530B0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				168A2E222DB65876001530B0 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		16C8DD942D7FB53A00907D86 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -38,6 +75,10 @@
 
 /* Begin PBXFileReference section */
 		16158C852D79992E00AC3458 /* Commelier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commelier.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		168A2DDA2DB655C3001530B0 /* HoldingWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HoldingWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		168A2DDC2DB655C3001530B0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		168A2DDE2DB655C3001530B0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		168A2E2F2DB65B53001530B0 /* HoldingWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HoldingWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -48,6 +89,31 @@
 			);
 			target = 16158C842D79992E00AC3458 /* Commelier */;
 		};
+		168A2DEF2DB655C5001530B0 /* Exceptions for "HoldingWidget" folder in "HoldingWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */;
+		};
+		168A2E282DB6593E001530B0 /* Exceptions for "Commelier" folder in "HoldingWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extension/Decimal128+Extension.swift",
+				Model/Entity/Realm/HoldingEntity.swift,
+				Model/Entity/Realm/HoldingMarketEntity.swift,
+				Model/Entity/Widget/WidgetHoldingEntity.swift,
+				Model/Realm/HoldingObject.swift,
+			);
+			target = 168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */;
+		};
+		168A2E342DB663E8001530B0 /* Exceptions for "HoldingWidget" folder in "Commelier" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				HoldingWidget.swift,
+			);
+			target = 16158C842D79992E00AC3458 /* Commelier */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,8 +121,18 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				16158E402D79CDDC00AC3458 /* Exceptions for "Commelier" folder in "Commelier" target */,
+				168A2E282DB6593E001530B0 /* Exceptions for "Commelier" folder in "HoldingWidgetExtension" target */,
 			);
 			path = Commelier;
+			sourceTree = "<group>";
+		};
+		168A2DE02DB655C3001530B0 /* HoldingWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				168A2E342DB663E8001530B0 /* Exceptions for "HoldingWidget" folder in "Commelier" target */,
+				168A2DEF2DB655C5001530B0 /* Exceptions for "HoldingWidget" folder in "HoldingWidgetExtension" target */,
+			);
+			path = HoldingWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -81,13 +157,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		168A2DD72DB655C3001530B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				168A2E212DB65876001530B0 /* RealmSwift in Frameworks */,
+				168A2DDF2DB655C3001530B0 /* SwiftUI.framework in Frameworks */,
+				168A2DDD2DB655C3001530B0 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		16158C7C2D79992E00AC3458 = {
 			isa = PBXGroup;
 			children = (
+				168A2E2F2DB65B53001530B0 /* HoldingWidgetExtension.entitlements */,
 				16158E262D79CDDC00AC3458 /* Commelier */,
+				168A2DE02DB655C3001530B0 /* HoldingWidget */,
+				168A2DDB2DB655C3001530B0 /* Frameworks */,
 				16158C862D79992E00AC3458 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,8 +185,18 @@
 			isa = PBXGroup;
 			children = (
 				16158C852D79992E00AC3458 /* Commelier.app */,
+				168A2DDA2DB655C3001530B0 /* HoldingWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		168A2DDB2DB655C3001530B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				168A2DDC2DB655C3001530B0 /* WidgetKit.framework */,
+				168A2DDE2DB655C3001530B0 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -111,10 +210,12 @@
 				16158C822D79992E00AC3458 /* Frameworks */,
 				16158C832D79992E00AC3458 /* Resources */,
 				16C8DD942D7FB53A00907D86 /* Embed Frameworks */,
+				168A2DEB2DB655C5001530B0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				168A2DE92DB655C5001530B0 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				16158E262D79CDDC00AC3458 /* Commelier */,
@@ -138,6 +239,30 @@
 			productReference = 16158C852D79992E00AC3458 /* Commelier.app */;
 			productType = "com.apple.product-type.application";
 		};
+		168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 168A2DEE2DB655C5001530B0 /* Build configuration list for PBXNativeTarget "HoldingWidgetExtension" */;
+			buildPhases = (
+				168A2DD62DB655C3001530B0 /* Sources */,
+				168A2DD72DB655C3001530B0 /* Frameworks */,
+				168A2DD82DB655C3001530B0 /* Resources */,
+				168A2E232DB65876001530B0 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				168A2DE02DB655C3001530B0 /* HoldingWidget */,
+			);
+			name = HoldingWidgetExtension;
+			packageProductDependencies = (
+				168A2E202DB65876001530B0 /* RealmSwift */,
+			);
+			productName = HoldingWidgetExtension;
+			productReference = 168A2DDA2DB655C3001530B0 /* HoldingWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -149,6 +274,9 @@
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					16158C842D79992E00AC3458 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					168A2DD92DB655C3001530B0 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -180,12 +308,20 @@
 			projectRoot = "";
 			targets = (
 				16158C842D79992E00AC3458 /* Commelier */,
+				168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		16158C832D79992E00AC3458 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		168A2DD82DB655C3001530B0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -202,7 +338,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		168A2DD62DB655C3001530B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		168A2DE92DB655C5001530B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */;
+			targetProxy = 168A2DE82DB655C5001530B0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		16158C992D79993000AC3458 /* Debug */ = {
@@ -210,6 +361,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Commelier/Commelier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
@@ -245,6 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Commelier/Commelier.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49256BK4G3;
@@ -396,6 +549,72 @@
 			};
 			name = Release;
 		};
+		168A2DEC2DB655C5001530B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HoldingWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 49256BK4G3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoldingWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HoldingWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.ted.Commelier.HoldingWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		168A2DED2DB655C5001530B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HoldingWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 49256BK4G3;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoldingWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HoldingWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.ted.Commelier.HoldingWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -413,6 +632,15 @@
 			buildConfigurations = (
 				16158C992D79993000AC3458 /* Debug */,
 				16158C9A2D79993000AC3458 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		168A2DEE2DB655C5001530B0 /* Build configuration list for PBXNativeTarget "HoldingWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				168A2DEC2DB655C5001530B0 /* Debug */,
+				168A2DED2DB655C5001530B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -562,6 +790,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		168A2E202DB65876001530B0 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16158CA02D799A6000AC3458 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
