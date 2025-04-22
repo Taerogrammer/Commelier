@@ -5,8 +5,9 @@
 //  Created by 김태형 on 4/21/25.
 //
 
-import WidgetKit
+import Charts
 import SwiftUI
+import WidgetKit
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
@@ -57,7 +58,11 @@ struct HoldingWidgetEntryView: View {
             case .systemMedium:
                 mediumView
             case .systemLarge:
-                unsupportedView
+                if #available(iOS 17.0, *) {
+                    largeView
+                } else {
+                    unsupportedView
+                }
             default:
                 unsupportedView
             }
@@ -118,6 +123,67 @@ struct HoldingWidgetEntryView: View {
         .padding()
     }
 
+    @available(iOS 17.0, *)
+    var largeView: some View {
+        let sorted = entry.holdings.sorted(by: { $0.amount > $1.amount })
+        let top5 = sorted.prefix(5)
+        let others = sorted.dropFirst(5)
+        let othersTotal = others.reduce(Decimal(0)) { $0 + $1.amount }
+
+        // Top 5 + 기타
+        let pieData = top5.map { ($0.symbol, $0.amount) } +
+                      (othersTotal > 0 ? [("기타", othersTotal)] : [])
+
+        let total = pieData.reduce(Decimal(0)) { $0 + $1.1 }
+
+        return VStack(spacing: 8) {
+            HStack(spacing: 6) {
+                Text("🪙")
+                Text("보유 비중 (Top 5)")
+                    .font(.headline)
+            }
+            .padding(.top, 4)
+            Spacer()
+
+            ZStack {
+                Chart {
+                    ForEach(pieData, id: \.0) { symbol, amount in
+                        SectorMark(
+                            angle: .value("보유량", NSDecimalNumber(decimal: amount).doubleValue),
+                            innerRadius: .ratio(0.5),
+                            angularInset: 2
+                        )
+                        .foregroundStyle(by: .value("코인", symbol))
+                        .annotation(position: .overlay) {
+                            VStack(spacing: 1) {
+                                Text(symbol)
+                                    .font(.caption)
+                                    .bold()
+                                    .foregroundColor(.primary)
+
+                                Text(percentString(of: amount, total: total))
+                                    .font(.caption)
+                                    .foregroundColor(.black)
+                            }
+                            .lineLimit(1)
+                        }
+                    }
+                }
+                .chartLegend(.hidden)
+                .frame(height: 240)
+
+                // 중앙 텍스트
+                VStack(spacing: 2) {
+                    Text("보유")
+                    Text("비중")
+                }
+                .font(.caption)
+                .foregroundColor(.black)
+            }
+        }
+        .padding()
+    }
+
     // MARK: - 미지원 사이즈 안내
     var unsupportedView: some View {
         VStack(spacing: 8) {
@@ -141,6 +207,13 @@ struct HoldingWidgetEntryView: View {
         formatter.numberStyle = .decimal
         return formatter.string(for: value) ?? "-"
     }
+
+    private func percentString(of amount: Decimal, total: Decimal) -> String {
+        guard total != 0 else { return "0%" }
+        let ratio = (amount / total) * 100
+        return String(format: "%.1f%%", NSDecimalNumber(decimal: ratio).doubleValue)
+    }
+
 }
 
 struct HoldingWidget: Widget {
