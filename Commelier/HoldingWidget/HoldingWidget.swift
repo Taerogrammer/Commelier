@@ -51,14 +51,46 @@ struct HoldingWidgetEntryView: View {
 
     var body: some View {
         Group {
-            if family == .systemMedium {
+            switch family {
+            case .systemSmall:
+                smallView
+            case .systemMedium:
                 mediumView
-            } else {
+            case .systemLarge:
+                unsupportedView
+            default:
                 unsupportedView
             }
         }
     }
 
+    var smallView: some View {
+        ZStack {
+            // 전체 배경 카드 (크게 키움)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color(.secondarySystemBackground))
+                .shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 2)
+
+            VStack(spacing: 10) {
+                Text("💰 보유 코인")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+
+                Text("\(entry.holdings.count)")
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+
+                Text("총 개수 기준")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+            .multilineTextAlignment(.center)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .padding(6) // 외곽 여백만 살짝
+    }
     // MARK: - Medium View (정상 화면)
     var mediumView: some View {
         VStack(alignment: .leading, spacing: 8) {

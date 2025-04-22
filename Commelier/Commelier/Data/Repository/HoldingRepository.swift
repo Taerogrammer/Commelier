@@ -87,9 +87,7 @@ final class HoldingRepository: HoldingRepositoryProtocol {
         let holdings = realm.objects(HoldingObject.self)
             .sorted(byKeyPath: "transactionQuantity", ascending: false)
             .map { $0.toWidgetModel() }
-            .prefix(3)
 
-//        let topHoldings = Array(holdings.prefix(5))
         print("🧾 저장될 위젯 데이터:")
         holdings.forEach { print("- \($0.symbol): \($0.amount)") }
 
