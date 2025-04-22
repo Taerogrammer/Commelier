@@ -89,8 +89,6 @@
 			);
 			target = 16158C842D79992E00AC3458 /* Commelier */;
 		};
-<<<<<<< HEAD
-=======
 		168A2DEF2DB655C5001530B0 /* Exceptions for "HoldingWidget" folder in "HoldingWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -98,23 +96,17 @@
 			);
 			target = 168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */;
 		};
->>>>>>> e933b970f52618452f3c528e1b7551a44806ea43
 		168A2E282DB6593E001530B0 /* Exceptions for "Commelier" folder in "HoldingWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Extension/Decimal128+Extension.swift",
 				Model/Entity/Realm/HoldingEntity.swift,
 				Model/Entity/Realm/HoldingMarketEntity.swift,
-<<<<<<< HEAD
-=======
 				Model/Entity/Widget/WidgetHoldingEntity.swift,
->>>>>>> e933b970f52618452f3c528e1b7551a44806ea43
 				Model/Realm/HoldingObject.swift,
 			);
 			target = 168A2DD92DB655C3001530B0 /* HoldingWidgetExtension */;
 		};
-<<<<<<< HEAD
-=======
 		168A2E342DB663E8001530B0 /* Exceptions for "HoldingWidget" folder in "Commelier" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -122,7 +114,6 @@
 			);
 			target = 16158C842D79992E00AC3458 /* Commelier */;
 		};
->>>>>>> e933b970f52618452f3c528e1b7551a44806ea43
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -137,13 +128,10 @@
 		};
 		168A2DE02DB655C3001530B0 /* HoldingWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-<<<<<<< HEAD
-=======
 			exceptions = (
 				168A2E342DB663E8001530B0 /* Exceptions for "HoldingWidget" folder in "Commelier" target */,
 				168A2DEF2DB655C5001530B0 /* Exceptions for "HoldingWidget" folder in "HoldingWidgetExtension" target */,
 			);
->>>>>>> e933b970f52618452f3c528e1b7551a44806ea43
 			path = HoldingWidget;
 			sourceTree = "<group>";
 		};
