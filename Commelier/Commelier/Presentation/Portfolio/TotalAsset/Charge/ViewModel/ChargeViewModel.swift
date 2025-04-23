@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 import RxCocoa
 import RxSwift
 
@@ -69,6 +70,20 @@ final class ChargeViewModel: ViewModel {
                 let entity = ChargeEntity(amount: amount, timestamp: now)
                 owner.chargeRepository.saveCharge(entity)
                 owner.actionRelay.accept(.dismiss)
+
+                Analytics.setUserProperty("ko", forName: "country")
+                Analytics.setUserProperty("guest", forName: "user_type")
+
+                let parameters: [String: Any] = [
+                    "amount": amount,
+                    "currency": StringLiteral.Currency.krw,
+                    "screen": "charge_screen",
+                    "user_type": "guest",
+                    "timestamp": now
+                ]
+
+                Analytics.logEvent(AnalyticsEventSelectItem, parameters: nil) // 선택 사항
+                Analytics.logEvent("charge_button_clicked", parameters: parameters)
             }
             .disposed(by: disposeBag)
 

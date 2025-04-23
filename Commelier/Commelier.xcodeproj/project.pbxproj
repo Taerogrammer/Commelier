@@ -17,6 +17,8 @@
 		16158CB32D799BB000AC3458 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB22D799BB000AC3458 /* Kingfisher */; };
 		16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB52D799BEA00AC3458 /* RxCocoa */; };
 		16158CB82D799BEA00AC3458 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16158CB72D799BEA00AC3458 /* RxSwift */; };
+		162620AA2DB8BCEF00468B16 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 162620A92DB8BCEF00468B16 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		162620AE2DB8C02000468B16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 162620AD2DB8C02000468B16 /* GoogleService-Info.plist */; };
 		162B6CBE2DA6A14A00BA9218 /* NumberterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 162B6CBD2DA6A14A00BA9218 /* NumberterKit */; };
 		165DB0812D95779100AE2A37 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 165DB0802D95779100AE2A37 /* DGCharts */; };
 		168A2DDD2DB655C3001530B0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168A2DDC2DB655C3001530B0 /* WidgetKit.framework */; };
@@ -75,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		16158C852D79992E00AC3458 /* Commelier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commelier.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		162620AD2DB8C02000468B16 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		168A2DDA2DB655C3001530B0 /* HoldingWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HoldingWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A2DDC2DB655C3001530B0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		168A2DDE2DB655C3001530B0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -142,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162620AA2DB8BCEF00468B16 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				162B6CBE2DA6A14A00BA9218 /* NumberterKit in Frameworks */,
 				16158CB62D799BEA00AC3458 /* RxCocoa in Frameworks */,
 				16158CA22D799A6000AC3458 /* RealmSwift in Frameworks */,
@@ -173,6 +177,7 @@
 		16158C7C2D79992E00AC3458 = {
 			isa = PBXGroup;
 			children = (
+				162620AD2DB8C02000468B16 /* GoogleService-Info.plist */,
 				168A2E2F2DB65B53001530B0 /* HoldingWidgetExtension.entitlements */,
 				16158E262D79CDDC00AC3458 /* Commelier */,
 				168A2DE02DB655C3001530B0 /* HoldingWidget */,
@@ -234,6 +239,7 @@
 				16158CB72D799BEA00AC3458 /* RxSwift */,
 				165DB0802D95779100AE2A37 /* DGCharts */,
 				162B6CBD2DA6A14A00BA9218 /* NumberterKit */,
+				162620A92DB8BCEF00468B16 /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = CryptoCollection;
 			productReference = 16158C852D79992E00AC3458 /* Commelier.app */;
@@ -301,6 +307,7 @@
 				16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				165DB07F2D95779100AE2A37 /* XCRemoteSwiftPackageReference "Charts" */,
 				162B6CBC2DA6A14A00BA9218 /* XCRemoteSwiftPackageReference "NumberterKit" */,
+				162620A82DB8BCEF00468B16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 16158C862D79992E00AC3458 /* Products */;
@@ -318,6 +325,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				162620AE2DB8C02000468B16 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -712,6 +720,14 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		162620A82DB8BCEF00468B16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
 		162B6CBC2DA6A14A00BA9218 /* XCRemoteSwiftPackageReference "NumberterKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Taerogrammer/NumberterKit.git";
@@ -780,6 +796,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 16158CB42D799BEA00AC3458 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		162620A92DB8BCEF00468B16 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 162620A82DB8BCEF00468B16 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 		162B6CBD2DA6A14A00BA9218 /* NumberterKit */ = {
 			isa = XCSwiftPackageProductDependency;
