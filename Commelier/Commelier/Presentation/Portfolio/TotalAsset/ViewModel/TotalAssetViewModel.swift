@@ -8,6 +8,7 @@
 import Combine
 import NumberterKit
 import Foundation
+import RxSwift
 
 final class TotalAssetViewModel: ViewModel {
     private let portfolioUseCase: PortfolioUseCaseProtocol
@@ -16,6 +17,7 @@ final class TotalAssetViewModel: ViewModel {
     private var cancellables = Set<AnyCancellable>()
     private let actionPublisher = PassthroughSubject<Action, Never>()
     let assetSnapshotPublisher = CurrentValueSubject<AssetSnapshotEntity?, Never>(nil)
+    private let disposeBag = DisposeBag()
 
     init(portfolioUseCase: PortfolioUseCaseProtocol,
          webSocket: WebSocketProvider) {
@@ -60,12 +62,41 @@ final class TotalAssetViewModel: ViewModel {
     }
 
     // TODO: - !긴급! 연동 여러 개 있을 때 다른 가격이 호출될 때도 있음
-     func connectWebSocketAndSendMarkets() {
+//     func connectWebSocketAndSendMarkets() {
+//        let holdings = portfolioUseCase.getHoldings()
+//        /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생
+//        let marketList = holdings.map { $0.name }.ifEmpty(default: defaultMarkets)
+//        print("📡 WebSocket Send for Markets:", marketList)
+//        webSocket.send(markets: marketList)
+//    }
+
+    func connectWebSocketAndSendMarkets() {
         let holdings = portfolioUseCase.getHoldings()
-        /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생
-        let marketList = holdings.map { $0.name }.ifEmpty(default: ["KRW-BTC"])
-        print("📡 WebSocket Send for Markets:", marketList)
-        webSocket.send(markets: marketList)
+
+        if holdings.isEmpty {
+            NetworkManager.shared.getItem(
+                api: UpbitRouter.getMarket(quote_currencies: "KRW"),
+                type: [UpbitTickerResponse].self
+            )
+            .map { responses in
+                responses
+                    .sorted(by: { $0.trade_price > $1.trade_price })
+                    .prefix(10)
+                    .map { $0.market }
+            }
+            .subscribe { [weak self] topMarkets in
+                print("📡 Default WebSocket Market Top10:", topMarkets)
+                self?.webSocket.send(markets: topMarkets)
+            } onFailure: { error in
+                print("❌ Failed to fetch default market list", error)
+            }
+            .disposed(by: disposeBag)
+
+        } else {
+            let marketList = holdings.map { $0.name }
+            print("📡 WebSocket Send for Holdings:", marketList)
+            webSocket.send(markets: marketList)
+        }
     }
 
     private func observeLivePriceAndEvaluate() {
