@@ -65,7 +65,7 @@ final class TotalAssetViewModel: ViewModel {
 //     func connectWebSocketAndSendMarkets() {
 //        let holdings = portfolioUseCase.getHoldings()
 //        /// 연결을 아무것도 전송하지 않으면 Snapshot이 전체가 오지 않아 데이터가 오지 않는 문제 발생
-//        let marketList = holdings.map { $0.name }.ifEmpty(default: defaultMarkets)
+//        let marketList = holdings.map { $0.name }.ifEmpty(default: ["KRW-BTC"])
 //        print("📡 WebSocket Send for Markets:", marketList)
 //        webSocket.send(markets: marketList)
 //    }
@@ -75,19 +75,22 @@ final class TotalAssetViewModel: ViewModel {
 
         if holdings.isEmpty {
             NetworkManager.shared.getItem(
-                api: UpbitRouter.getMarket(quote_currencies: "KRW"),
-                type: [UpbitTickerResponse].self
+                api: UpbitRouter.getMarket(),
+                type: [UpbitMarketResponse].self
             )
             .map { responses in
                 responses
+                    .compactMap { $0.toEntity() }
+            }
+            .subscribe(with: self) { owner, entities in
+                let topMarkets = entities
                     .sorted(by: { $0.trade_price > $1.trade_price })
                     .prefix(10)
                     .map { $0.market }
-            }
-            .subscribe { [weak self] topMarkets in
+
                 print("📡 Default WebSocket Market Top10:", topMarkets)
-                self?.webSocket.send(markets: topMarkets)
-            } onFailure: { error in
+                owner.webSocket.send(markets: topMarkets)
+            } onFailure: { owner, error in
                 print("❌ Failed to fetch default market list", error)
             }
             .disposed(by: disposeBag)
