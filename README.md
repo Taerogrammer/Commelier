@@ -49,6 +49,10 @@
 
 ## 🛠️ 기술 스택 및 아키텍처 (Tech Stack & Architecture)
 
+<img src="https://github.com/user-attachments/assets/09e5fae2-4594-4021-bcd3-461782cfd282" width="600" />
+
+<br>
+
 ### Architecture & Design Pattern
 - **MVVM (Input/Output)**
 - **Repository Pattern, Router Pattern, UseCase**
